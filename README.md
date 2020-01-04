@@ -1,2 +1,2 @@
 # 2020-Infinite-Recharge
-Robot Code for the 2020 FRC season.
+Robot Code for the 2020 FRC Infinite Recharge season.
