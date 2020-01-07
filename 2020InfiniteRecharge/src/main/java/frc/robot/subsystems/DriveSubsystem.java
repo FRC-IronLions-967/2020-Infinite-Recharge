@@ -11,6 +11,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -22,6 +24,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   private CANSparkMax rightSlave;
   private CANSparkMax leftMaster;
   private CANSparkMax leftSlave;
+
+  private double MAX = 1.0;
+
+  private static final double TRIGGER_THRESHOLD = 0.2;
 
   public DriveSubsystem() {
     // setDefaultCommand();
@@ -47,11 +53,14 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
 
   //class convenience method to move the robot to save space in the different drive methods
   private void move(double r, double l) {
+    //set max to either full or reduced based on driver trigger for increased control
+    MAX = (Robot.m_io.xbox0.getRawAxis(6) >= TRIGGER_THRESHOLD) ? 0.6 : 1.0;
+
     //defensive code to prevent the values being passed to move from exceeding the accepted ranges on the motor controllers
-    r = (r > 1.0) ? 1.0 :  r;
-    r = (r < -1.0) ? -1.0 : r;
-    l = (l > 1.0) ? 1.0 : l;
-    l = (l < -1.0) ? -1.0 : l;
+    r = (r > MAX) ? MAX :  r;
+    r = (r < -MAX) ? -MAX : r;
+    l = (l > MAX) ? MAX : l;
+    l = (l < -MAX) ? -MAX : l;
 
     //set motor powers, slaves do not need to be called as they were set to follow the master in the class constructor
     rightMaster.set(r);
@@ -69,8 +78,9 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     move(r, l);
   }
 
-
+  //method to be called in the event of a tank drive
   public void tankDrive(double r, double l) {
+    //this is pretty self explanatory
     move(r, l);
   }
 
