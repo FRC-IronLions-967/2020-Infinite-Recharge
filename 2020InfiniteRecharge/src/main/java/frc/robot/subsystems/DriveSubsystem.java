@@ -27,7 +27,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
 
   private double MAX = 1.0;
 
-  private static final double TRIGGER_THRESHOLD = 0.2;
+  // private static final double TRIGGER_THRESHOLD = 0.2;
 
   public DriveSubsystem() {
     // setDefaultCommand();
@@ -54,7 +54,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   //class convenience method to move the robot to save space in the different drive methods
   private void move(double r, double l) {
     //set max to either full or reduced based on driver trigger for increased control
-    MAX = (Robot.m_io.xbox0.getRawAxis(6) >= TRIGGER_THRESHOLD) ? 0.6 : 1.0;
+    // MAX = (Robot.m_io.xbox0.getRawAxis(6) >= TRIGGER_THRESHOLD) ? 0.6 : 1.0;
 
     //defensive code to prevent the values being passed to move from exceeding the accepted ranges on the motor controllers
     r = (r > MAX) ? MAX :  r;

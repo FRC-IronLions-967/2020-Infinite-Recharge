@@ -32,6 +32,7 @@ public class Logger {
         types = logTypes;
     }
 
+    //automatically logs all data from the array of data to log to the specified file
     public void logAuto() throws IOException {
         PrintWriter writer = new PrintWriter(new FileWriter(logFile, true));
         for(int i = 0; i < types.length; i++) {
@@ -55,12 +56,27 @@ public class Logger {
         writer.close();
     }
 
+    //writes the specified data in the array to the file, separated by whatever delimiter was specified in the construction of the object
     public void log(String[] data) throws IOException {
+        //TODO check and see if append is necessary since the filewriter is already set to append mode in the constructor
         PrintWriter writer = new PrintWriter(new FileWriter(logFile, true));
         for(int i = 0; i < data.length; i++) {
             writer.append(data[i]);
             writer.append(delim);
         }
+        writer.append("\n");
         writer.close();
+    }
+
+    public File getLogFile() {
+        return logFile;
+    }
+
+    public char getDelim() {
+        return delim;
+    }
+
+    public LogTypes[] getLogTypes() {
+        return types;
     }
 }
