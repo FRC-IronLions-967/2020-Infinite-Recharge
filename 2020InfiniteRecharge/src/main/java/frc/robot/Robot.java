@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
+import edu.wpi.first.networktables.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,7 +41,12 @@ public class Robot extends TimedRobot {
     //initialize IO object and all used subsystems here to be created during the robot startup
     m_io = new IO();
     m_driveSubsystem = new DriveSubsystem();
-  }
+
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    //for some reason, the getter will create the table if it already exists
+    //i have no idea why it would be written this way, but it is so just go with it, this doesn't seem to be present in the documentation on the docs page
+    NetworkTable table = inst.getTable("test");
+}
 
   /**
    * This function is called every robot packet, no matter the mode. Use

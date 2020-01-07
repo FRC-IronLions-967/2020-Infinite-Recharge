@@ -2,6 +2,8 @@ package frc.robot.utils;
 
 import java.io.*;
 
+import edu.wpi.first.wpilibj.RobotController;
+
 //class for logging data to help with failure analysis - which is sadly inevitable
 public class Logger {
 
@@ -9,7 +11,7 @@ public class Logger {
     public enum LogTypes {
         VOLTAGE,
         CURRENT,
-        SENSOR_DATA
+        SENSOR_DATA,
     };
 
     private File logFile;
@@ -31,12 +33,17 @@ public class Logger {
     }
 
     public void logAuto() throws IOException {
+        PrintWriter writer = new PrintWriter(new FileWriter(logFile, true));
         for(int i = 0; i < types.length; i++) {
             //TODO get all of the log data and write it to the file
             switch(types[i]) {
                 case VOLTAGE:
+                    Double voltage = RobotController.getBatteryVoltage();
+                    writer.append(voltage.toString() + delim);
                     break;
                 case CURRENT:
+                    Double current = RobotController.getInputCurrent();
+                    writer.append(current.toString() + delim);
                     break;
                 case SENSOR_DATA:
                     break;
@@ -44,6 +51,8 @@ public class Logger {
                     break;
             }
         }
+        writer.append("\n");
+        writer.close();
     }
 
     public void log(String[] data) throws IOException {
