@@ -24,6 +24,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static IO m_io;
   public static DriveSubsystem m_driveSubsystem;
 
   /**
@@ -36,6 +37,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
+    //initialize IO object and all used subsystems here to be created during the robot startup
+    m_io = new IO();
     m_driveSubsystem = new DriveSubsystem();
   }
 
