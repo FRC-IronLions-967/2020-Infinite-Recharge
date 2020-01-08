@@ -27,7 +27,6 @@ public class ArcadeDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO pull from yet to be created IO class with joystick values - need to talk to team about control scheme
     Robot.m_driveSubsystem.arcadeDrive(Robot.m_io.xbox0.getRawAxis(1), Robot.m_io.xbox0.getRawAxis(4));
   }
 

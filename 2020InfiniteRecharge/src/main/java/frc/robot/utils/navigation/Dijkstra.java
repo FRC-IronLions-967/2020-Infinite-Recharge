@@ -1,4 +1,4 @@
-package frc.robot.utils;
+package frc.robot.utils.navigation;
 
 public class Dijkstra {
     private static final int INFINITE = Integer.MAX_VALUE;

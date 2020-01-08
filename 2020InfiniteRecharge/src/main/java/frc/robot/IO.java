@@ -31,7 +31,7 @@ public class IO {
         JoystickButton xbox1_b = new JoystickButton(xbox1, 2);
         JoystickButton xbox1_x = new JoystickButton(xbox1, 3);
         JoystickButton xbox1_y = new JoystickButton(xbox1, 4);
-
+        
         //TODO assign commands to button presses here
     }
 }
