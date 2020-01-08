@@ -1,13 +1,61 @@
 package frc.robot.utils.values;
 
-import java.io.File;
+import java.io.*;
+import java.util.Properties;
 
 public class Values {
-    public Values(File valuesFile) {
+    private File file;
+    private Properties prop;
+    private InputStream input;
+    private double autoValues[];
 
+    public Values(File valuesFile) throws IOException {
+        file = valuesFile;
+        prop = new Properties();
+        input = new FileInputStream(file);
+        prop.load(input);
+        autoValues = null;
     }
 
-    public Values(String path) {
+    public Values(File valuesFile, String keys[]) throws IOException {
+        file = valuesFile;
+        prop = new Properties();
+        input = new FileInputStream(file);
+        prop.load(input);
+        autoValues = new double[keys.length];
+        for(int i = 0; i < keys.length; i++) {
+            autoValues[i] = Double.parseDouble(prop.getProperty(keys[i]));
+        }
+    }
 
+    public Values(String path) throws IOException {
+        file = new File(path);
+        prop = new Properties();
+        input = new FileInputStream(file);
+        prop.load(input);
+        autoValues = null;
+    }
+
+    public Values(String path, String keys[]) throws IOException {
+        file = new File(path);
+        prop = new Properties();
+        input = new FileInputStream(file);
+        prop.load(input);
+        autoValues = new double[keys.length];
+        for(int i = 0; i < keys.length; i++) {
+            autoValues[i] = Double.parseDouble(prop.getProperty(keys[i]));
+        }
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public double[] getAutoValues() {
+        return autoValues;
+    }
+
+    public double getValue(String key) {
+        return Double.parseDouble(prop.getProperty(key));
     }
 }
