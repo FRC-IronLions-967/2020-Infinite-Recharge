@@ -11,7 +11,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// import frc.robot.Robot;
+import frc.robot.Robot;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -33,10 +33,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     // setDefaultCommand();
 
     //create new motor controller objects for the drive
-    rightMaster = new CANSparkMax(0, MotorType.kBrushless);
-    rightSlave = new CANSparkMax(1, MotorType.kBrushless);
-    leftMaster = new CANSparkMax(2, MotorType.kBrushless);
-    leftSlave = new CANSparkMax(3, MotorType.kBrushless);
+    rightMaster = new CANSparkMax((int) Robot.m_robotMap.getValue("rightMaster"), MotorType.kBrushless);
+    rightSlave = new CANSparkMax((int) Robot.m_robotMap.getValue("rightSlave"), MotorType.kBrushless);
+    leftMaster = new CANSparkMax((int) Robot.m_robotMap.getValue("leftMaster"), MotorType.kBrushless);
+    leftSlave = new CANSparkMax((int) Robot.m_robotMap.getValue("leftSlave"), MotorType.kBrushless);
 
     //set slaves to follow master motor controllers
     rightSlave.follow(rightMaster);

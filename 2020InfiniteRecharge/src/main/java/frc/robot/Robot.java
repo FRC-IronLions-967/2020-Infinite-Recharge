@@ -7,11 +7,15 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
+import frc.robot.utils.values.Values;
 import edu.wpi.first.networktables.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +31,8 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static IO m_io;
   public static DriveSubsystem m_driveSubsystem;
+  public static Values m_values;
+  public static Values m_robotMap;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -40,6 +46,12 @@ public class Robot extends TimedRobot {
 
     //initialize IO object and all used subsystems here to be created during the robot startup
     m_io = new IO();
+    try {
+      m_values = new Values(new File("/home/lvuser/deploy/values.properties"), new String[] {"deadband"});
+      m_robotMap = new Values(new File("/home/lvuser/deploy/robotMap.properties"), new String[] {"rightMaster", "rightSlave", "leftMaster", "leftSlave"});
+    } catch (IOException e) {
+      DriverStation.reportError(e.getMessage(), e.getStackTrace());
+    }
     m_driveSubsystem = new DriveSubsystem();
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();

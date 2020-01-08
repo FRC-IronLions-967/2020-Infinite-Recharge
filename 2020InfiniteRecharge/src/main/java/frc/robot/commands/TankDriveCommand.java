@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.utils.Utils;
 
-public class ArcadeDriveCommand extends CommandBase {
+public class TankDriveCommand extends CommandBase {
   /**
-   * Creates a new ArcadeDriveCommand.
+   * Creates a new TankDriveCommand.
    */
-  public ArcadeDriveCommand() {
+  public TankDriveCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.m_driveSubsystem);
   }
@@ -28,7 +28,7 @@ public class ArcadeDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.m_driveSubsystem.arcadeDrive(Utils.deadband(Robot.m_io.xbox0.getRawAxis(1), Robot.m_values.getValue("deadband")), Utils.deadband(Robot.m_io.xbox0.getRawAxis(4), Robot.m_values.getValue("deadband")));
+    Robot.m_driveSubsystem.tankDrive(Utils.deadband(Robot.m_io.xbox0.getRawAxis(1), Robot.m_values.getValue("deadband")), Utils.deadband(Robot.m_io.xbox0.getRawAxis(5), Robot.m_values.getValue("deadband")));
   }
 
   // Called once the command ends or is interrupted.
