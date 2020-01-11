@@ -12,9 +12,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.commands.ArcadeDriveCommand;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 
 public class DriveSubsystem extends SubsystemBase implements Subsystem {
   /**
@@ -30,7 +32,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   // private static final double TRIGGER_THRESHOLD = 0.2;
 
   public DriveSubsystem() {
-    // setDefaultCommand();
+    setDefaultCommand(new ArcadeDriveCommand());
 
     //create new motor controller objects for the drive
     rightMaster = new CANSparkMax((int) Robot.m_robotMap.getValue("rightMaster"), MotorType.kBrushless);

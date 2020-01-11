@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static IO m_io;
   public static DriveSubsystem m_driveSubsystem;
+  public static IntakeSubsystem m_intakeSubsystem;
   public static Values m_values;
   public static Values m_robotMap;
 
