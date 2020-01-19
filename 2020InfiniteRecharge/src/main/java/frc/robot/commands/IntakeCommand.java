@@ -28,7 +28,7 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.m_intakeSubsystem.intake(Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), Robot.m_values.getValue("deadband")));
+    Robot.m_intakeSubsystem.intake(Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))));
   }
 
   // Called once the command ends or is interrupted.

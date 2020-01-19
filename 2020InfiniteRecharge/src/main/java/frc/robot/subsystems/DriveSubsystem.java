@@ -32,13 +32,17 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   // private static final double TRIGGER_THRESHOLD = 0.2;
 
   public DriveSubsystem() {
-    setDefaultCommand(new ArcadeDriveCommand());
+    // setDefaultCommand(new ArcadeDriveCommand());
 
     //create new motor controller objects for the drive
-    rightMaster = new CANSparkMax((int) Robot.m_robotMap.getValue("rightMaster"), MotorType.kBrushless);
-    rightSlave = new CANSparkMax((int) Robot.m_robotMap.getValue("rightSlave"), MotorType.kBrushless);
-    leftMaster = new CANSparkMax((int) Robot.m_robotMap.getValue("leftMaster"), MotorType.kBrushless);
-    leftSlave = new CANSparkMax((int) Robot.m_robotMap.getValue("leftSlave"), MotorType.kBrushless);
+    rightMaster = new CANSparkMax(2, MotorType.kBrushless);
+    rightSlave = new CANSparkMax(1, MotorType.kBrushless);
+    leftMaster = new CANSparkMax(3, MotorType.kBrushless);
+    leftSlave = new CANSparkMax(4, MotorType.kBrushless);
+    // rightMaster = new CANSparkMax((int) Robot.m_robotMap.getValue("rightMaster"), MotorType.kBrushless);
+    // rightSlave = new CANSparkMax((int) Robot.m_robotMap.getValue("rightSlave"), MotorType.kBrushless);
+    // leftMaster = new CANSparkMax((int) Robot.m_robotMap.getValue("leftMaster"), MotorType.kBrushless);
+    // leftSlave = new CANSparkMax((int) Robot.m_robotMap.getValue("leftSlave"), MotorType.kBrushless);
 
     //set slaves to follow master motor controllers
     rightSlave.follow(rightMaster);

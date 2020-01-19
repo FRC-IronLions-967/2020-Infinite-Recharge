@@ -55,7 +55,7 @@ public class Values {
         return autoValues;
     }
 
-    public double getValue(String key) {
-        return Double.parseDouble(prop.getProperty(key));
+    public String getValue(String key) {
+        return prop.getProperty(key);
     }
 }

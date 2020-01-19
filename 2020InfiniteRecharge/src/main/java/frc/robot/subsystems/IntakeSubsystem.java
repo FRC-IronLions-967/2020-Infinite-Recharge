@@ -23,8 +23,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   private double MAX = 1.0;
 
   public IntakeSubsystem() {
-    intakeMotor = new CANSparkMax((int) Robot.m_robotMap.getValue("intakeMotor"), MotorType.kBrushless);
-
+    // intakeMotor = new CANSparkMax((int) Robot.m_robotMap.getValue("intakeMotor"), MotorType.kBrushless);
+    intakeMotor = new CANSparkMax(0, MotorType.kBrushless);
     intakeMotor.setInverted(true);
   }
 

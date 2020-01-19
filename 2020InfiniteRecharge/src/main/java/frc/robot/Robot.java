@@ -11,9 +11,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
-import edu.wpi.first.networktables.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,9 +30,9 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  public static IO m_io;
-  public static DriveSubsystem m_driveSubsystem;
-  public static IntakeSubsystem m_intakeSubsystem;
+  public static IO m_io = new IO();
+  public static DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  public static IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   public static Values m_values;
   public static Values m_robotMap;
 
@@ -45,20 +46,21 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
+    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveCommand());
+
     //initialize IO object and all used subsystems here to be created during the robot startup
-    m_io = new IO();
+    // m_io = new IO();
     try {
       m_values = new Values(new File("/home/lvuser/deploy/values.properties"), new String[] {"deadband"});
       m_robotMap = new Values(new File("/home/lvuser/deploy/robotMap.properties"), new String[] {"rightMaster", "rightSlave", "leftMaster", "leftSlave"});
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
-    m_driveSubsystem = new DriveSubsystem();
 
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    // NetworkTableInstance inst = NetworkTableInstance.getDefault();
     //for some reason, the getter will create the table if it already exists
     //i have no idea why it would be written this way, but it is so just go with it, this doesn't seem to be present in the documentation on the docs page
-    NetworkTable table = inst.getTable("test");
+    // NetworkTable table = inst.getTable("test");
 }
 
   /**
@@ -71,6 +73,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
   }
 
   /**
