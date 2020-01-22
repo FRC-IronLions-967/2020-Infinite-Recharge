@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
 import java.io.File;
@@ -31,8 +31,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static IO m_io = new IO();
-  public static DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  public static IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  public static DriveSubsystem m_driveSubsystem;
+  public static IntakeSubsystem m_intakeSubsystem;
   public static Values m_values;
   public static Values m_robotMap;
 
@@ -46,8 +46,6 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveCommand());
-
     //initialize IO object and all used subsystems here to be created during the robot startup
     // m_io = new IO();
     try {
@@ -56,6 +54,13 @@ public class Robot extends TimedRobot {
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
+
+    m_driveSubsystem = new DriveSubsystem();
+    m_intakeSubsystem = new IntakeSubsystem();
+
+    //set the default commands for the various subsystems
+    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveCommand());
+    CommandScheduler.getInstance().setDefaultCommand(m_intakeSubsystem, new IntakeCommand());
 
     // NetworkTableInstance inst = NetworkTableInstance.getDefault();
     //for some reason, the getter will create the table if it already exists
