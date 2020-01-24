@@ -53,8 +53,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     rightSlave.setInverted(true);
 
     //defensive code, Talons had issues with this and I'd rather not go through that again
-    leftMaster.setInverted(false);
-    leftSlave.setInverted(false);
+    // leftMaster.setInverted(false);
+    // leftSlave.setInverted(false);
   }
 
   //class convenience method to move the robot to save space in the different drive methods
