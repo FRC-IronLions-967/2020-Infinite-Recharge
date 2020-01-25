@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
 
 /**
  * Add your docs here.
@@ -33,5 +34,8 @@ public class IO {
         JoystickButton xbox1_y = new JoystickButton(xbox1, 4);
         
         //TODO assign commands to button presses here
+        xbox1_x.whenPressed(new IntakeCommand());
+        xbox1_a.whenPressed(new LowerBeltCommand());
+        xbox1_b.whenPressed(new UpperBeltCommand());
     }
 }

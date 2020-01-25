@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
 
     //set the default commands for the various subsystems
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
-    CommandScheduler.getInstance().setDefaultCommand(m_intakeSubsystem, new IntakeCommand());
+    // CommandScheduler.getInstance().setDefaultCommand(m_intakeSubsystem, new IntakeCommand());
 
     // NetworkTableInstance inst = NetworkTableInstance.getDefault();
     //for some reason, the getter will create the table if it already exists

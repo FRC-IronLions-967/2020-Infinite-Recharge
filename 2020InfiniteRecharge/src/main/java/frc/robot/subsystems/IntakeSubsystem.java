@@ -7,32 +7,49 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   /**
    * Creates a new IntakeSubsystem.
    */
-  private CANSparkMax intakeMotor;
+  private TalonSRX intake;
+  private TalonSRX lower;
+  private TalonSRX upper;
+
 
   private double MAX = 1.0;
 
   public IntakeSubsystem() {
-    intakeMotor = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("intakeMotor")), MotorType.kBrushless);
-    // intakeMotor = new CANSparkMax(0, MotorType.kBrushless);
-    intakeMotor.setInverted(true);
+    intake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
+    lower = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
+    upper = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
   }
 
   public void intake(double x) {
     x = (x > MAX) ? MAX : x;
     x = (x < MAX) ? -MAX : x;
 
-    intakeMotor.set(x);
+    intake.set(ControlMode.PercentOutput, x);
+  }
+
+  public void lower(double x) {
+    x = (x > MAX) ? MAX : x;
+    x = (x < MAX) ? -MAX : x;
+
+    lower.set(ControlMode.PercentOutput, x);
+  }
+
+  public void upper(double x) {
+    x = (x > MAX) ? MAX : x;
+    x = (x < MAX) ? -MAX : x;
+
+    upper.set(ControlMode.PercentOutput, x);
   }
 
   @Override

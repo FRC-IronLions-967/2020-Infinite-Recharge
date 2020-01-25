@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class IntakeCommand extends CommandBase {
+public class LowerBeltCommand extends CommandBase {
   /**
-   * Creates a new IntakeCommand.
+   * Creates a new LowerBeltCommand.
    */
-  public IntakeCommand() {
+  public LowerBeltCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.m_intakeSubsystem);
   }
@@ -27,8 +27,7 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Robot.m_intakeSubsystem.intake(Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))));
-    Robot.m_intakeSubsystem.intake(0.5);
+    Robot.m_intakeSubsystem.lower(0.5);
   }
 
   // Called once the command ends or is interrupted.
