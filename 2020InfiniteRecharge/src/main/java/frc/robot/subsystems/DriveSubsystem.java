@@ -12,7 +12,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.commands.ArcadeDriveCommand;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -28,6 +27,22 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   private CANSparkMax leftSlave;
 
   private double MAX = 1.0;
+
+  private double lookup[] = {0, 0, 0,  0.1, 0.10009, 0.10036, 0.10081, 
+		0.10144, 0.10225, 0.10324, 0.10441, 0.10576, 0.10729, 
+		0.109, 0.11089, 0.11296, 0.11521, 0.11764, 0.12025, 
+		0.12304, 0.12601, 0.12916, 0.13249, 0.136, 0.13969, 0.14356, 
+		0.14761, 0.15184, 0.15625, 0.16084, 0.16561, 0.17056, 0.17569, 0.181, 
+		0.18649, 0.19216, 0.19801, 0.20404, 0.21025, 0.21664, 0.22321, 
+		0.22996, 0.23689, 0.244, 0.25129, 0.25876, 
+		0.26641, 0.27424, 0.28225, 0.29044, 0.29881, 0.30736, 0.31609, 
+		0.325, 0.33409, 0.34336, 0.35281, 0.36244, 0.37225, 0.38224, 
+		0.39241, 0.40276, 0.41329, 0.424, 0.43489, 0.44596, 0.45721, 
+		0.46864, 0.48025, 0.49204, 0.50401, 0.51616, 
+		0.52849, 0.541, 0.55369, 0.56656, 0.57961, 0.59284, 0.60625, 0.61984, 
+		0.63361, 0.64756, 0.66169, 0.676, 0.69049, 0.70516, 0.72001, 0.73504, 0.75025, 0.76564, 
+		0.78121, 0.79696, 0.81289, 0.829, 0.84529, 0.86176, 0.87841, 0.89524, 0.91225, 
+		0.92944, 0.94681, 0.96436, 0.98209, 1.0};
 
   // private static final double TRIGGER_THRESHOLD = 0.2;
 
@@ -53,8 +68,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     rightSlave.setInverted(true);
 
     //defensive code, Talons had issues with this and I'd rather not go through that again
-    // leftMaster.setInverted(false);
-    // leftSlave.setInverted(false);
+    leftMaster.setInverted(false);
+    leftSlave.setInverted(false);
   }
 
   //class convenience method to move the robot to save space in the different drive methods
@@ -80,6 +95,15 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     //set the values of r and l based off of x and y axes - may need to switch addition and subtraction, untested
     r = x + y;
     l = x - y;
+
+    move(r, l);
+  }
+
+  public void arcadeDriveLookup(double x, double y) {
+    double r, l;
+
+    r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
+    l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
 
     move(r, l);
   }
