@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -35,6 +37,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem m_intakeSubsystem;
   public static Values m_values;
   public static Values m_robotMap;
+  public static NetworkTable visionTable;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -62,10 +65,11 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
     // CommandScheduler.getInstance().setDefaultCommand(m_intakeSubsystem, new IntakeCommand());
 
-    // NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
     //for some reason, the getter will create the table if it already exists
     //i have no idea why it would be written this way, but it is so just go with it, this doesn't seem to be present in the documentation on the docs page
     // NetworkTable table = inst.getTable("test");
+    visionTable = inst.getTable("vision");
 }
 
   /**
