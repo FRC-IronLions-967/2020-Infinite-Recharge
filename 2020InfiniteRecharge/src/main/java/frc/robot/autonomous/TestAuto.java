@@ -9,7 +9,7 @@ public class TestAuto implements Autonomous {
         //TODO need to get PIDs set up in drivesubsystem or separate class file
         //TODO need to get encoders and the constants for the gear train set up
         /*
-        psuedocode
+        pseudocode
         navigate from starting pos to within vision range
         getDist from NetworkTables
         getAngle from NetworkTables
