@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   public static IO m_io = new IO();
   public static DriveSubsystem m_driveSubsystem;
   public static IntakeSubsystem m_intakeSubsystem;
+  public static ShooterSubsystem m_shooterSubsystem;
   public static Values m_values;
   public static Values m_robotMap;
   public static NetworkTable visionTable;
@@ -60,9 +61,11 @@ public class Robot extends TimedRobot {
 
     m_driveSubsystem = new DriveSubsystem();
     m_intakeSubsystem = new IntakeSubsystem();
+    m_shooterSubsystem = new ShooterSubsystem();
 
     //set the default commands for the various subsystems
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
+    CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
     // CommandScheduler.getInstance().setDefaultCommand(m_intakeSubsystem, new IntakeCommand());
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();

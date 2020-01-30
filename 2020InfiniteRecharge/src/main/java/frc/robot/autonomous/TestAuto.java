@@ -22,9 +22,9 @@ public class TestAuto implements Autonomous {
         keep firing until empty
         */
         //TODO nav code
-        NetworkTableEntry tableArea = Robot.visionTable.getEntry("area");
+        NetworkTableEntry tableHeight = Robot.visionTable.getEntry("height");
         NetworkTableEntry tableWidth = Robot.visionTable.getEntry("width");
-        double area = tableArea.getDouble(-1);
+        double height = tableHeight.getDouble(-1);
         double width = tableWidth.getDouble(-1);
     }
 
