@@ -59,6 +59,13 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     leftMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("leftMaster")), MotorType.kBrushless);
     leftSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("leftSlave")), MotorType.kBrushless);
 
+    //set the ramp rate of all of the motor controllers
+    double rate = Double.parseDouble(Robot.m_values.getValue("rampRate"));
+    rightMaster.setClosedLoopRampRate(rate);
+    rightSlave.setClosedLoopRampRate(rate);
+    leftMaster.setClosedLoopRampRate(rate);
+    leftSlave.setClosedLoopRampRate(rate);
+
     //set slaves to follow master motor controllers
     rightSlave.follow(rightMaster);
     leftSlave.follow(leftMaster);
