@@ -25,8 +25,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     flywheel1.follow(flywheel0);
 
-    flywheel0.setInverted(false);
-    flywheel1.setInverted(false);
+    flywheel0.setInverted(true);
+    flywheel1.setInverted(true);
   }
 
   public void shoot(double power) {

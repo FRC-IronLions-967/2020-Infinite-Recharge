@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  public static IO m_io = new IO();
+  public static IO m_io;
   public static DriveSubsystem m_driveSubsystem;
   public static IntakeSubsystem m_intakeSubsystem;
   public static ShooterSubsystem m_shooterSubsystem;
@@ -62,6 +62,7 @@ public class Robot extends TimedRobot {
     m_driveSubsystem = new DriveSubsystem();
     m_intakeSubsystem = new IntakeSubsystem();
     m_shooterSubsystem = new ShooterSubsystem();
+    m_io = new IO();
 
     //set the default commands for the various subsystems
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());

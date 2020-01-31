@@ -61,10 +61,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
 
     //set the ramp rate of all of the motor controllers
     double rate = Double.parseDouble(Robot.m_values.getValue("rampRate"));
-    rightMaster.setClosedLoopRampRate(rate);
-    rightSlave.setClosedLoopRampRate(rate);
-    leftMaster.setClosedLoopRampRate(rate);
-    leftSlave.setClosedLoopRampRate(rate);
+    rightMaster.setOpenLoopRampRate(rate);
+    rightSlave.setOpenLoopRampRate(rate);
+    leftMaster.setOpenLoopRampRate(rate);
+    leftSlave.setOpenLoopRampRate(rate);
 
     //set slaves to follow master motor controllers
     rightSlave.follow(rightMaster);
