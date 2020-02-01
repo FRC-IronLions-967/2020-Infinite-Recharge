@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,17 +18,17 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   /**
    * Creates a new IntakeSubsystem.
    */
-  private TalonSRX intake;
-  private TalonSRX lower;
-  private TalonSRX upper;
+  private VictorSPX intake;
+  private VictorSPX lower;
+  private VictorSPX upper;
 
 
   private double MAX = 1.0;
 
   public IntakeSubsystem() {
-    intake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
-    lower = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
-    upper = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
+    intake = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
+    lower = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
+    upper = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
   }
 
   public void intake(double x) {
