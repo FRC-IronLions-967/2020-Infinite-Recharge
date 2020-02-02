@@ -71,12 +71,12 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     leftSlave.follow(leftMaster);
 
     //one side will need to be inverted, unknown which one as of now
-    rightMaster.setInverted(true);
-    rightSlave.setInverted(true);
+    rightMaster.setInverted(false);
+    rightSlave.setInverted(false);
 
     //defensive code, Talons had issues with this and I'd rather not go through that again
-    leftMaster.setInverted(false);
-    leftSlave.setInverted(false);
+    leftMaster.setInverted(true);
+    leftSlave.setInverted(true);
   }
 
   //class convenience method to move the robot to save space in the different drive methods
@@ -100,8 +100,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     double r, l;
 
     //set the values of r and l based off of x and y axes - may need to switch addition and subtraction, untested
-    r = x + y;
-    l = x - y;
+    r = x - y;
+    l = x + y;
 
     move(r, l);
   }
@@ -109,8 +109,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public void arcadeDriveLookup(double x, double y) {
     double r, l;
 
-    r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
-    l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
+    r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
+    l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
 
     move(r, l);
   }

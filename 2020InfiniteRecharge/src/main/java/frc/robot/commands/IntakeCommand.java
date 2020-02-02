@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class IntakeCommand extends CommandBase {
+  private double power;
   /**
    * Creates a new IntakeCommand.
    */
-  public IntakeCommand() {
+  public IntakeCommand(double power) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.m_intakeSubsystem);
+    this.power = power;
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +30,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     // Robot.m_intakeSubsystem.intake(Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))));
-    Robot.m_intakeSubsystem.intake(0.5);
+    Robot.m_intakeSubsystem.intake(power);
   }
 
   // Called once the command ends or is interrupted.
