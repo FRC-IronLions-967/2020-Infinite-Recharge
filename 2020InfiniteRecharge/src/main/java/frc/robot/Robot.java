@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem m_driveSubsystem;
   public static IntakeSubsystem m_intakeSubsystem;
   public static ShooterSubsystem m_shooterSubsystem;
+  public static TestPIDSubsystem m_testPIDSubsystem;
   public static Values m_values;
   public static Values m_robotMap;
   public static NetworkTable visionTable;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
     m_driveSubsystem = new DriveSubsystem();
     m_intakeSubsystem = new IntakeSubsystem();
     m_shooterSubsystem = new ShooterSubsystem();
+    m_testPIDSubsystem = new TestPIDSubsystem();
     m_io = new IO();
 
     //set the default commands for the various subsystems
@@ -87,6 +89,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("Shooter RPM", m_shooterSubsystem.getRPM());
   }
 
   /**

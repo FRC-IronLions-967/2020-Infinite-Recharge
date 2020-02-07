@@ -10,26 +10,27 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class LowerBeltCommand extends CommandBase {
-  private double power;
+public class PIDAngleCommand extends CommandBase {
+  private double angle;
   /**
-   * Creates a new LowerBeltCommand.
+   * Creates a new PIDAngleCommand.
    */
-  public LowerBeltCommand(double power) {
+  public PIDAngleCommand(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_intakeSubsystem);
-    this.power = power;
+    addRequirements(Robot.m_driveSubsystem, Robot.m_testPIDSubsystem);
+    this.angle = angle;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Robot.m_testPIDSubsystem.setSetpoint(angle);
+    Robot.m_testPIDSubsystem.enable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.m_intakeSubsystem.lower(power);
   }
 
   // Called once the command ends or is interrupted.

@@ -16,9 +16,11 @@ public class TestPIDSubsystem extends PIDSubsystem {
    * Creates a new TestPIDSubsystem.
    */
   public TestPIDSubsystem() {
+    
     super(
         // The PIDController used by the subsystem
         new PIDController(Double.parseDouble(Robot.m_values.getValue("P")), Double.parseDouble(Robot.m_values.getValue("I")), Double.parseDouble(Robot.m_values.getValue("D"))));
+        this.m_controller.enableContinuousInput(-180, 180);
   }
 
   @Override

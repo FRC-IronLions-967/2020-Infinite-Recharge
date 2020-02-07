@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class UpperBeltCommand extends CommandBase {
+  private double power;
   /**
    * Creates a new UpperBeltCommand.
    */
-  public UpperBeltCommand() {
+  public UpperBeltCommand(double power) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.m_intakeSubsystem);
+    this.power = power;
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +29,7 @@ public class UpperBeltCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.m_intakeSubsystem.upper(0.5);
+    Robot.m_intakeSubsystem.upper(power);
   }
 
   // Called once the command ends or is interrupted.
