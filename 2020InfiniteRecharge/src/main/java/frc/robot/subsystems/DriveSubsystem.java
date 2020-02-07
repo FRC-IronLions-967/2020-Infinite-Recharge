@@ -27,8 +27,6 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   private CANSparkMax leftMaster;
   private CANSparkMax leftSlave;
 
-  private double MAX = 1.0;
-
   private double lookup[] = {0, 0, 0,  0.1, 0.10009, 0.10036, 0.10081, 
 		0.10144, 0.10225, 0.10324, 0.10441, 0.10576, 0.10729, 
 		0.109, 0.11089, 0.11296, 0.11521, 0.11764, 0.12025, 
@@ -81,7 +79,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     leftMaster.setInverted(true);
     leftSlave.setInverted(true);
 
-    turningFunction = new TurningFunction(0.1, 0.02, 0.3, 0.5);
+    turningFunction = new TurningFunction(Double.parseDouble(Robot.m_values.getValue("deadband")), Double.parseDouble(Robot.m_values.getValue("minPower")), Double.parseDouble(Robot.m_values.getValue("aimPower")), Double.parseDouble(Robot.m_values.getValue("highCutoff")));
   }
 
   //class convenience method to move the robot to save space in the different drive methods
@@ -90,10 +88,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     // MAX = (Robot.m_io.xbox0.getRawAxis(6) >= TRIGGER_THRESHOLD) ? 0.6 : 1.0;
 
     //defensive code to prevent the values being passed to move from exceeding the accepted ranges on the motor controllers
-    r = (r > MAX) ? MAX :  r;
-    r = (r < -MAX) ? -MAX : r;
-    l = (l > MAX) ? MAX : l;
-    l = (l < -MAX) ? -MAX : l;
+    r = (r > Double.parseDouble(Robot.m_values.getValue("MAX"))) ? Double.parseDouble(Robot.m_values.getValue("MAX")) :  r;
+    r = (r < -(Double.parseDouble(Robot.m_values.getValue("MAX")))) ? -(Double.parseDouble(Robot.m_values.getValue("MAX"))) : r;
+    l = (l > Double.parseDouble(Robot.m_values.getValue("MAX"))) ? Double.parseDouble(Robot.m_values.getValue("MAX")) : l;
+    l = (l < -(Double.parseDouble(Robot.m_values.getValue("MAX")))) ? -(Double.parseDouble(Robot.m_values.getValue("MAX"))) : l;
 
     //set motor powers, slaves do not need to be called as they were set to follow the master in the class constructor
     rightMaster.set(r);
