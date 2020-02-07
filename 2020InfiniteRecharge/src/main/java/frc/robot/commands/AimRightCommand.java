@@ -9,15 +9,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.utils.Utils;
 
-public class ShooterCommand extends CommandBase {
+public class AimRightCommand extends CommandBase {
+  private double power;
   /**
-   * Creates a new ShooterCommand.
+   * Creates a new AimRightCommand.
    */
-  public ShooterCommand() {
+  public AimRightCommand(double power) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_shooterSubsystem);
+    this.power = power;
+    addRequirements(Robot.m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -28,10 +29,7 @@ public class ShooterCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Robot.m_shooterSubsystem.shootRPM(Utils.deadband(Robot.m_io.xbox1.getRawAxis(3), Double.parseDouble(Robot.m_values.getValue("deadband"))));
-    if(Robot.m_io.xbox1.getRawAxis(3) > 0.3) {
-      Robot.m_shooterSubsystem.shootRPM(1.0);
-    }
+    Robot.m_driveSubsystem.move(0, power);
   }
 
   // Called once the command ends or is interrupted.

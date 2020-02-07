@@ -83,7 +83,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   }
 
   //class convenience method to move the robot to save space in the different drive methods
-  private void move(double r, double l) {
+  public void move(double r, double l) {
     //set max to either full or reduced based on driver trigger for increased control
     // MAX = (Robot.m_io.xbox0.getRawAxis(6) >= TRIGGER_THRESHOLD) ? 0.6 : 1.0;
 
