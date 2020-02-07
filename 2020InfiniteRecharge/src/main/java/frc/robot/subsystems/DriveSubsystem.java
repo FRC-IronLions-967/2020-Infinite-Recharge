@@ -12,6 +12,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.utils.values.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -42,7 +43,9 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
 		0.52849, 0.541, 0.55369, 0.56656, 0.57961, 0.59284, 0.60625, 0.61984, 
 		0.63361, 0.64756, 0.66169, 0.676, 0.69049, 0.70516, 0.72001, 0.73504, 0.75025, 0.76564, 
 		0.78121, 0.79696, 0.81289, 0.829, 0.84529, 0.86176, 0.87841, 0.89524, 0.91225, 
-		0.92944, 0.94681, 0.96436, 0.98209, 1.0};
+    0.92944, 0.94681, 0.96436, 0.98209, 1.0};
+    
+  private TurningFunction turningFunction;
 
   // private static final double TRIGGER_THRESHOLD = 0.2;
 
@@ -77,6 +80,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     //defensive code, Talons had issues with this and I'd rather not go through that again
     leftMaster.setInverted(true);
     leftSlave.setInverted(true);
+
+    turningFunction = new TurningFunction(0.1, 0.02, 0.3, 0.5);
   }
 
   //class convenience method to move the robot to save space in the different drive methods
@@ -109,8 +114,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public void arcadeDriveLookup(double x, double y) {
     double r, l;
 
-    r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
-    l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
+    // r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
+    r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
+    // l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
+    l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
 
     move(r, l);
   }
