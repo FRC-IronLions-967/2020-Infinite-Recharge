@@ -59,6 +59,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shoot(double power) {
+    // This method shoots the ball
     flywheel0.set(power);
   }
 
