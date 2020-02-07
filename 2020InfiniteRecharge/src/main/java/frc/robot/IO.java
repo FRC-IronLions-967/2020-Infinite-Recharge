@@ -30,13 +30,13 @@ public class IO {
         JoystickButton xbox0_x = new JoystickButton(xbox0, 3);
         JoystickButton xbox0_y = new JoystickButton(xbox0, 4);
         POVButton xbox0_povN = new POVButton(xbox0, 0, 0);
-        POVButton xbox0_povNE = new POVButton(xbox0, 0, 45);
-        POVButton xbox0_povE = new POVButton(xbox0, 0, 90);
-        POVButton xbox0_povSE = new POVButton(xbox0, 0, 135);
-        POVButton xbox0_povS = new POVButton(xbox0, 0, 180);
-        POVButton xbox0_povSW = new POVButton(xbox0, 0, 225);
-        POVButton xbox0_povW = new POVButton(xbox0, 0, 270);
-        POVButton xbox0_povNW = new POVButton(xbox0, 0, 315);
+        POVButton xbox0_povNE = new POVButton(xbox0, 45, 0);
+        POVButton xbox0_povE = new POVButton(xbox0, 90, 0);
+        POVButton xbox0_povSE = new POVButton(xbox0, 135, 0);
+        POVButton xbox0_povS = new POVButton(xbox0, 180, 0);
+        POVButton xbox0_povSW = new POVButton(xbox0, 225, 0);
+        POVButton xbox0_povW = new POVButton(xbox0, 270, 0);
+        POVButton xbox0_povNW = new POVButton(xbox0, 315, 0);
 
         JoystickButton xbox1_a = new JoystickButton(xbox1, 1);
         JoystickButton xbox1_b = new JoystickButton(xbox1, 2);
@@ -44,10 +44,14 @@ public class IO {
         JoystickButton xbox1_y = new JoystickButton(xbox1, 4);
         
         //TODO assign commands to button presses here
-        xbox0_povN.whenPressed(new PIDAngleCommand(0.0));
-        xbox0_povN.whenPressed(new PIDAngleCommand(90.0));
-        xbox0_povN.whenPressed(new PIDAngleCommand(180.0));
-        xbox0_povN.whenPressed(new PIDAngleCommand(-90.0));
+        // xbox0_povN.whenPressed(new PIDAngleCommand(0.0));
+        // xbox0_povE.whenPressed(new PIDAngleCommand(90.0));
+        // xbox0_povS.whenPressed(new PIDAngleCommand(180.0));
+        // xbox0_povW.whenPressed(new PIDAngleCommand(-90.0));
+        xbox0_povE.whenPressed(new AimRightCommand(0.02));
+        xbox0_povW.whenPressed(new AimLeftCommand(0.02));
+        xbox0_povE.whenReleased(new AimRightCommand(0));
+        xbox0_povW.whenReleased(new AimLeftCommand(0));
         // xbox1_x.whileHeld(new IntakeCommand(0.5));
         xbox1_x.whenPressed(new IntakeCommand(0.8));
         xbox1_x.whenReleased(new IntakeCommand(0.0));
