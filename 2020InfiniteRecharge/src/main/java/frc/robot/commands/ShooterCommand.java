@@ -31,6 +31,8 @@ public class ShooterCommand extends CommandBase {
     // Robot.m_shooterSubsystem.shootRPM(Utils.deadband(Robot.m_io.xbox1.getRawAxis(3), Double.parseDouble(Robot.m_values.getValue("deadband"))));
     if(Robot.m_io.xbox1.getRawAxis(3) > 0.3) {
       Robot.m_shooterSubsystem.shootRPM(1.0);
+    } else {
+      Robot.m_shooterSubsystem.shootRPM(0.0);
     }
   }
 
