@@ -27,6 +27,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   private CANSparkMax leftMaster;
   private CANSparkMax leftSlave;
 
+  //Drive lookup table(might be automatically generated in the future).
   private double lookup[] = {0, 0, 0,  0.1, 0.10009, 0.10036, 0.10081, 
 		0.10144, 0.10225, 0.10324, 0.10441, 0.10576, 0.10729, 
 		0.109, 0.11089, 0.11296, 0.11521, 0.11764, 0.12025, 
@@ -49,12 +50,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
 
   public DriveSubsystem() {
-    // setDefaultCommand(new ArcadeDriveCommand());
-    //create new motor controller objects for the drive
-    // rightMaster = new CANSparkMax(2, MotorType.kBrushless);
-    // rightSlave = new CANSparkMax(1, MotorType.kBrushless);
-    // leftMaster = new CANSparkMax(3, MotorType.kBrushless);
-    // leftSlave = new CANSparkMax(4, MotorType.kBrushless);
+    //Assigns the robot IDs from the robotMap.properties file
     rightMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightMaster")), MotorType.kBrushless);
     rightSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightSlave")), MotorType.kBrushless);
     leftMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("leftMaster")), MotorType.kBrushless);
@@ -84,8 +80,6 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
 
   //class convenience method to move the robot to save space in the different drive methods
   public void move(double r, double l) {
-    //set max to either full or reduced based on driver trigger for increased control
-    // MAX = (Robot.m_io.xbox0.getRawAxis(6) >= TRIGGER_THRESHOLD) ? 0.6 : 1.0;
 
     //defensive code to prevent the values being passed to move from exceeding the accepted ranges on the motor controllers
     r = (r > MAX) ? MAX :  r;
@@ -102,7 +96,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public void arcadeDrive(double x, double y) {
     double r, l;
 
-    //set the values of r and l based off of x and y axes - may need to switch addition and subtraction, untested
+    //set the values of r and l based off of x and y axes - may need to switch addition and subtraction
     r = x - y;
     l = x + y;
 
@@ -112,9 +106,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public void arcadeDriveLookup(double x, double y) {
     double r, l;
 
-    // r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
+    //"I have no clue how this works ask Nathan" -Owen
     r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
-    // l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? lookup[(int) Math.floor(Math.abs(y) * 100)] : -lookup[(int) Math.floor(Math.abs(y) * 100)]);
     l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
 
     move(r, l);

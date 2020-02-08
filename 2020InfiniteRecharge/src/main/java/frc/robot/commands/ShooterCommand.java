@@ -28,12 +28,12 @@ public class ShooterCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Robot.m_shooterSubsystem.shootRPM(Utils.deadband(Robot.m_io.xbox1.getRawAxis(3), Double.parseDouble(Robot.m_values.getValue("deadband"))));
-    if(Robot.m_io.xbox1.getRawAxis(3) > 0.3) {
-      Robot.m_shooterSubsystem.shootRPM(1.0);
-    } else {
-      Robot.m_shooterSubsystem.shootRPM(0.0);
-    }
+    // if(Robot.m_io.xbox1.getRawAxis(3) > 0.3) {
+    //   Robot.m_shooterSubsystem.shootRPM(1.0);
+    // } else {
+    //   Robot.m_shooterSubsystem.shootRPM(0.0);
+    // }
+    Robot.m_shooterSubsystem.shootRPM((Robot.m_io.xbox1.getRawAxis(3) > 0.3) ? 1.0 : 0.0);
   }
 
   // Called once the command ends or is interrupted.

@@ -24,14 +24,19 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new ReplaceMeSubsystem.
    */
   public ShooterSubsystem() {
+    
+    //Assigns the robot IDs fro mthe robotMap.properties file
     flywheel0 = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("flywheel1")), MotorType.kBrushless);
     flywheel1 = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("flywheel0")), MotorType.kBrushless);
-
+    
+    //Sets flywheel1 to follow flywheel0
     flywheel1.follow(flywheel0);
 
+    //Sets the flywheels to run inverted
     flywheel0.setInverted(true);
     flywheel1.setInverted(true);
 
+    //PID stuff
     controller0 = flywheel0.getPIDController();
     controller1 = flywheel1.getPIDController();
 

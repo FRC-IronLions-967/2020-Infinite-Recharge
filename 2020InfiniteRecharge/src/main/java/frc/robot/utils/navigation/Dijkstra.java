@@ -1,6 +1,7 @@
 package frc.robot.utils.navigation;
 
 public class Dijkstra {
+    //A test file to experiment with Dijkstra and see if it would be a good way of doing autonomous
     private static final int INFINITE = Integer.MAX_VALUE;
     private int numNodes;
     private int graph[][];
