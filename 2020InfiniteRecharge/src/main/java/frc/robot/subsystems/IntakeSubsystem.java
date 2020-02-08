@@ -22,6 +22,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   private VictorSPX lower;
   private VictorSPX upper;
 
+  double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
+
 
   public IntakeSubsystem() {
     //initialize the Victor objects
@@ -36,24 +38,24 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
 
   public void intake(double x) {
     //defensive code to make sure values do not exceed -1.0 to 1.0
-    x = (x > Double.parseDouble(Robot.m_values.getValue("MAX"))) ? Double.parseDouble(Robot.m_values.getValue("MAX")) : x;
-    x = (x < -Double.parseDouble(Robot.m_values.getValue("MAX"))) ? -Double.parseDouble(Robot.m_values.getValue("MAX")) : x;
+    x = (x > MAX) ? MAX : x;
+    x = (x < -MAX) ? -MAX : x;
 
     intake.set(ControlMode.PercentOutput, x);
   }
 
   public void lower(double x) {
     //defensive code to make sure values do not exceed -1.0 to 1.0
-    x = (x > Double.parseDouble(Robot.m_values.getValue("MAX"))) ? Double.parseDouble(Robot.m_values.getValue("MAX")) : x;
-    x = (x < -Double.parseDouble(Robot.m_values.getValue("MAX"))) ? -Double.parseDouble(Robot.m_values.getValue("MAX")) : x;
+    x = (x > MAX) ? MAX : x;
+    x = (x < -MAX) ? -MAX : x;
 
     lower.set(ControlMode.PercentOutput, x);
   }
 
   public void upper(double x) {
     //defensive code to make sure values do not exceed -1.0 to 1.0
-    x = (x > Double.parseDouble(Robot.m_values.getValue("MAX"))) ? Double.parseDouble(Robot.m_values.getValue("MAX")) : x;
-    x = (x < -Double.parseDouble(Robot.m_values.getValue("MAX"))) ? -Double.parseDouble(Robot.m_values.getValue("MAX")) : x;
+    x = (x > MAX) ? MAX : x;
+    x = (x < -MAX) ? -MAX : x;
 
     upper.set(ControlMode.PercentOutput, x);
   }

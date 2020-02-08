@@ -46,10 +46,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   private TurningFunction turningFunction;
 
   // private static final double TRIGGER_THRESHOLD = 0.2;
+  double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
 
   public DriveSubsystem() {
     // setDefaultCommand(new ArcadeDriveCommand());
-
     //create new motor controller objects for the drive
     // rightMaster = new CANSparkMax(2, MotorType.kBrushless);
     // rightSlave = new CANSparkMax(1, MotorType.kBrushless);
@@ -88,10 +88,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     // MAX = (Robot.m_io.xbox0.getRawAxis(6) >= TRIGGER_THRESHOLD) ? 0.6 : 1.0;
 
     //defensive code to prevent the values being passed to move from exceeding the accepted ranges on the motor controllers
-    r = (r > Double.parseDouble(Robot.m_values.getValue("MAX"))) ? Double.parseDouble(Robot.m_values.getValue("MAX")) :  r;
-    r = (r < -(Double.parseDouble(Robot.m_values.getValue("MAX")))) ? -(Double.parseDouble(Robot.m_values.getValue("MAX"))) : r;
-    l = (l > Double.parseDouble(Robot.m_values.getValue("MAX"))) ? Double.parseDouble(Robot.m_values.getValue("MAX")) : l;
-    l = (l < -(Double.parseDouble(Robot.m_values.getValue("MAX")))) ? -(Double.parseDouble(Robot.m_values.getValue("MAX"))) : l;
+    r = (r > MAX) ? MAX :  r;
+    r = (r < -(MAX)) ? -(MAX) : r;
+    l = (l > MAX) ? MAX : l;
+    l = (l < -(MAX)) ? -(MAX) : l;
 
     //set motor powers, slaves do not need to be called as they were set to follow the master in the class constructor
     rightMaster.set(r);
