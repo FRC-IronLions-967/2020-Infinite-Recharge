@@ -1,11 +1,12 @@
 package frc.robot.autonomous;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.*;
 import frc.robot.Robot;
 
 public class TestAuto implements Autonomous {
     @Override
     public void runAuto() {
+        double MOE = 0.05;
         //TODO need to get PIDs set up in drivesubsystem or separate class file
         //TODO need to get encoders and the constants for the gear train set up
         /*
@@ -22,10 +23,18 @@ public class TestAuto implements Autonomous {
         keep firing until empty
         */
         //TODO nav code
-        NetworkTableEntry tableHeight = Robot.visionTable.getEntry("height");
-        NetworkTableEntry tableWidth = Robot.visionTable.getEntry("width");
-        double height = tableHeight.getDouble(-1);
-        double width = tableWidth.getDouble(-1);
+        float tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+        while((Math.abs(tx) > MOE)) {
+            tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+            double heading_error = -tx;
+            double steering_adjust = 0.0f;
+            if (tx > 1.0) {
+                steering_adjust = -0.1*heading_error - 0.05;
+            } else if (tx < 1.0) {
+                steering_adjust = -0.1*heading_error + 0.05;
+            }
+            Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+        }
     }
 
     @Override
