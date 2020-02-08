@@ -117,36 +117,48 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    // Autonomous autonomous;
-    switch (m_autoSelected) {
-      case kTestAuto:
-      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-            double heading_error = -tx;
-            double steering_adjust = 0.0f;
-            if (tx > 1.0) {
-                steering_adjust = -0.1*heading_error - 0.05;
-            } else if (tx < 1.0) {
-                steering_adjust = -0.1*heading_error + 0.05;
-            }
-            Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-        // autonomous = new TestAuto();
-        break;
-      // case kDefaultAuto:
-      default:
-      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-            double heading_error = -tx;
-            double steering_adjust = 0.0f;
-            if (tx > 1.0) {
-                steering_adjust = -0.1*heading_error - 0.05;
-            } else if (tx < 1.0) {
-                steering_adjust = -0.1*heading_error + 0.05;
-            }
-            Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-      // autonomous = new TestAuto();
+    Autonomous autonomous;
+    // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+    //         double heading_error = -tx;
+    //         double steering_adjust = 0.0f;
+    try{
+      System.out.println(m_autoSelected);
+      System.out.println("0");
+    // switch (m_autoSelected) {
+    //   case kTestAuto:
+    //   // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+    //   //       double heading_error = -tx;
+    //   //       double steering_adjust = 0.0f;
+    //         // if (tx > 1.0) {
+    //         //     steering_adjust = -0.1*heading_error - 0.05;
+    //         // } else if (tx < 1.0) {
+    //         //     steering_adjust = -0.1*heading_error + 0.05;
+    //         // }
+    //         // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+    //     autonomous = new TestAuto();
+    //     break;
+    //   // case kDefaultAuto:
+    //   default:
+    //   //  tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+    //   //        heading_error = -tx;
+    //   //        steering_adjust = 0.0f;
+    //   //       if (tx > 1.0) {
+    //   //           steering_adjust = -0.1*heading_error - 0.05;
+    //   //       } else if (tx < 1.0) {
+    //   //           steering_adjust = -0.1*heading_error + 0.05;
+    //   //       }
+      //       Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+      System.out.println("1");
+      autonomous = new TestAuto();
         // Put default auto code here
-        break;
-    }
-    // autonomous.runAuto();
+        // break;
+    // }
+    System.out.println("2");
+    autonomous.runAuto();
+    System.out.println("3");
+  } catch(Exception e){
+    System.out.println("caught");
+  }
   }
 
   /**
