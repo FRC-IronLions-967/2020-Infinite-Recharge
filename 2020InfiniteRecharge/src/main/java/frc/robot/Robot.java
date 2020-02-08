@@ -117,18 +117,36 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    Autonomous autonomous;
+    // Autonomous autonomous;
     switch (m_autoSelected) {
       case kTestAuto:
-        autonomous = new TestAuto();
+      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+            double heading_error = -tx;
+            double steering_adjust = 0.0f;
+            if (tx > 1.0) {
+                steering_adjust = -0.1*heading_error - 0.05;
+            } else if (tx < 1.0) {
+                steering_adjust = -0.1*heading_error + 0.05;
+            }
+            Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+        // autonomous = new TestAuto();
         break;
       // case kDefaultAuto:
       default:
-      autonomous = new TestAuto();
+      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+            double heading_error = -tx;
+            double steering_adjust = 0.0f;
+            if (tx > 1.0) {
+                steering_adjust = -0.1*heading_error - 0.05;
+            } else if (tx < 1.0) {
+                steering_adjust = -0.1*heading_error + 0.05;
+            }
+            Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+      // autonomous = new TestAuto();
         // Put default auto code here
         break;
     }
-    autonomous.runAuto();
+    // autonomous.runAuto();
   }
 
   /**
