@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.utils.values.*;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -23,10 +25,15 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   /**
    * Creates a new DriveSubsystem.
    */
-  private CANSparkMax rightMaster;
-  private CANSparkMax rightSlave;
-  private CANSparkMax leftMaster;
-  private CANSparkMax leftSlave;
+  //private CANSparkMax rightMaster;
+  //private CANSparkMax rightSlave;
+  //private CANSparkMax leftMaster;
+  //private CANSparkMax leftSlave;
+
+  private TalonFX rightMaster;
+  private TalonFX rightSlave;
+  private TalonFX leftMaster;
+  private TalonFX leftSlave;
 
   //Drive lookup table(might be automatically generated in the future).
   private double lookup[] = {0, 0, 0,  0.1, 0.10009, 0.10036, 0.10081, 
@@ -52,17 +59,28 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
 
   public DriveSubsystem() {
     //Assigns the robot IDs from the robotMap.properties file
-    rightMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightMaster")), MotorType.kBrushless);
-    rightSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightSlave")), MotorType.kBrushless);
-    leftMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("leftMaster")), MotorType.kBrushless);
-    leftSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("leftSlave")), MotorType.kBrushless);
+    //rightMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightMaster")), MotorType.kBrushless);
+    //rightSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightSlave")), MotorType.kBrushless);
+    //leftMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("leftMaster")), MotorType.kBrushless);
+    //leftSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("leftSlave")), MotorType.kBrushless);
+
+    rightMaster = new TalonFX(Integer.parseInt(Robot.m_robotMap.getValue("rightMaster")));
+    rightSlave = new TalonFX(Integer.parseInt(Robot.m_robotMap.getValue("rightSlave")));
+    leftMaster = new TalonFX(Integer.parseInt(Robot.m_robotMap.getValue("leftMaster")));
+    leftSlave = new TalonFX(Integer.parseInt(Robot.m_robotMap.getValue("leftSlave")));
+
 
     //set the ramp rate of all of the motor controllers
     double rate = Double.parseDouble(Robot.m_values.getValue("rampRate"));
-    rightMaster.setOpenLoopRampRate(rate);
-    rightSlave.setOpenLoopRampRate(rate);
-    leftMaster.setOpenLoopRampRate(rate);
-    leftSlave.setOpenLoopRampRate(rate);
+    //rightMaster.setOpenLoopRampRate(rate);
+    //rightSlave.setOpenLoopRampRate(rate);
+    //leftMaster.setOpenLoopRampRate(rate);
+    //leftSlave.setOpenLoopRampRate(rate);
+
+    rightMaster.configOpenloopRamp(rate);
+    rightSlave.configOpenloopRamp(rate);
+    leftMaster.configOpenloopRamp(rate);
+    leftSlave.configOpenloopRamp(rate);
 
     //set slaves to follow master motor controllers
     rightSlave.follow(rightMaster);
@@ -89,8 +107,12 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     l = (l < -(MAX)) ? -(MAX) : l;
 
     //set motor powers, slaves do not need to be called as they were set to follow the master in the class constructor
-    rightMaster.set(r);
-    leftMaster.set(l);
+    //rightMaster.set(r);
+    //leftMaster.set(l);
+
+    rightMaster.set(ControlMode.PercentOutput, r);
+    leftMaster.set(ControlMode.PercentOutput, l);
+
   }
 
   //method to be called from the arcade drive command
