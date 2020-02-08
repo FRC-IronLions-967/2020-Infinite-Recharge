@@ -2,7 +2,7 @@ package frc.robot.utils.values;
 
 public class TurningFunction {
     private double deadband, minPower, aimPower, highCutoff;
-    private double table[] = new double[100];
+    private double table[] = new double[101];
     public TurningFunction(double deadband, double minPower, double aimPower, double highCutoff) {
         this.deadband = deadband;
         this.minPower = minPower;
@@ -20,7 +20,7 @@ public class TurningFunction {
             tableIndex++;
         }
         double driveSlope = (1.0 - aimPower)/(1.0 - highCutoff);
-        while(tableIndex < 100) {
+        while(tableIndex < 101) {
             table[tableIndex] = (driveSlope * (((double) tableIndex / 100) - highCutoff)) + aimPower;
             tableIndex++;
         }

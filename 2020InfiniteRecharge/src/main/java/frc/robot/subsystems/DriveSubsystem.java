@@ -9,6 +9,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
@@ -109,7 +110,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     //"I have no clue how this works ask Nathan" -Owen
     r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
-
+    SmartDashboard.putNumber("rightPower", r);
+    SmartDashboard.putNumber("leftPower", l);
     move(r, l);
   }
 
