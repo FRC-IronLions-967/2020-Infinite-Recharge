@@ -24,19 +24,33 @@ public class TestAuto implements Autonomous {
         */
         //TODO nav code
         float tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-        while((Math.abs(tx) > MOE)) {
             tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
             double heading_error = -tx;
             double steering_adjust = 0.0f;
+            System.out.println("The tx is " + tx);
+            System.out.println("The heading error is " + heading_error);
+            System.out.println("The initial steering adjust is " + steering_adjust);
+            
             if (tx > 1.0) {
                 steering_adjust = -0.1*heading_error - 0.05;
             } else if (tx < 1.0) {
-                steering_adjust = -0.1*heading_error + 0.05;
+                steering_adjust = -0.1*heading_error + 0.05;  
+            } 
+            if (tx > 0.5) {
+                steering_adjust = -0.075*heading_error - 0.05;
+            } else if (tx < 0.5) {
+                steering_adjust = -0.075*heading_error + 0.05;  
+            } 
+            if (tx > 0.25) {
+                steering_adjust = -0.05*heading_error - 0.05;
+            } else if (tx < 0.25) {
+                steering_adjust = -0.05*heading_error + 0.05;  
             }
             Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-        }
-    }
+            System.out.println("The steering adjust is " + steering_adjust);
 
+        }
+        
     @Override
     public void stopAuto() {
 
