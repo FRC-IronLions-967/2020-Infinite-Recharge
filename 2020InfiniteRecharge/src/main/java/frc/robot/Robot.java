@@ -22,6 +22,9 @@ import frc.robot.utils.values.Values;
 import java.io.File;
 import java.io.IOException;
 
+import com.revrobotics.CANPIDController;
+import com.revrobotics.ControlType;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -42,6 +45,9 @@ public class Robot extends TimedRobot {
   public static Values m_values;
   public static Values m_robotMap;
   public static NetworkTable visionTable;
+  public static float tx;
+  public static CANPIDController controllerRight;
+  public static CANPIDController controllerLeft;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -107,9 +113,40 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    tx = 0;
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    try {
+      System.out.println("1");
+      Autonomous autonomous = new TestAuto();
+      System.out.println("2");
+      // autonomous.runAuto();
+      System.out.println("3");
+    } catch(Exception e){
+      System.out.println("caught");
+    }
+    double kP = 5e-5; 
+    double kI = 1e-6;
+    double kD = 0; 
+    double kIz = 0; 
+    double kFF = 0; 
+    double kMaxOutput = 1; 
+    double kMinOutput = -1;
+
+    controllerRight.setP(kP);
+    controllerRight.setI(kI);
+    controllerRight.setD(kD);
+    controllerRight.setIZone(kIz);
+    controllerRight.setFF(kFF);
+    controllerRight.setOutputRange(kMinOutput, kMaxOutput);
+
+    controllerLeft.setP(kP);
+    controllerLeft.setI(kI);
+    controllerLeft.setD(kD);
+    controllerLeft.setIZone(kIz);
+    controllerLeft.setFF(kFF);
+    controllerLeft.setOutputRange(kMinOutput, kMaxOutput);
   }
 
   /**
@@ -117,13 +154,32 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    Autonomous autonomous;
+    double MOE = 0.3;
+    tx = (getTV() == 1) ? getTX() : tx;
+    double heading_error = -tx;
+    double steering_adjust = 0.0f;
+    if(tx > MOE || tx < -MOE) {
+      steering_adjust = -0.25*heading_error;
+    } else {
+      steering_adjust = 0;
+    }
+    steering_adjust = (steering_adjust > 0.25) ? 0.25 : steering_adjust;
+    steering_adjust = (steering_adjust < -0.25) ? -0.25 : steering_adjust;
+    controllerLeft.setReference(-steering_adjust, ControlType.kVelocity);
+    controllerRight.setReference(steering_adjust, ControlType.kVelocity);
+    // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+    // System.out.println("The steering adjust is " + steering_adjust);
+    System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
+    SmartDashboard.putNumber("rightMotor", steering_adjust);
+    SmartDashboard.putNumber("leftMotor", -steering_adjust);
+    SmartDashboard.putNumber("tx", tx);
+    // Autonomous autonomous;
     // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
     //         double heading_error = -tx;
     //         double steering_adjust = 0.0f;
-    try{
-      System.out.println(m_autoSelected);
-      System.out.println("0");
+    // try{
+      // System.out.println(m_autoSelected);
+      // System.out.println("0");
     // switch (m_autoSelected) {
     //   case kTestAuto:
     //   // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
@@ -148,17 +204,17 @@ public class Robot extends TimedRobot {
     //   //           steering_adjust = -0.1*heading_error + 0.05;
     //   //       }
       //       Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-      System.out.println("1");
-      autonomous = new TestAuto();
-        // Put default auto code here
-        // break;
-    // }
-    System.out.println("2");
-    autonomous.runAuto();
-    System.out.println("3");
-  } catch(Exception e){
-    System.out.println("caught");
-  }
+  //     System.out.println("1");
+  //     autonomous = new TestAuto();
+  //       // Put default auto code here
+  //       // break;
+  //   // }
+  //   System.out.println("2");
+  //   autonomous.runAuto();
+  //   System.out.println("3");
+  // } catch(Exception e){
+  //   System.out.println("caught");
+  // }
   }
 
   /**
@@ -173,5 +229,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public float getTX() {
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+  }
+
+  public float getTV() {
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getNumber(0).floatValue();
   }
 }

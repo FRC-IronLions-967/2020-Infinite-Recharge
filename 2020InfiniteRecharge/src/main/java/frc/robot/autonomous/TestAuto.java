@@ -1,12 +1,13 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class TestAuto implements Autonomous {
     @Override
     public void runAuto() {
-        double MOE = 0.05;
+        double MOE = 0.3;
         //TODO need to get PIDs set up in drivesubsystem or separate class file
         //TODO need to get encoders and the constants for the gear train set up
         /*
@@ -23,36 +24,68 @@ public class TestAuto implements Autonomous {
         keep firing until empty
         */
         //TODO nav code
-        float tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-            tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+        final float OFFSET = 0.0f;
+        float tx = getTX();
             double heading_error = -tx;
             double steering_adjust = 0.0f;
             System.out.println("The tx is " + tx);
             System.out.println("The heading error is " + heading_error);
             System.out.println("The initial steering adjust is " + steering_adjust);
-            
-            if (tx > 1.0) {
-                steering_adjust = -0.1*heading_error - 0.05;
-            } else if (tx < 1.0) {
-                steering_adjust = -0.1*heading_error + 0.05;  
-            } 
-            if (tx > 0.5) {
-                steering_adjust = -0.075*heading_error - 0.05;
-            } else if (tx < 0.5) {
-                steering_adjust = -0.075*heading_error + 0.05;  
-            } 
-            if (tx > 0.25) {
-                steering_adjust = -0.05*heading_error - 0.05;
-            } else if (tx < 0.25) {
-                steering_adjust = -0.05*heading_error + 0.05;  
+            int i = 0;
+            for(;;) {
+                if(tx > MOE) {
+                    steering_adjust = -0.03*heading_error;
+                } else if(tx < -MOE) {
+                    steering_adjust = -0.03*heading_error;
+                } else {
+                    i++;
+                }
+                steering_adjust = (steering_adjust > 0.03) ? 0.03 : steering_adjust;
+                steering_adjust = (steering_adjust < -0.03) ? -0.03 : steering_adjust;
+                Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+                // System.out.println("The steering adjust is " + steering_adjust);
+                System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
+                SmartDashboard.putNumber("rightMotor", steering_adjust);
+                SmartDashboard.putNumber("leftMotor", -steering_adjust);
+                SmartDashboard.putNumber("tx", tx);
+                tx = (getTV() == 1) ? getTX() : tx;
+                if(i > 100) break;
             }
-            Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-            System.out.println("The steering adjust is " + steering_adjust);
-
+            Robot.m_shooterSubsystem.shootRPM(1.0);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Robot.m_intakeSubsystem.upper(0.0);
+            Robot.m_intakeSubsystem.lower(0.0);
+            // if (tx > 1.0) {
+            //     steering_adjust = -0.05*heading_error - OFFSET;
+            // } else if (tx < 1.0) {
+            //     steering_adjust = -0.05*heading_error + OFFSET;  
+            // } 
+            // if (tx > 0.5) {
+            //     steering_adjust = -0.025*heading_error - OFFSET;
+            // } else if (tx < 0.5) {
+            //     steering_adjust = -0.025*heading_error + OFFSET;  
+            // } 
+            // if (tx > 0.25) {
+            //     steering_adjust = -0.025*heading_error - OFFSET;
+            // } else if (tx < 0.25) {
+            //     steering_adjust = -0.025*heading_error + OFFSET;  
+            // }
         }
         
     @Override
     public void stopAuto() {
 
+    }
+
+    public float getTX() {
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+    }
+
+    public float getTV() {
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getNumber(0).floatValue();
     }
 }
