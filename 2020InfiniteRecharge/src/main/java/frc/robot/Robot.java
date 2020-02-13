@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.autonomous.Autonomous;
-import frc.robot.autonomous.TestAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
@@ -55,7 +53,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("Test Auto", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
@@ -117,15 +115,6 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    try {
-      System.out.println("1");
-      Autonomous autonomous = new TestAuto();
-      System.out.println("2");
-      // autonomous.runAuto();
-      System.out.println("3");
-    } catch(Exception e){
-      System.out.println("caught");
-    }
     double kP = 5e-5; 
     double kI = 1e-6;
     double kD = 0; 
@@ -170,51 +159,10 @@ public class Robot extends TimedRobot {
     // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
     // System.out.println("The steering adjust is " + steering_adjust);
     System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
+    // log values to dashboard
     SmartDashboard.putNumber("rightMotor", steering_adjust);
     SmartDashboard.putNumber("leftMotor", -steering_adjust);
     SmartDashboard.putNumber("tx", tx);
-    // Autonomous autonomous;
-    // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-    //         double heading_error = -tx;
-    //         double steering_adjust = 0.0f;
-    // try{
-      // System.out.println(m_autoSelected);
-      // System.out.println("0");
-    // switch (m_autoSelected) {
-    //   case kTestAuto:
-    //   // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-    //   //       double heading_error = -tx;
-    //   //       double steering_adjust = 0.0f;
-    //         // if (tx > 1.0) {
-    //         //     steering_adjust = -0.1*heading_error - 0.05;
-    //         // } else if (tx < 1.0) {
-    //         //     steering_adjust = -0.1*heading_error + 0.05;
-    //         // }
-    //         // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-    //     autonomous = new TestAuto();
-    //     break;
-    //   // case kDefaultAuto:
-    //   default:
-    //   //  tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-    //   //        heading_error = -tx;
-    //   //        steering_adjust = 0.0f;
-    //   //       if (tx > 1.0) {
-    //   //           steering_adjust = -0.1*heading_error - 0.05;
-    //   //       } else if (tx < 1.0) {
-    //   //           steering_adjust = -0.1*heading_error + 0.05;
-    //   //       }
-      //       Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-  //     System.out.println("1");
-  //     autonomous = new TestAuto();
-  //       // Put default auto code here
-  //       // break;
-  //   // }
-  //   System.out.println("2");
-  //   autonomous.runAuto();
-  //   System.out.println("3");
-  // } catch(Exception e){
-  //   System.out.println("caught");
-  // }
   }
 
   /**
