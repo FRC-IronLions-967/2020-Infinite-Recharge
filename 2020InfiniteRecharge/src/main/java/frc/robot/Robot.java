@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.autonomous.Autonomous;
-import frc.robot.autonomous.TestAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
@@ -24,7 +22,6 @@ import java.io.File;
 import java.io.IOException;
 
 import com.revrobotics.CANPIDController;
-import com.revrobotics.ControlType;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -56,7 +53,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("Test Auto", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
