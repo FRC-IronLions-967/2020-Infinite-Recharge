@@ -19,6 +19,7 @@ import frc.robot.autonomous.TestAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -75,8 +76,8 @@ public class Robot extends TimedRobot {
     m_io = new IO();
 
     //set the default commands for the various subsystems
-    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
-    CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
+    // CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
+    // CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
     // CommandScheduler.getInstance().setDefaultCommand(m_intakeSubsystem, new IntakeCommand());
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -119,20 +120,23 @@ public class Robot extends TimedRobot {
     System.out.println("Auto selected: " + m_autoSelected);
     try {
       System.out.println("1");
-      Autonomous autonomous = new TestAuto();
+      // Autonomous autonomous = new TestAuto();
       System.out.println("2");
       // autonomous.runAuto();
       System.out.println("3");
     } catch(Exception e){
       System.out.println("caught");
     }
-    double kP = 5e-5; 
+    double kP = 0.01; 
     double kI = 1e-6;
     double kD = 0; 
     double kIz = 0; 
     double kFF = 0; 
     double kMaxOutput = 1; 
     double kMinOutput = -1;
+
+    controllerRight = m_driveSubsystem.rightMaster.getPIDController();
+    controllerLeft = m_driveSubsystem.leftMaster.getPIDController();
 
     controllerRight.setP(kP);
     controllerRight.setI(kI);
@@ -154,67 +158,34 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    double MOE = 0.3;
-    tx = (getTV() == 1) ? getTX() : tx;
+    double MOE = 1.5;
+    tx = (getTV() == 1) ? getTX() : 10.0f;
     double heading_error = -tx;
     double steering_adjust = 0.0f;
-    if(tx > MOE || tx < -MOE) {
-      steering_adjust = -0.25*heading_error;
+    if(tx > MOE) {
+      steering_adjust = -0.01*heading_error;
+    } else if(tx < -MOE) {
+      steering_adjust = -0.01*heading_error;
     } else {
       steering_adjust = 0;
+      Robot.m_shooterSubsystem.shootRPM(0.85);
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      Robot.m_intakeSubsystem.upper(0.7);
+      Robot.m_intakeSubsystem.lower(0.7);
     }
-    steering_adjust = (steering_adjust > 0.25) ? 0.25 : steering_adjust;
-    steering_adjust = (steering_adjust < -0.25) ? -0.25 : steering_adjust;
-    controllerLeft.setReference(-steering_adjust, ControlType.kVelocity);
-    controllerRight.setReference(steering_adjust, ControlType.kVelocity);
-    // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-    // System.out.println("The steering adjust is " + steering_adjust);
-    System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
+    steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
+    steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
+    // controllerLeft.setReference(steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
+    // controllerRight.setReference(-steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
+    Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+    // System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
     SmartDashboard.putNumber("rightMotor", steering_adjust);
     SmartDashboard.putNumber("leftMotor", -steering_adjust);
     SmartDashboard.putNumber("tx", tx);
-    // Autonomous autonomous;
-    // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-    //         double heading_error = -tx;
-    //         double steering_adjust = 0.0f;
-    // try{
-      // System.out.println(m_autoSelected);
-      // System.out.println("0");
-    // switch (m_autoSelected) {
-    //   case kTestAuto:
-    //   // double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-    //   //       double heading_error = -tx;
-    //   //       double steering_adjust = 0.0f;
-    //         // if (tx > 1.0) {
-    //         //     steering_adjust = -0.1*heading_error - 0.05;
-    //         // } else if (tx < 1.0) {
-    //         //     steering_adjust = -0.1*heading_error + 0.05;
-    //         // }
-    //         // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-    //     autonomous = new TestAuto();
-    //     break;
-    //   // case kDefaultAuto:
-    //   default:
-    //   //  tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
-    //   //        heading_error = -tx;
-    //   //        steering_adjust = 0.0f;
-    //   //       if (tx > 1.0) {
-    //   //           steering_adjust = -0.1*heading_error - 0.05;
-    //   //       } else if (tx < 1.0) {
-    //   //           steering_adjust = -0.1*heading_error + 0.05;
-    //   //       }
-      //       Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-  //     System.out.println("1");
-  //     autonomous = new TestAuto();
-  //       // Put default auto code here
-  //       // break;
-  //   // }
-  //   System.out.println("2");
-  //   autonomous.runAuto();
-  //   System.out.println("3");
-  // } catch(Exception e){
-  //   System.out.println("caught");
-  // }
   }
 
   /**
@@ -222,6 +193,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+  }
+
+  @Override
+  public void teleopInit() {
+    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
+    CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
   }
 
   /**

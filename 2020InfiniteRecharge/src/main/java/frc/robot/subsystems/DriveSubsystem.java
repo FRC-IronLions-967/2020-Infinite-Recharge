@@ -23,10 +23,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   /**
    * Creates a new DriveSubsystem.
    */
-  private CANSparkMax rightMaster;
-  private CANSparkMax rightSlave;
-  private CANSparkMax leftMaster;
-  private CANSparkMax leftSlave;
+  public CANSparkMax rightMaster;
+  public CANSparkMax rightSlave;
+  public CANSparkMax leftMaster;
+  public CANSparkMax leftSlave;
 
   //Drive lookup table(might be automatically generated in the future).
   private double lookup[] = {0, 0, 0,  0.1, 0.10009, 0.10036, 0.10081, 
