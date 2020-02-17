@@ -33,14 +33,14 @@ public class ShooterSubsystem extends SubsystemBase {
     flywheel1.follow(flywheel0);
 
     //Sets the flywheels to run inverted
-    flywheel0.setInverted(true);
-    flywheel1.setInverted(true);
+    flywheel0.setInverted(false);
+    flywheel1.setInverted(false);
 
     //PID stuff
     controller0 = flywheel0.getPIDController();
     controller1 = flywheel1.getPIDController();
 
-    double kP = 5e-5; 
+    double kP = 1e-4; 
     double kI = 1e-6;
     double kD = 0; 
     double kIz = 0; 

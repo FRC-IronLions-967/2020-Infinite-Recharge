@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,22 +19,25 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   /**
    * Creates a new IntakeSubsystem.
    */
-  private VictorSPX intake;
-  private VictorSPX lower;
-  private VictorSPX upper;
+  private TalonSRX intake;
+  private TalonSRX lower;
+  private TalonSRX upper;
 
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
 
 
   public IntakeSubsystem() {
     //initialize the Victor objects
-    intake = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
-    lower = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
-    upper = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
+    // intake = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
+    // lower = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
+    // upper = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
+    intake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
+    lower = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
+    upper = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
 
     intake.setInverted(false);
     lower.setInverted(false);
-    upper.setInverted(true);
+    upper.setInverted(false);
   }
 
   public void intake(double x) {
