@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
   public static Values m_values;
   public static Values m_robotMap;
   public static NetworkTable visionTable;
-  public static float tx;
+  public static double tx;
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
 
@@ -156,7 +156,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     double MOE = 1.5;
-    tx = (getTV() == 1) ? getTX() : 10.0f;
+    // tx = (getTV() == 1) ? getTX() : 10.0f;
+    tx = getTX();
     double heading_error = -tx;
     double steering_adjust = 0.0f;
     if(tx > MOE) {
@@ -165,14 +166,14 @@ public class Robot extends TimedRobot {
       steering_adjust = -0.01*heading_error;
     } else {
       steering_adjust = 0;
-      Robot.m_shooterSubsystem.shootRPM(0.85);
+      // Robot.m_shooterSubsystem.shootRPM(0.85);
       try {
         Thread.sleep(500);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      Robot.m_intakeSubsystem.upper(0.7);
-      Robot.m_intakeSubsystem.lower(0.7);
+      // Robot.m_intakeSubsystem.upper(0.7);
+      // Robot.m_intakeSubsystem.lower(0.7);
     }
     steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
     steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
@@ -205,11 +206,11 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-  public float getTX() {
-    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).floatValue();
+  public double getTX() {
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
   }
 
-  public float getTV() {
-    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getNumber(0).floatValue();
+  public double getTV() {
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0.0);
   }
 }
