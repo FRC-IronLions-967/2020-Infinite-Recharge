@@ -57,9 +57,9 @@ public class IO {
         xbox0_povW.whenPressed(new AimLeftCommand(0.05));
         xbox1_x.whenPressed(new IntakeCommand(0.8));
         xbox1_x.whenReleased(new IntakeCommand(0.0));
-        xbox1_a.whenPressed(new LowerBeltCommand(0.4));
+        xbox1_a.whenPressed(new LowerBeltCommand(0.3));
         xbox1_a.whenReleased(new LowerBeltCommand(0.0));
-        xbox1_b.whenPressed(new UpperBeltCommand(0.4));
+        xbox1_b.whenPressed(new UpperBeltCommand(0.3));
         xbox1_b.whenReleased(new UpperBeltCommand(0.0));
     }
 }

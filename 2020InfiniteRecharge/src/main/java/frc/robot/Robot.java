@@ -124,7 +124,7 @@ public class Robot extends TimedRobot {
     } catch(Exception e){
       System.out.println("caught");
     }
-    double kP = 0.01; 
+    double kP = 5e-6; 
     double kI = 1e-6;
     double kD = 0; 
     double kIz = 0; 
@@ -166,9 +166,14 @@ public class Robot extends TimedRobot {
       steering_adjust = -0.01*heading_error;
     } else {
       steering_adjust = 0;
-      // Robot.m_shooterSubsystem.shootRPM(0.85);
       try {
-        Thread.sleep(500);
+        Thread.sleep(250);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      Robot.m_shooterSubsystem.shoot(0.85);
+      try {
+        Thread.sleep(1500);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

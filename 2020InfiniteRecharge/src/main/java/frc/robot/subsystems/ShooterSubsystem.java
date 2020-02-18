@@ -40,9 +40,9 @@ public class ShooterSubsystem extends SubsystemBase {
     controller0 = flywheel0.getPIDController();
     controller1 = flywheel1.getPIDController();
 
-    double kP = 1e-4; 
+    double kP = 1e-10; 
     double kI = 1e-6;
-    double kD = 0; 
+    double kD = 0.00005; 
     double kIz = 0; 
     double kFF = 0; 
     double kMaxOutput = 1; 
