@@ -11,6 +11,8 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 
@@ -40,9 +42,9 @@ public class ShooterSubsystem extends SubsystemBase {
     controller0 = flywheel0.getPIDController();
     controller1 = flywheel1.getPIDController();
 
-    double kP = 1e-10; 
-    double kI = 1e-6;
-    double kD = 0.00005; 
+    double kP = 5e-4; 
+    double kI = 4.5e-7;
+    double kD = 0; 
     double kIz = 0; 
     double kFF = 0; 
     double kMaxOutput = 1; 
@@ -69,7 +71,9 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shootRPM(double power) {
-    double setPoint = power * maxRPM;
+    // double setPoint = power * maxRPM;
+    double setPoint = 5000;
+    SmartDashboard.putNumber("Setpoint", setPoint);
     controller0.setReference(setPoint, ControlType.kVelocity);
   }
 

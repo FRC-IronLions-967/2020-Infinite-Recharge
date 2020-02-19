@@ -32,7 +32,7 @@ public class ShooterCommand extends CommandBase {
     // } else {
     //   Robot.m_shooterSubsystem.shootRPM(0.0);
     // }
-    // Robot.m_shooterSubsystem.shootRPM((Robot.m_io.xbox1.getRawAxis(3) > 0.3) ? 0.8 : 0.0);
+    Robot.m_shooterSubsystem.shootRPM((Robot.m_io.xbox1.getRawAxis(3) > 0.3) ? 1.0 : 0.0);
     // Robot.m_shooterSubsystem.shoot((Robot.m_io.xbox1.getRawAxis(3) > 0.2) ? 0.8 : 0.0);
   }
 
