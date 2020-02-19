@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
+import frc.robot.autonomous.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +47,7 @@ public class Robot extends TimedRobot {
   public static double tx;
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
+  public static Autonomous selectedAuto;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -71,11 +73,6 @@ public class Robot extends TimedRobot {
     m_shooterSubsystem = new ShooterSubsystem();
     m_testPIDSubsystem = new TestPIDSubsystem();
     m_io = new IO();
-
-    //set the default commands for the various subsystems
-    // CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
-    // CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
-    // CommandScheduler.getInstance().setDefaultCommand(m_intakeSubsystem, new IntakeCommand());
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     //for some reason, the getter will create the table if it already exists
@@ -115,15 +112,10 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    try {
-      System.out.println("1");
-      // Autonomous autonomous = new TestAuto();
-      System.out.println("2");
-      // autonomous.runAuto();
-      System.out.println("3");
-    } catch(Exception e){
-      System.out.println("caught");
-    }
+
+    //TODO set this to pull from the dashboard for the autonomous selection
+    selectedAuto = new TestAuto();
+
     double kP = 5e-6; 
     double kI = 1e-6;
     double kD = 0; 
@@ -155,40 +147,41 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    double MOE = 1.5;
-    // tx = (getTV() == 1) ? getTX() : 10.0f;
-    tx = getTX();
-    double heading_error = -tx;
-    double steering_adjust = 0.0f;
-    if(tx > MOE) {
-      steering_adjust = -0.01*heading_error;
-    } else if(tx < -MOE) {
-      steering_adjust = -0.01*heading_error;
-    } else {
-      steering_adjust = 0;
-      try {
-        Thread.sleep(250);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      Robot.m_shooterSubsystem.shoot(0.85);
-      try {
-        Thread.sleep(1500);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      // Robot.m_intakeSubsystem.upper(0.7);
-      // Robot.m_intakeSubsystem.lower(0.7);
-    }
-    steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
-    steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
-    // controllerLeft.setReference(steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-    // controllerRight.setReference(-steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-    Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-    // System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
-    SmartDashboard.putNumber("rightMotor", steering_adjust);
-    SmartDashboard.putNumber("leftMotor", -steering_adjust);
-    SmartDashboard.putNumber("tx", tx);
+    selectedAuto.runAuto();
+    // double MOE = 1.5;
+    // // tx = (getTV() == 1) ? getTX() : 10.0f;
+    // tx = getTX();
+    // double heading_error = -tx;
+    // double steering_adjust = 0.0f;
+    // if(tx > MOE) {
+    //   steering_adjust = -0.01*heading_error;
+    // } else if(tx < -MOE) {
+    //   steering_adjust = -0.01*heading_error;
+    // } else {
+    //   steering_adjust = 0;
+    //   try {
+    //     Thread.sleep(250);
+    //   } catch (InterruptedException e) {
+    //     e.printStackTrace();
+    //   }
+    //   Robot.m_shooterSubsystem.shoot(0.85);
+    //   try {
+    //     Thread.sleep(1500);
+    //   } catch (InterruptedException e) {
+    //     e.printStackTrace();
+    //   }
+    //   // Robot.m_intakeSubsystem.upper(0.7);
+    //   // Robot.m_intakeSubsystem.lower(0.7);
+    // }
+    // steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
+    // steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
+    // // controllerLeft.setReference(steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
+    // // controllerRight.setReference(-steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
+    // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+    // // System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
+    // SmartDashboard.putNumber("rightMotor", steering_adjust);
+    // SmartDashboard.putNumber("leftMotor", -steering_adjust);
+    // SmartDashboard.putNumber("tx", tx);
   }
 
   /**

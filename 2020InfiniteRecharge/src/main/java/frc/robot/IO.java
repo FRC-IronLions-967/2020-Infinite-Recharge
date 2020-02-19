@@ -29,7 +29,7 @@ public class IO {
     public POVButton xbox0_povNW;
 
     public IO() {
-        //initialize both of the Xbox controllers here
+        //initialize both of the Xbox controllers here, 0 is the drive controller, 1 controls the manipulators
         xbox0 = new Joystick(0);
         xbox1 = new Joystick(1);
 
@@ -55,6 +55,8 @@ public class IO {
         //TODO assign commands to button presses here
         xbox0_povE.whenPressed(new AimRightCommand(0.05));
         xbox0_povW.whenPressed(new AimLeftCommand(0.05));
+        xbox0_a.whenPressed(new AutoAimCommand());
+
         xbox1_x.whenPressed(new IntakeCommand(0.8));
         xbox1_x.whenReleased(new IntakeCommand(0.0));
         xbox1_a.whenPressed(new LowerBeltCommand(0.3));
