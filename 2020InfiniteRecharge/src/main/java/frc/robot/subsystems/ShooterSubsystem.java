@@ -19,7 +19,7 @@ import frc.robot.Robot;
 public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax flywheel0;
   private CANSparkMax flywheel1;
-  private double maxRPM = 5000;
+  // private double maxRPM = 5000;
   private CANPIDController controller0;
   private CANPIDController controller1;
   /**
@@ -71,8 +71,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shootRPM(double power) {
-    // double setPoint = power * maxRPM;
-    double setPoint = 5000;
+    double setPoint = power * Robot.maxRPM;
+    // double setPoint = 5000;
     SmartDashboard.putNumber("Setpoint", setPoint);
     controller0.setReference(setPoint, ControlType.kVelocity);
   }

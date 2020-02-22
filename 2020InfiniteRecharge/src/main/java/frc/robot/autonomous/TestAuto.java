@@ -25,7 +25,7 @@ public class TestAuto implements Autonomous {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Robot.m_shooterSubsystem.shoot(0.85);
+        Robot.m_shooterSubsystem.shoot(1.0);
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {

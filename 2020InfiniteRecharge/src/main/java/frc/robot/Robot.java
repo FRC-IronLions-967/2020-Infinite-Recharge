@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
   public static Autonomous selectedAuto;
+  public static int maxRPM = 5000;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -93,6 +94,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Shooter RPM", m_shooterSubsystem.getRPM());
+    SmartDashboard.putNumber("Max RPM", maxRPM);
   }
 
   /**

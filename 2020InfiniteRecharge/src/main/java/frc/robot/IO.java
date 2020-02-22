@@ -51,6 +51,8 @@ public class IO {
         JoystickButton xbox1_b = new JoystickButton(xbox1, 2);
         JoystickButton xbox1_x = new JoystickButton(xbox1, 3);
         JoystickButton xbox1_y = new JoystickButton(xbox1, 4);
+        JoystickButton xbox1_bump_l = new JoystickButton(xbox1, 5);
+        JoystickButton xbox1_bump_r = new JoystickButton(xbox1, 6);
         //Assigns commands to each of the buttons
         //TODO assign commands to button presses here
         xbox0_povE.whenPressed(new AimRightCommand(0.05));
@@ -63,5 +65,7 @@ public class IO {
         xbox1_a.whenReleased(new LowerBeltCommand(0.0));
         xbox1_b.whenPressed(new UpperBeltCommand(0.3));
         xbox1_b.whenReleased(new UpperBeltCommand(0.0));
+        xbox1_bump_l.whenPressed(new RPMDownCommand());
+        xbox1_bump_r.whenPressed(new RPMUpCommand());
     }
 }
