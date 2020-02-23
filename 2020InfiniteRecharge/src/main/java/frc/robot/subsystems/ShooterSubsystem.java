@@ -74,7 +74,11 @@ public class ShooterSubsystem extends SubsystemBase {
     double setPoint = power * Robot.maxRPM;
     // double setPoint = 5000;
     SmartDashboard.putNumber("Setpoint", setPoint);
-    controller0.setReference(setPoint, ControlType.kVelocity);
+    if(setPoint != 0.0) {
+      controller0.setReference(setPoint, ControlType.kVelocity);
+    } else {
+      flywheel0.set(0.0);
+    }
   }
 
   public double getRPM() {

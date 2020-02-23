@@ -25,12 +25,14 @@ public class TestAuto implements Autonomous {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Robot.m_shooterSubsystem.shoot(1.0);
+        Robot.m_shooterSubsystem.shoot(0.55); //.7826
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Robot.m_intakeSubsystem.upper(0.4);
+        Robot.m_intakeSubsystem.lower(0.4);
             // Robot.m_intakeSubsystem.upper(0.7);
             // Robot.m_intakeSubsystem.lower(0.7);
         }

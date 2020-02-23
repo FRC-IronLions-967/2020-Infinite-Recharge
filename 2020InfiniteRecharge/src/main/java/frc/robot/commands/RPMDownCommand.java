@@ -27,7 +27,7 @@ public class RPMDownCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Robot.maxRPM > 3600) {
+    if(Robot.maxRPM > 1000) {
       Robot.maxRPM -= 200;
     }
     finished = true;
