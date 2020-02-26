@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Shooter RPM", m_shooterSubsystem.getRPM());
     SmartDashboard.putNumber("Max RPM", maxRPM);
+    SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
   }
 
   /**

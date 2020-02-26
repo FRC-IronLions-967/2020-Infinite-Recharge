@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class ToggleBeltsCommand extends CommandBase {
+  private boolean finished =  false;
   /**
    * Creates a new ToggleBeltsCommand.
    */
@@ -27,6 +28,7 @@ public class ToggleBeltsCommand extends CommandBase {
   @Override
   public void execute() {
     Robot.beltsReversed = (Robot.beltsReversed) ? false : true;
+    finished = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +39,6 @@ public class ToggleBeltsCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return finished;
   }
 }

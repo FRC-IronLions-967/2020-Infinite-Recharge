@@ -45,6 +45,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
+    x = (Robot.beltsReversed) ? -x : x;
+
     intake.set(ControlMode.PercentOutput, x);
   }
 
@@ -53,6 +55,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
+    x = (Robot.beltsReversed) ? -x : x;
+
     lower.set(ControlMode.PercentOutput, x);
   }
 
@@ -60,6 +64,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     //defensive code to make sure values do not exceed -1.0 to 1.0
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
+
+    x = (Robot.beltsReversed) ? -x : x;
 
     upper.set(ControlMode.PercentOutput, x);
   }
