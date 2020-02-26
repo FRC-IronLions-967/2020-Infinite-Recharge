@@ -9,15 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.utils.Utils;
 
-public class TankDriveCommand extends CommandBase {
+public class ToggleBeltsCommand extends CommandBase {
   /**
-   * Creates a new TankDriveCommand.
+   * Creates a new ToggleBeltsCommand.
    */
-  public TankDriveCommand() {
+  public ToggleBeltsCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +26,7 @@ public class TankDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.m_driveSubsystem.tankDriveLookup(Utils.deadband(Robot.m_io.xbox0.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(Robot.m_io.xbox0.getRawAxis(5), Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    Robot.beltsReversed = (Robot.beltsReversed) ? false : true;
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +37,6 @@ public class TankDriveCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

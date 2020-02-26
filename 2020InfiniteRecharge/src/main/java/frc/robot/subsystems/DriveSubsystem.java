@@ -121,6 +121,13 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     move(r, l);
   }
 
+  public void tankDriveLookup(double r, double l) {
+    r = ((r > 0)) ? lookup[(int) Math.floor(Math.abs(r) * 100)] : -lookup[(int) Math.floor(Math.abs(r) * 100)];
+    l = ((l > 0)) ? lookup[(int) Math.floor(Math.abs(l) * 100)] : -lookup[(int) Math.floor(Math.abs(l) * 100)];
+    
+    move(r, l);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -59,12 +59,13 @@ public class IO {
         xbox0_povW.whenPressed(new AimLeftCommand(0.05));
         xbox0_a.whenPressed(new AutoAimCommand());
 
-        xbox1_a.whenPressed(new IntakeCommand(0.8));
+        xbox1_a.whenPressed(new IntakeCommand((Robot.beltsReversed) ? -0.8 : 0.8));
         xbox1_a.whenReleased(new IntakeCommand(0.0));
-        xbox1_x.whenPressed(new LowerBeltCommand(0.4));
+        xbox1_x.whenPressed(new LowerBeltCommand((Robot.beltsReversed) ? -0.4 : 0.4));
         xbox1_x.whenReleased(new LowerBeltCommand(0.0));
-        xbox1_b.whenPressed(new UpperBeltCommand(0.4));
+        xbox1_b.whenPressed(new UpperBeltCommand((Robot.beltsReversed) ? -0.4 : 0.4));
         xbox1_b.whenReleased(new UpperBeltCommand(0.0));
+        xbox1_y.whenPressed(new ToggleBeltsCommand());
         xbox1_bump_l.whenPressed(new RPMDownCommand());
         xbox1_bump_r.whenPressed(new RPMUpCommand());
     }
