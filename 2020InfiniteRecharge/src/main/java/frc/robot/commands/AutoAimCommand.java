@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.utils.vision.*;
 
 public class AutoAimCommand extends CommandBase {
@@ -27,6 +28,7 @@ public class AutoAimCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    CommandScheduler.getInstance().setDefaultCommand(Robot.m_driveSubsystem, this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -59,6 +61,7 @@ public class AutoAimCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    CommandScheduler.getInstance().setDefaultCommand(Robot.m_driveSubsystem, new ArcadeDriveLookupCommand());
   }
 
   // Returns true when the command should end.
