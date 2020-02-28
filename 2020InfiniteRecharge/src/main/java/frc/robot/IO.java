@@ -27,6 +27,10 @@ public class IO {
     public POVButton xbox0_povSW;
     public POVButton xbox0_povW;
     public POVButton xbox0_povNW;
+    public JoystickButton xbox0_a;
+    public JoystickButton xbox0_b;
+    public JoystickButton xbox0_x;
+    public JoystickButton xbox0_y;
 
     public IO() {
         //initialize both of the Xbox controllers here, 0 is the drive controller, 1 controls the manipulators
@@ -34,10 +38,10 @@ public class IO {
         xbox1 = new Joystick(1);
 
         //initialize all of the buttons on the Xbox controllers here
-        JoystickButton xbox0_a = new JoystickButton(xbox0, 1);
-        JoystickButton xbox0_b = new JoystickButton(xbox0, 2);
-        JoystickButton xbox0_x = new JoystickButton(xbox0, 3);
-        JoystickButton xbox0_y = new JoystickButton(xbox0, 4);
+        xbox0_a = new JoystickButton(xbox0, 1);
+        xbox0_b = new JoystickButton(xbox0, 2);
+        xbox0_x = new JoystickButton(xbox0, 3);
+        xbox0_y = new JoystickButton(xbox0, 4);
         xbox0_povN = new POVButton(xbox0, 0, 0);
         xbox0_povNE = new POVButton(xbox0, 45, 0);
         xbox0_povE = new POVButton(xbox0, 90, 0);
@@ -57,7 +61,6 @@ public class IO {
         //TODO assign commands to button presses here
         xbox0_povE.whenPressed(new AimRightCommand(0.05));
         xbox0_povW.whenPressed(new AimLeftCommand(0.05));
-        xbox0_a.whenPressed(new AutoAimCommand());
 
         xbox1_a.whenPressed(new IntakeCommand(0.8));
         xbox1_a.whenReleased(new IntakeCommand(0.0));

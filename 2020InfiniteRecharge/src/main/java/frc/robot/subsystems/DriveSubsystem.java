@@ -10,9 +10,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.commands.AutoAimCommand;
 import frc.robot.utils.values.*;
 
 import com.revrobotics.CANSparkMax;
@@ -131,6 +133,17 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if(Robot.m_io.xbox0_a.get()) {
+      CommandScheduler.getInstance().schedule(new AutoAimCommand());
+    }
+  }
+
+  public double getRightSpeed() {
+    return rightMaster.getEncoder().getVelocity() * 0.001255;
+  }
+
+  public double getLeftSpeed() {
+    return leftMaster.getEncoder().getVelocity() * 0.001255;
   }
 
 }

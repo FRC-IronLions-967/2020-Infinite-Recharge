@@ -97,6 +97,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter RPM", m_shooterSubsystem.getRPM());
     SmartDashboard.putNumber("Max RPM", maxRPM);
     SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
+    SmartDashboard.putNumber("Right Speed", m_driveSubsystem.getRightSpeed());
+    SmartDashboard.putNumber("Left Speed", m_driveSubsystem.getLeftSpeed());
   }
 
   /**
@@ -152,40 +154,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     selectedAuto.runAuto();
-    // double MOE = 1.5;
-    // // tx = (getTV() == 1) ? getTX() : 10.0f;
-    // tx = getTX();
-    // double heading_error = -tx;
-    // double steering_adjust = 0.0f;
-    // if(tx > MOE) {
-    //   steering_adjust = -0.01*heading_error;
-    // } else if(tx < -MOE) {
-    //   steering_adjust = -0.01*heading_error;
-    // } else {
-    //   steering_adjust = 0;
-    //   try {
-    //     Thread.sleep(250);
-    //   } catch (InterruptedException e) {
-    //     e.printStackTrace();
-    //   }
-    //   Robot.m_shooterSubsystem.shoot(0.85);
-    //   try {
-    //     Thread.sleep(1500);
-    //   } catch (InterruptedException e) {
-    //     e.printStackTrace();
-    //   }
-    //   // Robot.m_intakeSubsystem.upper(0.7);
-    //   // Robot.m_intakeSubsystem.lower(0.7);
-    // }
-    // steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
-    // steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
-    // // controllerLeft.setReference(steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-    // // controllerRight.setReference(-steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-    // Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
-    // // System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
-    // SmartDashboard.putNumber("rightMotor", steering_adjust);
-    // SmartDashboard.putNumber("leftMotor", -steering_adjust);
-    // SmartDashboard.putNumber("tx", tx);
   }
 
   /**
