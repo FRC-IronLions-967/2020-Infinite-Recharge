@@ -28,7 +28,7 @@ public class AutoAimCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    CommandScheduler.getInstance().setDefaultCommand(Robot.m_driveSubsystem, this);
+    // CommandScheduler.getInstance().setDefaultCommand(Robot.m_driveSubsystem, this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

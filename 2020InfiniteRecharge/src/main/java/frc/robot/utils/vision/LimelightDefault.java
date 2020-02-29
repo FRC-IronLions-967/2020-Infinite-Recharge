@@ -8,10 +8,10 @@ public class LimelightDefault {
     }
 
     public static double getTY() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).doubleValue();
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getNumber(0).doubleValue();
     }
 
     public static double getTV() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getNumber(0).doubleValue();
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getNumber(0).doubleValue();
     }
 }

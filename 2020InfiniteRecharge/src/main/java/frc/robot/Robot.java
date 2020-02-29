@@ -48,8 +48,10 @@ public class Robot extends TimedRobot {
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
   public static Autonomous selectedAuto;
-  public static int maxRPM = 4600;
+  public static int maxRPM = 3200;
   public static boolean beltsReversed = false;
+
+  public static int rpmLookup[] = {3200, 3250, 3300, 3475, 3525, 3650, 3775};
 
   /**
    * This function is run when the robot is first started up and should be

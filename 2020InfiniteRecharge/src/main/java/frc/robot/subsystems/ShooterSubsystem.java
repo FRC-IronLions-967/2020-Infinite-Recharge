@@ -42,8 +42,10 @@ public class ShooterSubsystem extends SubsystemBase {
     controller0 = flywheel0.getPIDController();
     controller1 = flywheel1.getPIDController();
 
-    double kP = 5e-4; 
-    double kI = 4.5e-7;
+    // double kP = 5e-4; 
+    double kP = 5.5e-4; 
+    // double kI = 4.5e-7;
+    double kI = 4.8e-7;
     double kD = 0; 
     double kIz = 0; 
     double kFF = 0; 
@@ -87,6 +89,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Motor Power", flywheel0.get());
     // This method will be called once per scheduler run
   }
 }

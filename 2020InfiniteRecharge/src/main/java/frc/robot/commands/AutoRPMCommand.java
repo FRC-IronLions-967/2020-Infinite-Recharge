@@ -9,13 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.utils.vision.LimelightDefault;
 
-public class RPMUpCommand extends CommandBase {
+public class AutoRPMCommand extends CommandBase {
   private boolean finished = false;
   /**
-   * Creates a new RPMUpCommand.
+   * Creates a new AutoRPMCommand.
    */
-  public RPMUpCommand() {
+  public AutoRPMCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,8 +28,20 @@ public class RPMUpCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Robot.maxRPM < 5600) {
-      Robot.maxRPM += 25;
+    if(LimelightDefault.getTY() > 20.8) {
+      Robot.maxRPM = Robot.rpmLookup[0];
+    } else if(LimelightDefault.getTY() > 16.14) {
+      Robot.maxRPM = Robot.rpmLookup[1];
+    } else if(LimelightDefault.getTY() > 12.31) {
+      Robot.maxRPM = Robot.rpmLookup[2];
+    } else if(LimelightDefault.getTY() > 9.8) {
+      Robot.maxRPM = Robot.rpmLookup[3];
+    } else if(LimelightDefault.getTY() > 7.26) {
+      Robot.maxRPM = Robot.rpmLookup[4];
+    } else if(LimelightDefault.getTY() > 5.84) {
+      Robot.maxRPM = Robot.rpmLookup[5];
+    } else if(LimelightDefault.getTY() > 4.63) {
+      Robot.maxRPM = Robot.rpmLookup[6];
     }
     finished = true;
   }

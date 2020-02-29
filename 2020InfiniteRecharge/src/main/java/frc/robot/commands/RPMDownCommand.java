@@ -28,7 +28,7 @@ public class RPMDownCommand extends CommandBase {
   @Override
   public void execute() {
     if(Robot.maxRPM > 1000) {
-      Robot.maxRPM -= 200;
+      Robot.maxRPM -= 25;
     }
     finished = true;
   }
