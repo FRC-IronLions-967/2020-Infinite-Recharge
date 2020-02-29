@@ -30,18 +30,22 @@ public class AutoRPMCommand extends CommandBase {
   public void execute() {
     if(LimelightDefault.getTY() > 20.8) {
       Robot.maxRPM = Robot.rpmLookup[0];
-    } else if(LimelightDefault.getTY() > 16.14) {
+    } else if(LimelightDefault.getTY() > 18.3) {
       Robot.maxRPM = Robot.rpmLookup[1];
-    } else if(LimelightDefault.getTY() > 12.31) {
+    } else if(LimelightDefault.getTY() > 16.14) {
       Robot.maxRPM = Robot.rpmLookup[2];
-    } else if(LimelightDefault.getTY() > 9.8) {
+    } else if(LimelightDefault.getTY() > 14.1) {
       Robot.maxRPM = Robot.rpmLookup[3];
-    } else if(LimelightDefault.getTY() > 7.26) {
+    } else if(LimelightDefault.getTY() > 12.31) {
       Robot.maxRPM = Robot.rpmLookup[4];
-    } else if(LimelightDefault.getTY() > 5.84) {
+    } else if(LimelightDefault.getTY() > 9.8) {
       Robot.maxRPM = Robot.rpmLookup[5];
-    } else if(LimelightDefault.getTY() > 4.63) {
+    } else if(LimelightDefault.getTY() > 7.26) {
       Robot.maxRPM = Robot.rpmLookup[6];
+    } else if(LimelightDefault.getTY() > 5.84) {
+      Robot.maxRPM = Robot.rpmLookup[7];
+    } else if(LimelightDefault.getTY() > 4.63) {
+      Robot.maxRPM = Robot.rpmLookup[8];
     }
     finished = true;
   }

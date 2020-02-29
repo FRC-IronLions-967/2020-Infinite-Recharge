@@ -20,6 +20,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
    * Creates a new IntakeSubsystem.
    */
   private TalonSRX intake;
+  private TalonSRX outerIntake;
   private TalonSRX lower;
   private TalonSRX upper;
 
@@ -32,12 +33,16 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     // lower = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
     // upper = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
     intake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
+    outerIntake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("outerIntake")));
     lower = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
     upper = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
 
     intake.setInverted(false);
+    outerIntake.setInverted(false);
     lower.setInverted(false);
     upper.setInverted(false);
+
+    outerIntake.follow(intake);
   }
 
   public void intake(double x) {
