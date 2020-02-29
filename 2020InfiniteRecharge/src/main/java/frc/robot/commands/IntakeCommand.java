@@ -12,6 +12,8 @@ import frc.robot.Robot;
 
 public class IntakeCommand extends CommandBase {
   private double power;
+  private boolean finished =  false;
+
   /**
    * Creates a new IntakeCommand.
    */
@@ -30,6 +32,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     // Robot.m_intakeSubsystem.intake(Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    Robot.intakeOn = (Robot.intakeOn) ? false : true;
     Robot.m_intakeSubsystem.intake(power);
   }
 
@@ -41,6 +44,6 @@ public class IntakeCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }
