@@ -33,7 +33,8 @@ public class IntakeCommand extends CommandBase {
   public void execute() {
     // Robot.m_intakeSubsystem.intake(Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))));
     Robot.intakeOn = (Robot.intakeOn) ? false : true;
-    Robot.m_intakeSubsystem.intake(power);
+    Robot.m_intakeSubsystem.intake((Robot.intakeOn) ? power : 0.0);
+    finished = true;
   }
 
   // Called once the command ends or is interrupted.

@@ -82,7 +82,7 @@ public class IO {
         xbox1_start.whenPressed(new AutoRPMCommand());
 
         xbox1_a.whenPressed(new IntakeCommand(0.8));
-        xbox1_a.whenReleased(new IntakeCommand(0.0));
+        // xbox1_a.whenReleased(new IntakeCommand(0.0));
         xbox1_x.whenPressed(new LowerBeltCommand(0.3));
         xbox1_x.whenReleased(new LowerBeltCommand(0.0));
         xbox1_b.whenPressed(new UpperBeltCommand(0.3));
