@@ -40,15 +40,16 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //PID stuff
     controller0 = flywheel0.getPIDController();
-    controller1 = flywheel1.getPIDController();
+    // controller1 = flywheel1.getPIDController();
 
-    // double kP = 5e-4; 
-    double kP = 5.5e-4; 
-    // double kI = 4.5e-7;
-    double kI = 3.9e-7;
+    double kP = 9.0e-8; 
+    // double kP = 3.2e-4;
+    // double kP = 7.0e-4; 
+    // double kI = 0.0;
+    double kI = 3.0e-8;
     double kD = 0; 
     double kIz = 0; 
-    double kFF = 0; 
+    double kFF = 1.58e-4; 
     double kMaxOutput = 1; 
     double kMinOutput = -1;
 
@@ -59,12 +60,12 @@ public class ShooterSubsystem extends SubsystemBase {
     controller0.setFF(kFF);
     controller0.setOutputRange(kMinOutput, kMaxOutput);
 
-    controller1.setP(kP);
-    controller1.setI(kI);
-    controller1.setD(kD);
-    controller1.setIZone(kIz);
-    controller1.setFF(kFF);
-    controller1.setOutputRange(kMinOutput, kMaxOutput);
+    // controller1.setP(kP);
+    // controller1.setI(kI);
+    // controller1.setD(kD);
+    // controller1.setIZone(kIz);
+    // controller1.setFF(kFF);
+    // controller1.setOutputRange(kMinOutput, kMaxOutput);
   }
 
   public void shoot(double power) {
