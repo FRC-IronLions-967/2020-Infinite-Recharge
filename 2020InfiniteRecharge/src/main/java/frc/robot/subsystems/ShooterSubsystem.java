@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // double kP = 5e-4; 
     double kP = 5.5e-4; 
     // double kI = 4.5e-7;
-    double kI = 4.8e-7;
+    double kI = 3.9e-7;
     double kD = 0; 
     double kIz = 0; 
     double kFF = 0; 

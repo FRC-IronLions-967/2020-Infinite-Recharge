@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
   public static Autonomous selectedAuto;
-  public static int maxRPM = 3200;
+  public static int maxRPM = 3500;
   public static boolean beltsReversed = false;
 
   public static int rpmLookup[] = {3200, 3250, 3300, 3475, 3525, 3650, 3775};
