@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
   public static Autonomous selectedAuto;
   public static int maxRPM = 3500;
   public static boolean beltsReversed = false;
+  public static boolean intakeOn = false;
 
   public static int rpmLookup[] = {3200, 3250, 3300, 3475, 3525, 3650, 3775};
 
@@ -99,6 +100,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter RPM", m_shooterSubsystem.getRPM());
     SmartDashboard.putNumber("Max RPM", maxRPM);
     SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
+    SmartDashboard.putBoolean("Intake On", intakeOn);
     SmartDashboard.putNumber("Right Speed", m_driveSubsystem.getRightSpeed());
     SmartDashboard.putNumber("Left Speed", m_driveSubsystem.getLeftSpeed());
   }
