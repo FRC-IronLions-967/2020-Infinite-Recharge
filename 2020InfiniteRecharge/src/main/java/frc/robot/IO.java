@@ -27,6 +27,14 @@ public class IO {
     public POVButton xbox0_povSW;
     public POVButton xbox0_povW;
     public POVButton xbox0_povNW;
+    public POVButton xbox1_povN;
+    public POVButton xbox1_povNE;
+    public POVButton xbox1_povE;
+    public POVButton xbox1_povSE;
+    public POVButton xbox1_povS;
+    public POVButton xbox1_povSW;
+    public POVButton xbox1_povW;
+    public POVButton xbox1_povNW;
     public JoystickButton xbox0_a;
     public JoystickButton xbox0_b;
     public JoystickButton xbox0_x;
@@ -58,6 +66,14 @@ public class IO {
         JoystickButton xbox1_bump_l = new JoystickButton(xbox1, 5);
         JoystickButton xbox1_bump_r = new JoystickButton(xbox1, 6);
         JoystickButton xbox1_start = new JoystickButton(xbox1, 8);
+        xbox1_povN = new POVButton(xbox1, 0, 0);
+        xbox1_povNE = new POVButton(xbox1, 45, 0);
+        xbox1_povE = new POVButton(xbox1, 90, 0);
+        xbox1_povSE = new POVButton(xbox1, 135, 0);
+        xbox1_povS = new POVButton(xbox1, 180, 0);
+        xbox1_povSW = new POVButton(xbox1, 225, 0);
+        xbox1_povW = new POVButton(xbox1, 270, 0);
+        xbox1_povNW = new POVButton(xbox1, 315, 0);
         //Assigns commands to each of the buttons
         //TODO assign commands to button presses here
         xbox0_povE.whenPressed(new AimRightCommand(0.05));
