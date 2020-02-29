@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.utils.Utils;
 
 public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   /**
@@ -25,6 +26,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   private TalonSRX upper;
 
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
+  double deadband = Double.parseDouble(Robot.m_values.getValue("deadband2"));
 
 
   public IntakeSubsystem() {
@@ -78,5 +80,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    upper.set(ControlMode.PercentOutput, Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), deadband));
+    lower.set(ControlMode.PercentOutput, Utils.deadband(Robot.m_io.xbox1.getRawAxis(5), deadband));
+
   }
 }
