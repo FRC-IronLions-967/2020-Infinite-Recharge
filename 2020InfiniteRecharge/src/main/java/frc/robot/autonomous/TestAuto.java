@@ -28,23 +28,35 @@ public class TestAuto implements Autonomous {
         double ty = LimelightDefault.getTY() + 30;
         if(ty > 50.8) {
             Robot.maxRPM = Robot.rpmLookup[0];
-        } else if(ty > 48.3) {
+          } else if(ty > 48.3) {
             Robot.maxRPM = Robot.rpmLookup[1];
-        } else if(ty > 46.14) {
+          } else if(ty > 46.14) {
             Robot.maxRPM = Robot.rpmLookup[2];
-        } else if(ty > 44.1) {
+          } else if(ty > 44.1) {
             Robot.maxRPM = Robot.rpmLookup[3];
-        } else if(ty > 42.31) {
+          } else if(ty > 42.31) {
             Robot.maxRPM = Robot.rpmLookup[4];
-        } else if(ty > 39.8) {
+          } else if(ty > 39.8) {
             Robot.maxRPM = Robot.rpmLookup[5];
-        } else if(ty > 37.26) {
+          } else if(ty > 37.26) {
             Robot.maxRPM = Robot.rpmLookup[6];
-        } else if(ty > 35.84) {
+          } else if(ty > 35.84) {
             Robot.maxRPM = Robot.rpmLookup[7];
-        } else if(ty > 34.63) {
+          } else if(ty > 34.63) {
             Robot.maxRPM = Robot.rpmLookup[8];
-        }
+          } else if(ty > 33.7) {
+            Robot.maxRPM = Robot.rpmLookup[9];
+          } else if(ty > 32.5) {
+            Robot.maxRPM = Robot.rpmLookup[10];
+          } else if(ty > 31.95) {
+            Robot.maxRPM = Robot.rpmLookup[11];
+          } else if(ty > 31.45) {
+            Robot.maxRPM = Robot.rpmLookup[12];
+          } else if(ty > 30.7) {
+            Robot.maxRPM = Robot.rpmLookup[13];
+          } else {
+            Robot.maxRPM = 5350;
+          }
         Robot.m_shooterSubsystem.shootRPM(1.0);
         // try {
         //     Thread.sleep(1000);
