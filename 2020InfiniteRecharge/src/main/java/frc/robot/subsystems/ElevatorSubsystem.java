@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 
@@ -17,6 +18,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   private TalonSRX elevator0;
   private TalonSRX elevator1;
   private TalonSRX roller;
+  private DigitalInput bottomLimit;
+  private DigitalInput upperLimit;
   /**
    * Creates a new ElevatorSubsystem.
    */
@@ -30,12 +33,21 @@ public class ElevatorSubsystem extends SubsystemBase {
     roller.setInverted(false);
 
     elevator1.follow(elevator0);
+
+    bottomLimit = new DigitalInput(0);
+    upperLimit = new DigitalInput(1);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : ((Robot.m_io.xbox1_povS.get()) ? -0.5 : 0.0));
+    if(bottomLimit.get()) {
+      elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : 0.0);
+    } else if(upperLimit.get()) {
+      elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povS.get()) ? -0.5 : 0.0);
+    } else {
+      elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : ((Robot.m_io.xbox1_povS.get()) ? -0.5 : 0.0));
+    }
     roller.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povE.get()) ? 0.5 : ((Robot.m_io.xbox1_povW.get()) ? -0.5 : 0.0));
   }
 }
