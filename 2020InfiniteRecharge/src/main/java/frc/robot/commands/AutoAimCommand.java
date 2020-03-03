@@ -34,7 +34,7 @@ public class AutoAimCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double MOE = 1.5;
+    double MOE = 1.0;
     // tx = (getTV() == 1) ? getTX() : 10.0f;
     tx = LimelightDefault.getTX();
     double heading_error = -tx;

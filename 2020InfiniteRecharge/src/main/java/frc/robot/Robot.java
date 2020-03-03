@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
   public static boolean beltsReversed = false;
   public static boolean intakeOn = false;
 
-  public static int rpmLookup[] = {3175, 3225, 3275, 3450, 3500, 3575, 3625, 3675, 3750};
+  public static int rpmLookup[] = {3175, 3225, 3275, 3450, 3500, 3575, 3625, 3675, 3750, 3875, 4050, 4225, 4325, 4500};
 
   /**
    * This function is run when the robot is first started up and should be

@@ -9,7 +9,7 @@ public class TestAuto implements Autonomous {
     private double tx;
     @Override
     public void runAuto() {
-        double MOE = 1.5;
+        double MOE = 1.0;
         // tx = (getTV() == 1) ? getTX() : 10.0f;
         tx = LimelightDefault.getTX();
         double heading_error = -tx;
@@ -20,19 +20,39 @@ public class TestAuto implements Autonomous {
             steering_adjust = -0.01*heading_error;
         } else {
             steering_adjust = 0;
-        try {
-            Thread.sleep(250);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        // try {
+        //     Thread.sleep(250);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+        double ty = LimelightDefault.getTY() + 30;
+        if(ty > 50.8) {
+            Robot.maxRPM = Robot.rpmLookup[0];
+        } else if(ty > 48.3) {
+            Robot.maxRPM = Robot.rpmLookup[1];
+        } else if(ty > 46.14) {
+            Robot.maxRPM = Robot.rpmLookup[2];
+        } else if(ty > 44.1) {
+            Robot.maxRPM = Robot.rpmLookup[3];
+        } else if(ty > 42.31) {
+            Robot.maxRPM = Robot.rpmLookup[4];
+        } else if(ty > 39.8) {
+            Robot.maxRPM = Robot.rpmLookup[5];
+        } else if(ty > 37.26) {
+            Robot.maxRPM = Robot.rpmLookup[6];
+        } else if(ty > 35.84) {
+            Robot.maxRPM = Robot.rpmLookup[7];
+        } else if(ty > 34.63) {
+            Robot.maxRPM = Robot.rpmLookup[8];
         }
-        Robot.m_shooterSubsystem.shoot(0.55); //.7826
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Robot.m_intakeSubsystem.upper(0.4);
-        Robot.m_intakeSubsystem.lower(0.4);
+        Robot.m_shooterSubsystem.shootRPM(1.0);
+        // try {
+        //     Thread.sleep(1000);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+        Robot.m_intakeSubsystem.upper(0.3);
+        Robot.m_intakeSubsystem.lower(0.3);
             // Robot.m_intakeSubsystem.upper(0.7);
             // Robot.m_intakeSubsystem.lower(0.7);
         }

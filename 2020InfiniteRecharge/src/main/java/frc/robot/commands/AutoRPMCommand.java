@@ -47,6 +47,18 @@ public class AutoRPMCommand extends CommandBase {
       Robot.maxRPM = Robot.rpmLookup[7];
     } else if(ty > 34.63) {
       Robot.maxRPM = Robot.rpmLookup[8];
+    } else if(ty > 33.7) {
+      Robot.maxRPM = Robot.rpmLookup[9];
+    } else if(ty > 32.5) {
+      Robot.maxRPM = Robot.rpmLookup[10];
+    } else if(ty > 31.95) {
+      Robot.maxRPM = Robot.rpmLookup[11];
+    } else if(ty > 31.45) {
+      Robot.maxRPM = Robot.rpmLookup[12];
+    } else if(ty > 30.7) {
+      Robot.maxRPM = Robot.rpmLookup[13];
+    } else {
+      Robot.maxRPM = 5350;
     }
     finished = true;
   }
