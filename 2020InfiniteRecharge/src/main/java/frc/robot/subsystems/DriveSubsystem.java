@@ -109,7 +109,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public void arcadeDriveLookup(double x, double y) {
     double r, l;
 
-    //"I have no clue how this works ask Nathan" -Owen
+    //"I have no clue how this works ask Nathan" - Owen
     r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     SmartDashboard.putNumber("rightPower", r);

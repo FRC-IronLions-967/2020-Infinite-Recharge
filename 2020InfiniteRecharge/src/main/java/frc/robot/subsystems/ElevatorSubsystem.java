@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Servo;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.utils.Utils;
@@ -24,6 +25,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   private Servo jam0;
   private Servo jam1;
 
+  private DigitalInput bottomLimit;
+  private DigitalInput upperLimit;
   /**
    * Creates a new ElevatorSubsystem.
    */
@@ -47,6 +50,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void jam(double x){
     jam1.set(x);
 
+    elevator1.follow(elevator0);
+
+    bottomLimit = new DigitalInput(0);
+    upperLimit = new DigitalInput(1);
   }
 
   @Override
@@ -56,6 +63,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevator0.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), .12));
     elevator1.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), .12));
 
+    // if(bottomLimit.get()) {
+    //   elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : 0.0);
+    // } else if(upperLimit.get()) {
+    //   elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povS.get()) ? -0.5 : 0.0);
+    // } else {
+    //   elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : ((Robot.m_io.xbox1_povS.get()) ? -0.5 : 0.0));
+    // }
     roller.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povE.get()) ? 0.5 : ((Robot.m_io.xbox1_povW.get()) ? -0.5 : 0.0));
   }
 }
