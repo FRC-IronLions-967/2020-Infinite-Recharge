@@ -65,6 +65,7 @@ public class IO {
         JoystickButton xbox1_y = new JoystickButton(xbox1, 4);
         JoystickButton xbox1_bump_l = new JoystickButton(xbox1, 5);
         JoystickButton xbox1_bump_r = new JoystickButton(xbox1, 6);
+        JoystickButton xbox1_select = new JoystickButton(xbox1, 7);
         JoystickButton xbox1_start = new JoystickButton(xbox1, 8);
         xbox1_povN = new POVButton(xbox1, 0, 0);
         xbox1_povNE = new POVButton(xbox1, 45, 0);
@@ -79,8 +80,9 @@ public class IO {
         xbox0_povE.whenPressed(new AimRightCommand(0.05));
         xbox0_povW.whenPressed(new AimLeftCommand(0.05));
 
-        xbox1_start.whenPressed(new AutoRPMCommand());
 
+        xbox1_start.whenPressed(new AutoRPMCommand());
+        xbox1_select.whenPressed(new JamCommand());
         xbox1_a.whenPressed(new IntakeCommand(0.8));
         // xbox1_a.whenReleased(new IntakeCommand(0.0));
         xbox1_x.whenPressed(new LowerBeltCommand(0.3));

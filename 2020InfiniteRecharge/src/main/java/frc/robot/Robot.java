@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem m_intakeSubsystem;
   public static ShooterSubsystem m_shooterSubsystem;
   public static TestPIDSubsystem m_testPIDSubsystem;
+  public static ElevatorSubsystem m_elevatorSubsystem;
   public static Values m_values;
   public static Values m_robotMap;
   public static NetworkTable visionTable;
@@ -51,6 +52,7 @@ public class Robot extends TimedRobot {
   public static int maxRPM = 3500;
   public static boolean beltsReversed = false;
   public static boolean intakeOn = false;
+  public static boolean elevatorJammed = false;
 
   public static int rpmLookup[] = {3175, 3225, 3275, 3450, 3500, 3575, 3625, 3675, 3750, 3875, 4050, 4225, 4325, 4500};
 
@@ -74,6 +76,7 @@ public class Robot extends TimedRobot {
     }
 
     m_driveSubsystem = new DriveSubsystem();
+    m_elevatorSubsystem = new ElevatorSubsystem();
     m_intakeSubsystem = new IntakeSubsystem();
     m_shooterSubsystem = new ShooterSubsystem();
     m_testPIDSubsystem = new TestPIDSubsystem();
@@ -101,6 +104,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Max RPM", maxRPM);
     SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
     SmartDashboard.putBoolean("Intake On", intakeOn);
+    SmartDashboard.putBoolean("Elevator Stopped", elevatorJammed);
     SmartDashboard.putNumber("Right Speed", m_driveSubsystem.getRightSpeed());
     SmartDashboard.putNumber("Left Speed", m_driveSubsystem.getLeftSpeed());
   }

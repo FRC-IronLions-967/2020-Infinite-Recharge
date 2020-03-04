@@ -80,8 +80,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));
-    lower.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), deadband));
+    // upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));
+    // lower.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), deadband));
 
   }
 }
