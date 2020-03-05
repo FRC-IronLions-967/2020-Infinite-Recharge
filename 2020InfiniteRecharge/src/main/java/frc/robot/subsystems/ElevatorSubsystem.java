@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Servo;
@@ -37,6 +38,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     jam0 = new Servo(Integer.parseInt(Robot.m_robotMap.getValue("jam0")));
     jam1 = new Servo(Integer.parseInt(Robot.m_robotMap.getValue("jam1")));
 
+    elevator0.setNeutralMode(NeutralMode.Brake);
+    elevator1.setNeutralMode(NeutralMode.Brake);
+
     elevator0.setInverted(false);
     elevator1.setInverted(false);
     roller.setInverted(false);
@@ -50,7 +54,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void jam(double x){
     jam1.set(x);
 
-    elevator1.follow(elevator0);
+    // elevator1.follow(elevator0);
 
     bottomLimit = new DigitalInput(0);
     upperLimit = new DigitalInput(1);
@@ -59,9 +63,14 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : ((Robot.m_io.xbox1_povS.get()) ? -0.5 : 0.0));
-    elevator0.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), .12));
-    elevator1.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), .12));
+    // if(Robot.m_io.xbox1_povN.get()) {
+    //   elevator0.set(ControlMode.PercentOutput, 0.32)
+    //   elevator1.set(ControlMode.PercentOutput, )
+    // }
+    elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.48 : ((Robot.m_io.xbox1_povS.get()) ? -0.48 : 0.0));
+    elevator1.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.38 : ((Robot.m_io.xbox1_povS.get()) ? -0.38 : 0.0));
+    // elevator0.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), .12));
+    // elevator1.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), .12));
 
     // if(bottomLimit.get()) {
     //   elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : 0.0);
