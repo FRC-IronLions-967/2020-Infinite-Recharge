@@ -14,9 +14,7 @@ public class TestAuto implements Autonomous {
         tx = LimelightDefault.getTX();
         double heading_error = -tx;
         double steering_adjust = 0.0f;
-        if(tx > MOE) {
-            steering_adjust = -0.01*heading_error;
-        } else if(tx < -MOE) {
+        if(tx > MOE || tx < -MOE) {
             steering_adjust = -0.01*heading_error;
         } else {
             steering_adjust = 0;
@@ -77,6 +75,14 @@ public class TestAuto implements Autonomous {
         SmartDashboard.putNumber("rightMotor", steering_adjust);
         SmartDashboard.putNumber("leftMotor", -steering_adjust);
         SmartDashboard.putNumber("tx", tx);
+        try {
+          Thread.sleep(3000);
+          Robot.m_driveSubsystem.move(-0.3, -0.3);
+          Thread.sleep(1500);
+          Robot.m_driveSubsystem.move(0.0, 0.0);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
     }
         
     @Override
