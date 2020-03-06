@@ -54,7 +54,8 @@ public class Robot extends TimedRobot {
   public static boolean intakeOn = false;
   public static boolean elevatorJammed = false;
 
-  public static int rpmLookup[] = {3175, 3225, 3275, 3450, 3500, 3575, 3625, 3675, 3750, 3875, 4050, 4225, 4325, 4500};
+  // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
+  public static int rpmLookup[] = {3300, 3400, 3500, 3650, 3800, 4150, 4300, 4500, 4700, 4950, 5100, 5250, 5400, 5500};
 
   /**
    * This function is run when the robot is first started up and should be
@@ -173,6 +174,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_io.telopInit();
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
     CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
   }

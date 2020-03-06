@@ -39,8 +39,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
 
     intake.setInverted(false);
     outerIntake.setInverted(false);
-    lower.setInverted(false);
-    upper.setInverted(false);
+    lower.setInverted(true);
+    upper.setInverted(true);
 
     outerIntake.follow(intake);
   }
@@ -53,6 +53,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (Robot.beltsReversed) ? -x : x;
 
     intake.set(ControlMode.PercentOutput, x);
+    outerIntake.set(ControlMode.PercentOutput, x);
   }
 
   public void lower(double x) {

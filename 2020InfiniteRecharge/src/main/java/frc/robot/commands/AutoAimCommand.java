@@ -10,13 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Robot;
 import frc.robot.utils.vision.*;
 
 public class AutoAimCommand extends CommandBase {
   private boolean finished;
   private double tx;
+  private long startTime = 0;
   /**
    * Creates a new AutoAimCommand.
    */
@@ -28,6 +28,7 @@ public class AutoAimCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    startTime = System.currentTimeMillis();
     // CommandScheduler.getInstance().setDefaultCommand(Robot.m_driveSubsystem, this);
   }
 
@@ -44,12 +45,12 @@ public class AutoAimCommand extends CommandBase {
     } else {
       steering_adjust = 0;
       finished = true;
-      try {
-        Thread.sleep(250);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
     }
+      // try {
+      //   Thread.sleep(250);
+      // } catch (InterruptedException e) {
+      //   e.printStackTrace();
+      // }
     double ty = LimelightDefault.getTY() + 30;
     if(ty > 50.8) {
       Robot.maxRPM = Robot.rpmLookup[0];
@@ -80,7 +81,7 @@ public class AutoAimCommand extends CommandBase {
     } else if(ty > 30.7) {
       Robot.maxRPM = Robot.rpmLookup[13];
     } else {
-      Robot.maxRPM = 5350;
+      Robot.maxRPM = 5600;
     }
     steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
     steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
@@ -88,6 +89,9 @@ public class AutoAimCommand extends CommandBase {
     SmartDashboard.putNumber("rightMotor", steering_adjust);
     SmartDashboard.putNumber("leftMotor", -steering_adjust);
     SmartDashboard.putNumber("tx", tx);
+    if(System.currentTimeMillis() - startTime > 2500) {
+      finished = true;
+    }
   }
 
   // Called once the command ends or is interrupted.

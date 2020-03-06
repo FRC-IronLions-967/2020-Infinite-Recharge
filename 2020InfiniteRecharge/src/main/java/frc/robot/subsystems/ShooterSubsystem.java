@@ -7,11 +7,13 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANError;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
@@ -78,7 +80,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // double setPoint = 5000;
     SmartDashboard.putNumber("Setpoint", setPoint);
     if(setPoint != 0.0) {
-      controller0.setReference(setPoint, ControlType.kVelocity);
+      CANError err = controller0.setReference(setPoint, ControlType.kVelocity);
+      DriverStation.reportError(err.toString(), false);
     } else {
       flywheel0.set(0.0);
     }
@@ -91,6 +94,7 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Motor Power", flywheel0.get());
+    // flywheel0.set(1.0);
     // This method will be called once per scheduler run
   }
 }

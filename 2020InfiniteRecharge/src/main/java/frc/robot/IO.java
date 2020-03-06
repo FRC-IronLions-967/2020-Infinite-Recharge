@@ -39,6 +39,14 @@ public class IO {
     public JoystickButton xbox0_b;
     public JoystickButton xbox0_x;
     public JoystickButton xbox0_y;
+    JoystickButton xbox1_a;
+    JoystickButton xbox1_b;
+    JoystickButton xbox1_x;
+    JoystickButton xbox1_y;
+    JoystickButton xbox1_bump_l;
+    JoystickButton xbox1_bump_r;
+    JoystickButton xbox1_select;
+    JoystickButton xbox1_start;
 
     public IO() {
         //initialize both of the Xbox controllers here, 0 is the drive controller, 1 controls the manipulators
@@ -59,14 +67,14 @@ public class IO {
         xbox0_povW = new POVButton(xbox0, 270, 0);
         xbox0_povNW = new POVButton(xbox0, 315, 0);
 
-        JoystickButton xbox1_a = new JoystickButton(xbox1, 1);
-        JoystickButton xbox1_b = new JoystickButton(xbox1, 2);
-        JoystickButton xbox1_x = new JoystickButton(xbox1, 3);
-        JoystickButton xbox1_y = new JoystickButton(xbox1, 4);
-        JoystickButton xbox1_bump_l = new JoystickButton(xbox1, 5);
-        JoystickButton xbox1_bump_r = new JoystickButton(xbox1, 6);
-        JoystickButton xbox1_select = new JoystickButton(xbox1, 7);
-        JoystickButton xbox1_start = new JoystickButton(xbox1, 8);
+        xbox1_a = new JoystickButton(xbox1, 1);
+        xbox1_b = new JoystickButton(xbox1, 2);
+        xbox1_x = new JoystickButton(xbox1, 3);
+        xbox1_y = new JoystickButton(xbox1, 4);
+        xbox1_bump_l = new JoystickButton(xbox1, 5);
+        xbox1_bump_r = new JoystickButton(xbox1, 6);
+        xbox1_select = new JoystickButton(xbox1, 7);
+        xbox1_start = new JoystickButton(xbox1, 8);
         xbox1_povN = new POVButton(xbox1, 0, 0);
         xbox1_povNE = new POVButton(xbox1, 45, 0);
         xbox1_povE = new POVButton(xbox1, 90, 0);
@@ -77,6 +85,24 @@ public class IO {
         xbox1_povNW = new POVButton(xbox1, 315, 0);
         //Assigns commands to each of the buttons
         //TODO assign commands to button presses here
+        // xbox0_povE.whenPressed(new AimRightCommand(0.05));
+        // xbox0_povW.whenPressed(new AimLeftCommand(0.05));
+
+
+        // xbox1_start.whenPressed(new AutoRPMCommand());
+        // xbox1_select.whenPressed(new JamCommand());
+        // xbox1_a.whenPressed(new IntakeCommand(0.8));
+        // // xbox1_a.whenReleased(new IntakeCommand(0.0));
+        // xbox1_x.whenPressed(new LowerBeltCommand(0.3));
+        // xbox1_x.whenReleased(new LowerBeltCommand(0.0));
+        // xbox1_b.whenPressed(new UpperBeltCommand(0.3));
+        // xbox1_b.whenReleased(new UpperBeltCommand(0.0));
+        // xbox1_y.whenPressed(new ToggleBeltsCommand());
+        // xbox1_bump_l.whenPressed(new RPMDownCommand());
+        // xbox1_bump_r.whenPressed(new RPMUpCommand());
+    }
+
+    public void telopInit() {
         xbox0_povE.whenPressed(new AimRightCommand(0.05));
         xbox0_povW.whenPressed(new AimLeftCommand(0.05));
 
@@ -84,8 +110,8 @@ public class IO {
         xbox1_start.whenPressed(new AutoRPMCommand());
         xbox1_select.whenPressed(new JamCommand());
         xbox1_a.whenPressed(new IntakeCommand(0.8));
-        // xbox1_a.whenReleased(new IntakeCommand(0.0));
-        xbox1_x.whenPressed(new LowerBeltCommand(0.3));
+        xbox1_a.whenReleased(new IntakeCommand(0.0));
+        xbox1_x.whenPressed(new LowerBeltCommand(0.7));
         xbox1_x.whenReleased(new LowerBeltCommand(0.0));
         xbox1_b.whenPressed(new UpperBeltCommand(0.3));
         xbox1_b.whenReleased(new UpperBeltCommand(0.0));

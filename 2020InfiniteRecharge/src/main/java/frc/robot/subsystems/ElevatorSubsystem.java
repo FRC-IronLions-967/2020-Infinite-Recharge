@@ -20,7 +20,7 @@ import frc.robot.Robot;
 public class ElevatorSubsystem extends SubsystemBase {
   private TalonSRX elevator0;
   private TalonSRX elevator1;
-  private TalonSRX roller;
+  // private TalonSRX roller;
   private Servo jam0;
   private Servo jam1;
 
@@ -32,7 +32,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public ElevatorSubsystem() {
     elevator0 = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("elevator0")));
     elevator1 = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("elevator1")));
-    roller = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("roller")));
+    // roller = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("roller")));
     jam0 = new Servo(Integer.parseInt(Robot.m_robotMap.getValue("jam0")));
     jam1 = new Servo(Integer.parseInt(Robot.m_robotMap.getValue("jam1")));
 
@@ -41,7 +41,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     elevator0.setInverted(false);
     elevator1.setInverted(false);
-    roller.setInverted(false);
+    // roller.setInverted(false);
     
     
 
@@ -61,12 +61,18 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // if(Robot.m_io.xbox1_povN.get()) {
-    //   elevator0.set(ControlMode.PercentOutput, 0.32)
-    //   elevator1.set(ControlMode.PercentOutput, )
-    // }
-    elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.48 : ((Robot.m_io.xbox1_povS.get()) ? -0.48 : 0.0));
-    elevator1.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.38 : ((Robot.m_io.xbox1_povS.get()) ? -0.38 : 0.0));
+    if(Robot.m_io.xbox1_povN.get() || Robot.m_io.xbox1_povNE.get() || Robot.m_io.xbox1_povNW.get()) {
+      elevator0.set(ControlMode.PercentOutput, 0.46);
+      elevator1.set(ControlMode.PercentOutput, 0.395);
+    } else if(Robot.m_io.xbox1_povS.get() || Robot.m_io.xbox1_povSE.get() || Robot.m_io.xbox1_povSW.get()) {
+      elevator0.set(ControlMode.PercentOutput, -0.46);
+      elevator1.set(ControlMode.PercentOutput, -0.395);
+    } else {
+      elevator0.set(ControlMode.PercentOutput, 0.0);
+      elevator1.set(ControlMode.PercentOutput, 0.0);
+    }
+    // elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.48 : ((Robot.m_io.xbox1_povS.get()) ? -0.48 : 0.0));
+    // elevator1.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.38 : ((Robot.m_io.xbox1_povS.get()) ? -0.38 : 0.0));
     // elevator0.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), .12));
     // elevator1.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), .12));
 
@@ -77,6 +83,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     // } else {
     //   elevator0.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povN.get()) ? 0.5 : ((Robot.m_io.xbox1_povS.get()) ? -0.5 : 0.0));
     // }
-    roller.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povE.get()) ? 0.5 : ((Robot.m_io.xbox1_povW.get()) ? -0.5 : 0.0));
+    // roller.set(ControlMode.PercentOutput, (Robot.m_io.xbox1_povE.get()) ? 0.5 : ((Robot.m_io.xbox1_povW.get()) ? -0.5 : 0.0));
   }
 }
