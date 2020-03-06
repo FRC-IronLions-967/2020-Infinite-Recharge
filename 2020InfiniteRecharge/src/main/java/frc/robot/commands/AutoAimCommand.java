@@ -45,6 +45,7 @@ public class AutoAimCommand extends CommandBase {
     } else {
       steering_adjust = 0;
       finished = true;
+      Robot.m_driveSubsystem.lastAimSuccessful = true;
     }
       // try {
       //   Thread.sleep(250);

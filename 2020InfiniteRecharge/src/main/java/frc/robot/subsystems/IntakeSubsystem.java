@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
@@ -78,6 +79,13 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
 
   @Override
   public void periodic() {
+    if(Robot.beltsReversed) {
+      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.2);
+      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.2);
+    } else {
+      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
+      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
+    }
     // This method will be called once per scheduler run
     // upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));
     // lower.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), deadband));

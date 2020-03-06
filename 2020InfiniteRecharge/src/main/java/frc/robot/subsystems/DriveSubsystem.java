@@ -9,6 +9,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -25,6 +26,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   /**
    * Creates a new DriveSubsystem.
    */
+  public static boolean lastAimSuccessful = false;
+  
   public CANSparkMax rightMaster;
   public CANSparkMax rightSlave;
   public CANSparkMax leftMaster;
@@ -135,6 +138,22 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     // This method will be called once per scheduler run
     if(Robot.m_io.xbox0_a.get()) {
       CommandScheduler.getInstance().schedule(new AutoAimCommand());
+    }
+
+    if(lastAimSuccessful) {
+      Robot.m_io.xbox0.setRumble(RumbleType.kLeftRumble, 0.5);
+      Robot.m_io.xbox0.setRumble(RumbleType.kRightRumble, 0.5);
+      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.5);
+      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.5);
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      Robot.m_io.xbox0.setRumble(RumbleType.kLeftRumble, 0.0);
+      Robot.m_io.xbox0.setRumble(RumbleType.kRightRumble, 0.0);
+      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
+      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
     }
   }
 
