@@ -10,12 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class RPMUpCommand extends CommandBase {
+public class SetRPMCommand extends CommandBase {
+  private int rpm = 3900;
   private boolean finished = false;
   /**
-   * Creates a new RPMUpCommand.
+   * Creates a new SetRPMCommand.
    */
-  public RPMUpCommand() {
+  public SetRPMCommand(int rpm) {
+    this.rpm = rpm;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,9 +29,7 @@ public class RPMUpCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Robot.maxRPM < 5600) {
-      Robot.maxRPM += 50;
-    }
+    Robot.maxRPM = this.rpm;
     finished = true;
   }
 

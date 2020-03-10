@@ -20,15 +20,16 @@ public class AutoAimCommand extends CommandBase {
   /**
    * Creates a new AutoAimCommand.
    */
-  public AutoAimCommand() {
+  public AutoAimCommand(long startTime) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.startTime = startTime;
     addRequirements(Robot.m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    startTime = System.currentTimeMillis();
+    // startTime = System.currentTimeMillis();
     // CommandScheduler.getInstance().setDefaultCommand(Robot.m_driveSubsystem, this);
   }
 

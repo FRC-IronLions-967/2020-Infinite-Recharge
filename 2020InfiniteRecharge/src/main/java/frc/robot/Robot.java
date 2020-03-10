@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -49,13 +50,13 @@ public class Robot extends TimedRobot {
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
   public static Autonomous selectedAuto;
-  public static int maxRPM = 3500;
+  public static int maxRPM = 3900;
   public static boolean beltsReversed = false;
   public static boolean intakeOn = false;
   public static boolean elevatorJammed = false;
 
   // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
-  public static int rpmLookup[] = {3300, 3400, 3500, 3650, 3800, 4150, 4300, 4500, 4700, 4950, 5100, 5250, 5400, 5500};
+  public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
 
   /**
    * This function is run when the robot is first started up and should be
@@ -100,6 +101,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    // CameraServer.getInstance().startAutomaticCapture();
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Shooter RPM", m_shooterSubsystem.getRPM());
     SmartDashboard.putNumber("Max RPM", maxRPM);
@@ -155,6 +157,8 @@ public class Robot extends TimedRobot {
     controllerLeft.setIZone(kIz);
     controllerLeft.setFF(kFF);
     controllerLeft.setOutputRange(kMinOutput, kMaxOutput);
+
+    selectedAuto.runAuto();
   }
 
   /**
@@ -162,7 +166,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    selectedAuto.runAuto();
+    // selectedAuto.runAuto();
   }
 
   /**
@@ -175,6 +179,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     m_io.telopInit();
+    CameraServer.getInstance().startAutomaticCapture();
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
     CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
   }

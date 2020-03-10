@@ -10,21 +10,21 @@ public class TestAuto implements Autonomous {
     private boolean moved = false;
     @Override
     public void runAuto() {
-        double MOE = 1.0;
-        // tx = (getTV() == 1) ? getTX() : 10.0f;
-        tx = LimelightDefault.getTX();
-        double heading_error = -tx;
-        double steering_adjust = 0.0f;
-        if(tx > MOE || tx < -MOE) {
-            steering_adjust = -0.01*heading_error;
-        } else {
-            steering_adjust = 0;
+        // double MOE = 1.0;
+        // // tx = (getTV() == 1) ? getTX() : 10.0f;
+        // tx = LimelightDefault.getTX();
+        // double heading_error = -tx;
+        // double steering_adjust = 0.0f;
+        // if(tx > MOE || tx < -MOE) {
+        //     steering_adjust = -0.01*heading_error;
+        // } else {
+        //     steering_adjust = 0;
         // try {
         //     Thread.sleep(250);
         // } catch (InterruptedException e) {
         //     e.printStackTrace();
         // }
-        Robot.maxRPM = 3500;
+        Robot.maxRPM = 3900;
         // double ty = LimelightDefault.getTY() + 30;
         // if(ty > 50.8) {
         //     Robot.maxRPM = Robot.rpmLookup[0];
@@ -63,13 +63,20 @@ public class TestAuto implements Autonomous {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Robot.m_intakeSubsystem.upper(0.3);
-        Robot.m_intakeSubsystem.lower(0.3);
+        Robot.m_intakeSubsystem.upper(0.2);
+        Robot.m_intakeSubsystem.lower(0.2);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Robot.m_intakeSubsystem.upper(0.0);
+        Robot.m_intakeSubsystem.lower(0.0);
             // Robot.m_intakeSubsystem.upper(0.7);
             // Robot.m_intakeSubsystem.lower(0.7);
         if(!moved) {
           try {
-            Thread.sleep(3000);
+            // Thread.sleep(3000);
             Robot.m_driveSubsystem.move(-0.3, -0.3);
             
             Thread.sleep(1500);
@@ -79,15 +86,12 @@ public class TestAuto implements Autonomous {
             e.printStackTrace();
           }
         }
-        }
-        steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
-        steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
+        Robot.m_shooterSubsystem.shootRPM(0.0);
         // controllerLeft.setReference(steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
         // controllerRight.setReference(-steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-        Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
         // System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
-        SmartDashboard.putNumber("rightMotor", steering_adjust);
-        SmartDashboard.putNumber("leftMotor", -steering_adjust);
+        // SmartDashboard.putNumber("rightMotor", steering_adjust);
+        // SmartDashboard.putNumber("leftMotor", -steering_adjust);
         SmartDashboard.putNumber("tx", tx);
     }
         

@@ -118,5 +118,7 @@ public class IO {
         xbox1_y.whenPressed(new ToggleBeltsCommand());
         xbox1_bump_l.whenPressed(new RPMDownCommand());
         xbox1_bump_r.whenPressed(new RPMUpCommand());
+        xbox1_povW.whenPressed(new SetRPMCommand(3900));
+        xbox1_povE.whenPressed(new SetRPMCommand(4500));
     }
 }

@@ -62,11 +62,11 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if(Robot.m_io.xbox1_povN.get() || Robot.m_io.xbox1_povNE.get() || Robot.m_io.xbox1_povNW.get()) {
-      elevator0.set(ControlMode.PercentOutput, 0.46);
-      elevator1.set(ControlMode.PercentOutput, 0.395);
+      elevator0.set(ControlMode.PercentOutput, 0.66);
+      elevator1.set(ControlMode.PercentOutput, 0.59);
     } else if(Robot.m_io.xbox1_povS.get() || Robot.m_io.xbox1_povSE.get() || Robot.m_io.xbox1_povSW.get()) {
-      elevator0.set(ControlMode.PercentOutput, -0.46);
-      elevator1.set(ControlMode.PercentOutput, -0.395);
+      elevator0.set(ControlMode.PercentOutput, -0.66);
+      elevator1.set(ControlMode.PercentOutput, -0.59);
     } else {
       elevator0.set(ControlMode.PercentOutput, 0.0);
       elevator1.set(ControlMode.PercentOutput, 0.0);

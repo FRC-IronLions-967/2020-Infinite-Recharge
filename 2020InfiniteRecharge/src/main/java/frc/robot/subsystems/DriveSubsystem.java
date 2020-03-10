@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.commands.AutoAimCommand;
+import frc.robot.commands.RumbleCommand;
 import frc.robot.utils.values.*;
 
 import com.revrobotics.CANSparkMax;
@@ -113,8 +114,10 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     double r, l;
 
     //"I have no clue how this works ask Nathan" - Owen
-    r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
-    l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
+    // r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
+    // l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
+    r = ((x > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
+    l = ((x > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     SmartDashboard.putNumber("rightPower", r);
     SmartDashboard.putNumber("leftPower", l);
     move(r, l);
@@ -137,23 +140,25 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public void periodic() {
     // This method will be called once per scheduler run
     if(Robot.m_io.xbox0_a.get()) {
-      CommandScheduler.getInstance().schedule(new AutoAimCommand());
+      CommandScheduler.getInstance().schedule(new AutoAimCommand(System.currentTimeMillis()));
     }
 
     if(lastAimSuccessful) {
-      Robot.m_io.xbox0.setRumble(RumbleType.kLeftRumble, 0.5);
-      Robot.m_io.xbox0.setRumble(RumbleType.kRightRumble, 0.5);
-      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.5);
-      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.5);
-      try {
-        Thread.sleep(500);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      Robot.m_io.xbox0.setRumble(RumbleType.kLeftRumble, 0.0);
-      Robot.m_io.xbox0.setRumble(RumbleType.kRightRumble, 0.0);
-      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
-      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
+      new RumbleCommand().initialize();
+    //   Robot.m_io.xbox0.setRumble(RumbleType.kLeftRumble, 0.5);
+    //   Robot.m_io.xbox0.setRumble(RumbleType.kRightRumble, 0.5);
+    //   Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.5);
+    //   Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.5);
+    //   try {
+    //     Thread.sleep(500);
+    //   } catch (InterruptedException e) {
+    //     e.printStackTrace();
+    //   }
+    //   Robot.m_io.xbox0.setRumble(RumbleType.kLeftRumble, 0.0);
+    //   Robot.m_io.xbox0.setRumble(RumbleType.kRightRumble, 0.0);
+    //   Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
+    //   Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
+    //   lastAimSuccessful = false;
     }
   }
 
