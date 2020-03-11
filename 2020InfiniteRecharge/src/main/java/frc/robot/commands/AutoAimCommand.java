@@ -42,7 +42,7 @@ public class AutoAimCommand extends CommandBase {
     double heading_error = -tx;
     double steering_adjust = 0.0f;
     if(tx > MOE || tx < -MOE) {
-      steering_adjust = -0.01*heading_error;
+      steering_adjust = -0.02*heading_error;
     } else {
       steering_adjust = 0;
       finished = true;

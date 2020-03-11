@@ -1,10 +1,12 @@
 package frc.robot.autonomous;
 
+import com.revrobotics.CANEncoder;
+
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
-public class TestAuto implements Autonomous {
+public class TrenchAuto implements Autonomous {
     private double tx;
     private boolean moved = false;
     @Override
@@ -71,26 +73,17 @@ public class TestAuto implements Autonomous {
         }
         Robot.m_intakeSubsystem.upper(0.0);
         Robot.m_intakeSubsystem.lower(0.0);
-            // Robot.m_intakeSubsystem.upper(0.7);
-            // Robot.m_intakeSubsystem.lower(0.7);
-        if(!moved) {
-          try {
-            // Thread.sleep(3000);
-            Robot.m_driveSubsystem.move(-0.3, -0.3);
-            
-            Thread.sleep(1500);
-            Robot.m_driveSubsystem.move(0.0, 0.0);
-            moved = true;
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-        }
         Robot.m_shooterSubsystem.shootRPM(0.0);
-        // controllerLeft.setReference(steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-        // controllerRight.setReference(-steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-        // System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
-        // SmartDashboard.putNumber("rightMotor", steering_adjust);
-        // SmartDashboard.putNumber("leftMotor", -steering_adjust);
+
+        if(!moved) {
+          Robot.m_driveSubsystem.move(-0.3, -0.3);
+          CANEncoder rEncoder = Robot.m_driveSubsystem.rightMaster.getEncoder();
+          CANEncoder lEncoder = Robot.m_driveSubsystem.leftMaster.getEncoder();
+          rEncoder.setPosition(0.0);
+          lEncoder.setPosition(0.0);
+          while(rEncoder.getPosition() < 20 && lEncoder.getPosition() < 20);
+          Robot.m_driveSubsystem.move(0.0, 0.0);
+        }
         SmartDashboard.putNumber("tx", tx);
     }
         

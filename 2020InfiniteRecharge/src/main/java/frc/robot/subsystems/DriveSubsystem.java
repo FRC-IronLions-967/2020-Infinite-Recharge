@@ -158,7 +158,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     //   Robot.m_io.xbox0.setRumble(RumbleType.kRightRumble, 0.0);
     //   Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
     //   Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
-    //   lastAimSuccessful = false;
+      lastAimSuccessful = false;
     }
   }
 
