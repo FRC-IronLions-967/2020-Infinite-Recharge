@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
+import frc.robot.utils.logging.Logger;
 import frc.robot.autonomous.*;
 
 import java.io.File;
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
   public static boolean beltsReversed = false;
   public static boolean intakeOn = false;
   public static boolean elevatorJammed = false;
+  public static Logger logger;
 
   // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
   public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
@@ -73,6 +75,7 @@ public class Robot extends TimedRobot {
     try {
       m_values = new Values(new File("/home/lvuser/deploy/values.properties"), new String[] {"deadband"});
       m_robotMap = new Values(new File("/home/lvuser/deploy/robotMap.properties"), new String[] {"rightMaster", "rightSlave", "leftMaster", "leftSlave"});
+      logger = new Logger("/home/lvuser/log.csv", ',', null);
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
@@ -110,6 +113,13 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Elevator Stopped", elevatorJammed);
     SmartDashboard.putNumber("Right Speed", m_driveSubsystem.getRightSpeed());
     SmartDashboard.putNumber("Left Speed", m_driveSubsystem.getLeftSpeed());
+    try {
+      logger.log(new String[] {Double.toString(m_shooterSubsystem.getRPM()), Double.toString(maxRPM),
+        Boolean.toString(beltsReversed), Boolean.toString(intakeOn), Boolean.toString(elevatorJammed),
+        Double.toString(m_driveSubsystem.getRightSpeed()), Double.toString(m_driveSubsystem.getLeftSpeed())});
+    } catch (IOException e) {
+      DriverStation.reportError(e.getMessage(), e.getStackTrace());
+    }
   }
 
   /**
