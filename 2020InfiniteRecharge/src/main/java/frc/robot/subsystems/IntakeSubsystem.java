@@ -29,10 +29,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
 
 
   public IntakeSubsystem() {
-    //initialize the Victor objects
-    // intake = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
-    // lower = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));
-    // upper = new VictorSPX(Integer.parseInt(Robot.m_robotMap.getValue("upperBelt")));
+    //initialize motor controller objects
     intake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
     outerIntake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("outerIntake")));
     lower = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("lowerBelt")));

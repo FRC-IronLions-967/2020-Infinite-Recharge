@@ -21,7 +21,6 @@ import frc.robot.Robot;
 public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax flywheel0;
   private CANSparkMax flywheel1;
-  // private double maxRPM = 5000;
   private CANPIDController controller0;
   private CANPIDController controller1;
   /**
@@ -29,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public ShooterSubsystem() {
     
-    //Assigns the robot IDs fro mthe robotMap.properties file
+    //Assigns the robot IDs from the robotMap.properties file
     flywheel0 = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("flywheel1")), MotorType.kBrushless);
     flywheel1 = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("flywheel0")), MotorType.kBrushless);
     
@@ -42,12 +41,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //PID stuff
     controller0 = flywheel0.getPIDController();
-    // controller1 = flywheel1.getPIDController();
 
     double kP = 9.0e-8; 
-    // double kP = 3.2e-4;
-    // double kP = 7.0e-4; 
-    // double kI = 0.0;
     double kI = 2.7e-8;
     double kD = 0; 
     double kIz = 0; 
@@ -62,12 +57,6 @@ public class ShooterSubsystem extends SubsystemBase {
     controller0.setFF(kFF);
     controller0.setOutputRange(kMinOutput, kMaxOutput);
 
-    // controller1.setP(kP);
-    // controller1.setI(kI);
-    // controller1.setD(kD);
-    // controller1.setIZone(kIz);
-    // controller1.setFF(kFF);
-    // controller1.setOutputRange(kMinOutput, kMaxOutput);
   }
 
   public void shoot(double power) {
@@ -77,7 +66,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shootRPM(double power) {
     double setPoint = power * Robot.maxRPM;
-    // double setPoint = 5000;
     SmartDashboard.putNumber("Setpoint", setPoint);
     if(setPoint != 0.0) {
       CANError err = controller0.setReference(setPoint, ControlType.kVelocity);
@@ -94,7 +82,6 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Motor Power", flywheel0.get());
-    // flywheel0.set(1.0);
     // This method will be called once per scheduler run
   }
 }
