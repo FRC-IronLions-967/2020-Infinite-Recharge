@@ -33,7 +33,20 @@ public abstract class MatrixOperations {
     }
 
     //multiplies m1 times m2, throws a DimensionMismatchException if the number of columns in m1 != to the number of rows in m2
-    //public static Matrix multiply(Matrix m1, Matrix m2) throws DimensionMismatchException {
+    //please note that this uses a triple for loop, so it is rather computationally expensive
+    public static Matrix multiply(Matrix m1, Matrix m2) throws DimensionMismatchException {
+        //columns of first matrix must match rows in second or else multiplication cannot be performed
+        if(m1.getColumns() != m2.getRows()) throw new DimensionMismatchException("Error multiplying matrices: columns of first does not equal rows of second");
 
-    //}
+        double result[][] = new double[m1.getRows()][m2.getColumns()];
+        for(int i = 0; i < m1.getRows(); i++) {
+            for(int j = 0; j < m2.getColumns(); j++) {
+                for(int k = 0; k < m2.getRows(); k++) {
+                    result[i][j] += m1.getElement(i, k) + m2.getElement(k, j);
+                }
+            }
+        }
+
+        return new Matrix(result);
+    }
 }

@@ -63,6 +63,12 @@ public class Matrix {
         return 0;
     }
 
+    //sets the element at the specified position to the new value
+    public void setElement(int row, int column, double value) {
+        if(row >= rows || column >= columns) return;
+        mat[row][column] = value;
+    }
+
     //get the element at the specified position
     //returns the element, or 0.0 if the element does not exist
     public double getElement(int row, int column) {
@@ -83,7 +89,7 @@ public class Matrix {
     }
 
     //adds otherMatrix to this matrix object
-    //if you wish to add two matrices without changing either, use MatrixOperations - TODO
+    //if you wish to add two matrices without changing either, use MatrixOperations
     public void addMatrixToThis(Matrix otherMatrix) throws DimensionMismatchException {
         if(rows != otherMatrix.getRows() || columns != otherMatrix.getColumns()) {
             throw new DimensionMismatchException("Error adding matrices: dimensions do not match");
@@ -96,7 +102,7 @@ public class Matrix {
     }
 
     //subtracts otherMatrix from this matrix object
-    //if you wish to subtract two matrices without changing either, use MatrixOperations - TODO
+    //if you wish to subtract two matrices without changing either, use MatrixOperations
     public void subtractMatrixFromThis(Matrix otherMatrix) throws DimensionMismatchException {
         if(rows != otherMatrix.getRows() || columns != otherMatrix.getColumns()) {
             throw new DimensionMismatchException("Error subtracting matrices: dimensions do not match");
@@ -106,5 +112,16 @@ public class Matrix {
                 mat[i][j] = mat[i][j] - otherMatrix.getElement(i, j);
             }
         }
+    }
+
+    //returns the transposition of this matrix
+    public Matrix transpose() {
+        double d[][] = new double[columns][rows];
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                d[j][i] = mat[i][j];
+            }
+        }
+        return new Matrix(d);
     }
 }
