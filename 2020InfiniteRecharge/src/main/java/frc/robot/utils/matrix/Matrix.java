@@ -1,3 +1,9 @@
+/*
+So I (Nathan) wrote this before realizing that I didn't want and/or need to rewrite some complex matrix math and adding the
+apache commons math library to handle some of that.  Probably should rewrite the Kalman filter class to use those instead but
+I'm lazy and this is just a proof of concept
+*/
+
 package frc.robot.utils.matrix;
 
 import frc.robot.utils.exceptions.*;
@@ -124,4 +130,5 @@ public class Matrix {
         }
         return new Matrix(d);
     }
+
 }

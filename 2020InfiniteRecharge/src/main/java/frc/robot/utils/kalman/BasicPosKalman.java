@@ -2,6 +2,7 @@ package frc.robot.utils.kalman;
 
 import frc.robot.utils.matrix.*;
 import frc.robot.utils.exceptions.*;
+import org.apache.commons.math3.linear.*;
 
 public class BasicPosKalman {
     //state matrix
@@ -22,10 +23,12 @@ public class BasicPosKalman {
     private Matrix k;
     //final measurement state matrix
     private Matrix y;
-    //measured state matrix
-    private Matrix xm;
     //coeffecient for measured state matrix in measurement equation
     private Matrix c;
+    //coefficient matrix used for calculating kalman gain
+    private Matrix h;
+    //identity matrix
+    private Matrix i;
 
     //right now this configures the filter to track acceleration, velocity, and position in x and y directions
     public BasicPosKalman() {
@@ -55,7 +58,6 @@ public class BasicPosKalman {
         pp = new Matrix(6, 6);
         k = new Matrix(6, 1);
         y = new Matrix(6, 1);
-        xm = new Matrix(6, 1);
         //we don't have a way to directly measure velocity so this matrix zeroes those from the measurement
         c = new Matrix(new double[][] {{0, 0, 0, 0, 0, 0},
                                        {0, 0, 0, 0, 0, 0},
@@ -63,9 +65,23 @@ public class BasicPosKalman {
                                        {0, 0, 0, 1, 0, 0},
                                        {0, 0, 0, 0, 1, 0},
                                        {0, 0, 0, 0, 0, 1}});
+
+        h = new Matrix(new double[][] {{1, 0, 0, 0, 0, 0},
+                                       {0, 1, 0, 0, 0, 0},
+                                       {0, 0, 1, 0, 0, 0},
+                                       {0, 0, 0, 1, 0, 0},
+                                       {0, 0, 0, 0, 1, 0},
+                                       {0, 0, 0, 0, 0, 1}});
+
+        i = new Matrix(new double[][] {{1, 0, 0, 0, 0, 0},
+                                       {0, 1, 0, 0, 0, 0},
+                                       {0, 0, 1, 0, 0, 0},
+                                       {0, 0, 0, 1, 0, 0},
+                                       {0, 0, 0, 0, 1, 0},
+                                       {0, 0, 0, 0, 0, 1}});
     }
 
-    public void predict() {
+    public void predict() throws DimensionMismatchException {
         //x_p = ax + bu = w (not including w just yet - it's a noise matrix)
         xp = MatrixOperations.add(MatrixOperations.multiply(a, x), MatrixOperations.multiply(b, u));
         //p_p = a * p * a^T + q (also not including q as it is a noise matrix)
@@ -73,7 +89,19 @@ public class BasicPosKalman {
     }
 
     //m is a matrix created with all of the values from the sensors
-    public void measure(Matrix m) {
-        
+    //r is a matrix that holds the covariances of all of the sensor data
+    //calculates the measured position and the kalman gain
+    public void measure(Matrix xm, Matrix r) throws DimensionMismatchException {
+        y = MatrixOperations.multiply(c, xm);
+        //i split this into two lines because it was even more unreadable the other way
+        //the equation is: (pp*h)/((h*pp*h^T) + r)
+        k = MatrixOperations.add(MatrixOperations.multiply(MatrixOperations.multiply(h, pp), h.transpose()), r);
+        k = MatrixOperations.multiply(new Matrix(MatrixUtils.inverse(new Array2DRowRealMatrix(k.getMat())).getData()),
+        MatrixOperations.multiply(h, pp));
+    }
+
+    public void update() throws DimensionMismatchException {
+        x = MatrixOperations.add(xp, MatrixOperations.multiply(k, MatrixOperations.subtract(y, MatrixOperations.multiply(h, x))));
+        p = MatrixOperations.multiply(MatrixOperations.subtract(i, MatrixOperations.multiply(k, h)), p);
     }
 }
