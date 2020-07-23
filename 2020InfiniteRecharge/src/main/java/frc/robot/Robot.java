@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
+import frc.robot.utils.kalman.BasicPosKalman;
 import frc.robot.utils.logging.Logger;
+import frc.robot.utils.matrix.Matrix;
 import frc.robot.autonomous.*;
 
 import java.io.File;
@@ -56,6 +58,35 @@ public class Robot extends TimedRobot {
   public static boolean intakeOn = false;
   public static boolean elevatorJammed = false;
   public static Logger logger;
+  public static BasicPosKalman kalman;
+
+  //the following matrices control the kalman filter, they will require some time and effort to tune, but will hopefully pay
+  //dividends with their ability to track position with a very high degree of accuracy
+
+  //modify the values here based on the starting errors, high values mean higher error, meaning that these values will change faster
+  public static Matrix p = new Matrix(new double[][] {{1.0, 0, 0, 0, 0, 0}, //x pos error
+                                              {0, 1.0, 0, 0, 0, 0}, //y pos error
+                                              {0, 0, 1.0, 0, 0, 0}, //x veloc error
+                                              {0, 0, 0, 1.0, 0, 0}, //y veloc error
+                                              {0, 0, 0, 0, 1.0, 0}, //x accel error
+                                              {0, 0, 0, 0, 0, 1.0}}); //y accel error
+
+  //modify the values here based on the starting position, velocity, and acceleration                                              
+  public static Matrix x = new Matrix(new double[][] {{0.0}, //pos on x axis
+                                                    {0.0}, //pos on y axis
+                                                    {0.0}, //units/sec on x axis
+                                                    {0.0}, //units/sec on y axis
+                                                    {0.0}, //accelerating at units/sec^2 on x axis
+                                                    {0.0}}); //accelerating at units/sec^2 on y axis
+
+  
+  //modify the values here to reflect the relative errors in the sensors
+  public static Matrix r = new Matrix(new double[][] {{1.0, 0, 0, 0, 0, 0},
+                                                    {0, 1.0, 0, 0, 0, 0},
+                                                    {0, 0, 1.0, 0, 0, 0},
+                                                    {0, 0, 0, 1.0, 0, 0},
+                                                    {0, 0, 0, 0, 1.0, 0},
+                                                    {0, 0, 0, 0, 0, 1.0}});
 
   // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
   public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
@@ -86,6 +117,7 @@ public class Robot extends TimedRobot {
     m_shooterSubsystem = new ShooterSubsystem();
     m_testPIDSubsystem = new TestPIDSubsystem();
     m_io = new IO();
+    kalman = new BasicPosKalman(x, p);
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     //for some reason, the getter will create the table if it already exists
@@ -120,6 +152,11 @@ public class Robot extends TimedRobot {
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
+
+    kalman.predict();
+    //the matrix object created here needs to take in the values from the sensors to feed into the filter
+    kalman.measure(new Matrix(new double[][] {{0.0}, {0.0}, {0.0}, {0.0}, {0.0}, {0.0}}), r);
+    kalman.update();
   }
 
   /**

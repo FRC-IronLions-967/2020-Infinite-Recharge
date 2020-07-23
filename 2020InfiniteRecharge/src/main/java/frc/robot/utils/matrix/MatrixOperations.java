@@ -26,7 +26,7 @@ public abstract class MatrixOperations {
         double[][] result = new double[m1.getRows()][m1.getColumns()];
         for(int i = 0; i < m1.getRows(); i++) {
             for(int j = 0; j < m1.getColumns(); j++) {
-                result[i][j] = m1.getElement(i, j) + m2.getElement(i, j);
+                result[i][j] = m1.getElement(i, j) - m2.getElement(i, j);
             }
         }
         return new Matrix(result);
@@ -42,7 +42,7 @@ public abstract class MatrixOperations {
         for(int i = 0; i < m1.getRows(); i++) {
             for(int j = 0; j < m2.getColumns(); j++) {
                 for(int k = 0; k < m2.getRows(); k++) {
-                    result[i][j] += m1.getElement(i, k) + m2.getElement(k, j);
+                    result[i][j] += m1.getElement(i, k) * m2.getElement(k, j);
                 }
             }
         }
