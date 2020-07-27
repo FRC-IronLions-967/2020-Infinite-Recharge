@@ -91,7 +91,11 @@ public class Matrix {
     //returns the specified column, or null if it doesn't exist
     public double[] getColumn(int columnNum) {
         if(columnNum >= columns) return null;
-        return mat[columnNum];
+        double[] result = new double[columns];
+        for(int i = 0; i < columns; i++) {
+            result[i] = mat[i][columnNum];
+        }
+        return result;
     }
 
     //adds otherMatrix to this matrix object

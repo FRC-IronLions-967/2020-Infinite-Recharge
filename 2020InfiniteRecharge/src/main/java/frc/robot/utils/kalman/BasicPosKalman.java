@@ -51,6 +51,7 @@ public class BasicPosKalman {
         x = init;
         // u = new Matrix(new double[][] {{x.getElement(2, 0)}, {x.getElement(3, 0)}, {x.getElement(4, 0)}, {x.getElement(5, 0)}});
         xp = new Matrix(6, 1);
+        //this matrix is initialized for the 50 Hz of the periodic functions
         a = new Matrix(new double[][] {{1, 0, .02, 0, .002, 0},
                                        {0, 1, 0, .02, 0, .002},
                                        {0, 0, 1, 0, .02, 0},
