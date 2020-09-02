@@ -10,7 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.kalman.BasicPosKalman;
 import frc.robot.utils.navigation.Tracker2D;
-import frc.robot.utils.matrix.*;
+import org.apache.commons.math3.linear.*;
 
 public class KalmanSubsystem extends SubsystemBase {
   private BasicPosKalman posKalman;
@@ -20,7 +20,7 @@ public class KalmanSubsystem extends SubsystemBase {
   //dividends with their ability to track position with a very high degree of accuracy
 
   //modify the values here based on the starting errors, high values mean higher error, meaning that these values will change faster
-  public static final Matrix p = new Matrix(new double[][] {{1.0, 0, 0, 0, 0, 0}, //x pos error
+  public static final Array2DRowRealMatrix p = new Array2DRowRealMatrix(new double[][] {{1.0, 0, 0, 0, 0, 0}, //x pos error
                                               {0, 1.0, 0, 0, 0, 0}, //y pos error
                                               {0, 0, 1.0, 0, 0, 0}, //x veloc error
                                               {0, 0, 0, 1.0, 0, 0}, //y veloc error
@@ -28,7 +28,7 @@ public class KalmanSubsystem extends SubsystemBase {
                                               {0, 0, 0, 0, 0, 1.0}}); //y accel error
 
   //modify the values here based on the starting position, velocity, and acceleration                                              
-  public static final Matrix x = new Matrix(new double[][] {{0.0}, //pos on x axis
+  public static final Array2DRowRealMatrix x = new Array2DRowRealMatrix(new double[][] {{0.0}, //pos on x axis
                                                     {0.0}, //pos on y axis
                                                     {0.0}, //units/sec on x axis
                                                     {0.0}, //units/sec on y axis
@@ -37,7 +37,7 @@ public class KalmanSubsystem extends SubsystemBase {
 
   
   //modify the values here to reflect the relative errors in the sensors
-  public static final Matrix r = new Matrix(new double[][] {{1.0, 0, 0, 0, 0, 0},
+  public static final Array2DRowRealMatrix r = new Array2DRowRealMatrix(new double[][] {{1.0, 0, 0, 0, 0, 0},
                                                     {0, 1.0, 0, 0, 0, 0},
                                                     {0, 0, 1.0, 0, 0, 0},
                                                     {0, 0, 0, 1.0, 0, 0},
@@ -66,7 +66,7 @@ public class KalmanSubsystem extends SubsystemBase {
     posKalman.predict();
     //the matrix object created here needs to take in the values from the sensors to feed into the filter
     //TODO get the values here from the various sensors
-    posKalman.measure(new Matrix(new double[][] {{0.0}, {0.0}, {0.0}, {0.0}, {0.0}, {0.0}}), r);
+    posKalman.measure(new Array2DRowRealMatrix(new double[][] {{0.0}, {0.0}, {0.0}, {0.0}, {0.0}, {0.0}}), r);
     posKalman.update();
     tracker.update(posKalman.getX().getColumn(0));
   }

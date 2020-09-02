@@ -7,6 +7,7 @@ I'm lazy and this is just a proof of concept
 package frc.robot.utils.matrix;
 
 import frc.robot.utils.exceptions.*;
+import org.apache.commons.math3.linear.*;
 
 public class Matrix {
     private int rows;
@@ -144,5 +145,37 @@ public class Matrix {
         }
         System.out.println();
     }
+
+
+    //this begins the interface methods that I need to implement
+
+    //returns this Matrix plus m as a Matrix object
+    // public Matrix add(RealMatrix m) throws DimensionMismatchException {
+    //     if(rows != otherMatrix.getRows() || columns != otherMatrix.getColumns()) {
+    //         throw new DimensionMismatchException("Error adding matrices: dimensions do not match");
+    //     }
+    //     double result[][] = new double[rows][columns];
+    //     for(int i = 0; i < rows; i++) {
+    //         for(int j = 0; j < columns; j++) {
+    //             result[i][j] = mat[i][j] + otherMatrix.getElement(i, j);
+    //         }
+    //     }
+    //     return new Matrix(result);
+    // }
+
+    // //adds increment to the value already stored at the position row, column
+    // public void addToEntry(int row, int column, double increment) throws DimensionMismatchException {
+    //     if(row > rows || column > columns) {
+    //         throw new DimensionMismatchException("Matrix position out of bounds");
+    //     }
+        
+    //     mat[row][column] += increment;
+    // }
+
+    // //returns a copy of this Matrix
+    // public Matrix copy() {
+    //     return this.clone();
+    // }
+
 
 }

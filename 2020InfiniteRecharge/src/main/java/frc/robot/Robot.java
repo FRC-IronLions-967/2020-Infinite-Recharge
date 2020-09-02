@@ -20,7 +20,6 @@ import frc.robot.subsystems.*;
 import frc.robot.utils.values.Values;
 import frc.robot.utils.kalman.BasicPosKalman;
 import frc.robot.utils.logging.Logger;
-import frc.robot.utils.matrix.Matrix;
 import frc.robot.autonomous.*;
 
 import java.io.File;

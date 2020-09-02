@@ -1,8 +1,9 @@
 package frc.robot.utils.matrix;
 
 import frc.robot.utils.exceptions.DimensionMismatchException;
+import org.apache.commons.math3.linear.*;
 
-public abstract class MatrixOperations {
+public class MatrixOperations {
 
     //adds m1 and m2, throws a DimensionMismatchException if the operation cannot be performed
     public static Matrix add(Matrix m1, Matrix m2) throws DimensionMismatchException {
