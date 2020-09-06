@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
   public static boolean intakeOn = false;
   public static boolean elevatorJammed = false;
   public static Logger logger;
+  SubsystemsInstance inst;
 
   // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
   public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    inst = SubsystemsInstance.getInstance();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("Test Auto", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -96,17 +98,17 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // CameraServer.getInstance().startAutomaticCapture();
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Shooter RPM", m_shooterSubsystem.getRPM());
+    SmartDashboard.putNumber("Shooter RPM", inst.m_shooterSubsystem.getRPM());
     SmartDashboard.putNumber("Max RPM", maxRPM);
     SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
     SmartDashboard.putBoolean("Intake On", intakeOn);
     SmartDashboard.putBoolean("Elevator Stopped", elevatorJammed);
-    SmartDashboard.putNumber("Right Speed", m_driveSubsystem.getRightSpeed());
-    SmartDashboard.putNumber("Left Speed", m_driveSubsystem.getLeftSpeed());
+    SmartDashboard.putNumber("Right Speed", inst.m_driveSubsystem.getRightSpeed());
+    SmartDashboard.putNumber("Left Speed", inst.m_driveSubsystem.getLeftSpeed());
     try {
-      logger.log(new String[] {Double.toString(m_shooterSubsystem.getRPM()), Double.toString(maxRPM),
+      logger.log(new String[] {Double.toString(inst.m_shooterSubsystem.getRPM()), Double.toString(maxRPM),
         Boolean.toString(beltsReversed), Boolean.toString(intakeOn), Boolean.toString(elevatorJammed),
-        Double.toString(m_driveSubsystem.getRightSpeed()), Double.toString(m_driveSubsystem.getLeftSpeed())});
+        Double.toString(inst.m_driveSubsystem.getRightSpeed()), Double.toString(inst.m_driveSubsystem.getLeftSpeed())});
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
@@ -141,8 +143,8 @@ public class Robot extends TimedRobot {
     double kMaxOutput = 1; 
     double kMinOutput = -1;
 
-    controllerRight = m_driveSubsystem.rightMaster.getPIDController();
-    controllerLeft = m_driveSubsystem.leftMaster.getPIDController();
+    controllerRight = inst.m_driveSubsystem.rightMaster.getPIDController();
+    controllerLeft = inst.m_driveSubsystem.leftMaster.getPIDController();
 
     controllerRight.setP(kP);
     controllerRight.setI(kI);
@@ -180,8 +182,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     m_io.telopInit();
     CameraServer.getInstance().startAutomaticCapture();
-    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new ArcadeDriveLookupCommand());
-    CommandScheduler.getInstance().setDefaultCommand(m_shooterSubsystem, new ShooterCommand());
+    CommandScheduler.getInstance().setDefaultCommand(inst.m_driveSubsystem, new ArcadeDriveLookupCommand());
+    CommandScheduler.getInstance().setDefaultCommand(inst.m_shooterSubsystem, new ShooterCommand());
   }
 
   /**

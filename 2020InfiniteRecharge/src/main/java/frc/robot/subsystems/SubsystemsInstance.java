@@ -15,7 +15,7 @@ public class SubsystemsInstance {
     public ShooterSubsystem m_shooterSubsystem;
     public TestPIDSubsystem m_testPIDSubsystem;
     public ElevatorSubsystem m_elevatorSubsystem;
-    public KalmanSubsystem m_kalmanSubsystem;
+    // public KalmanSubsystem m_kalmanSubsystem;
 
     private SubsystemsInstance() {
         m_driveSubsystem = new DriveSubsystem();
@@ -23,7 +23,7 @@ public class SubsystemsInstance {
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
         m_testPIDSubsystem = new TestPIDSubsystem();
-        m_kalmanSubsystem = new KalmanSubsystem();
+        // m_kalmanSubsystem = new KalmanSubsystem();
     }
 
     public static SubsystemsInstance getInstance() {
