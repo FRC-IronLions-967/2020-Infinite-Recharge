@@ -9,16 +9,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.SubsystemsInstance;
 
 public class AimRightCommand extends CommandBase {
   private double power;
+  SubsystemsInstance inst;
   /**
    * Creates a new AimRightCommand.
    */
   public AimRightCommand(double power) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.power = power;
-    addRequirements(Robot.m_driveSubsystem);
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +32,7 @@ public class AimRightCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.m_driveSubsystem.move(0, power);
+    inst.m_driveSubsystem.move(0, power);
   }
 
   // Called once the command ends or is interrupted.

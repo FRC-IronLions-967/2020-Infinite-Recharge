@@ -9,15 +9,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.SubsystemsInstance;
 import frc.robot.utils.Utils;
 
 public class ArcadeDriveCommand extends CommandBase {
+  SubsystemsInstance inst;
   /**
    * Creates a new ArcadeDriveCommand.
    */
   public ArcadeDriveCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_driveSubsystem);
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +32,7 @@ public class ArcadeDriveCommand extends CommandBase {
   @Override
   public void execute() {
     //run the arcade drive based off of the joystick inputs from the xbox driver controller
-    Robot.m_driveSubsystem.arcadeDrive(-Utils.deadband(Robot.m_io.xbox0.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(Robot.m_io.xbox0.getRawAxis(4), Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    inst.m_driveSubsystem.arcadeDrive(-Utils.deadband(Robot.m_io.xbox0.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(Robot.m_io.xbox0.getRawAxis(4), Double.parseDouble(Robot.m_values.getValue("deadband"))));
   }
 
   // Called once the command ends or is interrupted.

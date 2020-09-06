@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.SubsystemsInstance;
 
 public class JamCommand extends CommandBase {
   /**
@@ -16,10 +17,12 @@ public class JamCommand extends CommandBase {
    */
   private double pos;
   private boolean finished =  false;
+  SubsystemsInstance inst;
 
   public JamCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_elevatorSubsystem);
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_elevatorSubsystem);
     this.pos = pos;
   }
 
@@ -31,11 +34,13 @@ public class JamCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //TODO move this boolean to the subsystem, makes more sense there
+    //also I'm not sure what I was thinking when I wrote this, it needs to be altered or removed
     Robot.elevatorJammed = (Robot.elevatorJammed) ? false : true;
     if(Robot.elevatorJammed == false){
-    Robot.m_elevatorSubsystem.jam(pos);
+      inst.m_elevatorSubsystem.jam(pos);
     } else if(Robot.elevatorJammed == true){
-      Robot.m_elevatorSubsystem.jam(.5);
+      inst.m_elevatorSubsystem.jam(.5);
     }
     finished = true;
   }

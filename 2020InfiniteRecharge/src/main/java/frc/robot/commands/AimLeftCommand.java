@@ -12,13 +12,15 @@ import frc.robot.Robot;
 
 public class AimLeftCommand extends CommandBase {
   private double power;
+  SubsystemsInstance inst;
   /**
    * Creates a new AimLeftCommand.
    */
   public AimLeftCommand(double power) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.power = power;
-    addRequirements(Robot.m_driveSubsystem);
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +31,7 @@ public class AimLeftCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.m_driveSubsystem.move(power, 0);
+    inst.m_driveSubsystem.move(power, 0);
   }
 
   // Called once the command ends or is interrupted.

@@ -9,14 +9,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.SubsystemsInstance;
 
 public class ShooterCommand extends CommandBase {
+  SubsystemsInstance inst;
   /**
    * Creates a new ShooterCommand.
    */
   public ShooterCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_shooterSubsystem);
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -64,7 +67,7 @@ public class ShooterCommand extends CommandBase {
     // } else {
     //   Robot.maxRPM = 5350;
     // }
-    Robot.m_shooterSubsystem.shootRPM((Robot.m_io.xbox1.getRawAxis(3) > 0.3) ? 1.0 : 0.0);
+    inst.m_shooterSubsystem.shootRPM((Robot.m_io.xbox1.getRawAxis(3) > 0.3) ? 1.0 : 0.0);
     // Robot.m_shooterSubsystem.shoot((Robot.m_io.xbox1.getRawAxis(3) > 0.2) ? 0.8 : 0.0);
   }
 

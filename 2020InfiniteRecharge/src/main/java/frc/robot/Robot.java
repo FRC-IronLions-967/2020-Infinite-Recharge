@@ -39,11 +39,6 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static IO m_io;
-  public static DriveSubsystem m_driveSubsystem;
-  public static IntakeSubsystem m_intakeSubsystem;
-  public static ShooterSubsystem m_shooterSubsystem;
-  public static TestPIDSubsystem m_testPIDSubsystem;
-  public static ElevatorSubsystem m_elevatorSubsystem;
   public static Values m_values;
   public static Values m_robotMap;
   public static NetworkTable visionTable;
@@ -79,12 +74,7 @@ public class Robot extends TimedRobot {
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
-
-    m_driveSubsystem = new DriveSubsystem();
-    m_elevatorSubsystem = new ElevatorSubsystem();
-    m_intakeSubsystem = new IntakeSubsystem();
-    m_shooterSubsystem = new ShooterSubsystem();
-    m_testPIDSubsystem = new TestPIDSubsystem();
+    
     m_io = new IO();
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();

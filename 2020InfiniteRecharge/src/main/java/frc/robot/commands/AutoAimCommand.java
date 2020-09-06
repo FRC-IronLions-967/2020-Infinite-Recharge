@@ -11,19 +11,22 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.SubsystemsInstance;
 import frc.robot.utils.vision.*;
 
 public class AutoAimCommand extends CommandBase {
   private boolean finished;
   private double tx;
   private long startTime = 0;
+  SubsystemsInstance inst;
   /**
    * Creates a new AutoAimCommand.
    */
   public AutoAimCommand(long startTime) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.startTime = startTime;
-    addRequirements(Robot.m_driveSubsystem);
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -46,13 +49,14 @@ public class AutoAimCommand extends CommandBase {
     } else {
       steering_adjust = 0;
       finished = true;
-      Robot.m_driveSubsystem.lastAimSuccessful = true;
+      inst.m_driveSubsystem.lastAimSuccessful = true;
     }
       // try {
       //   Thread.sleep(250);
       // } catch (InterruptedException e) {
       //   e.printStackTrace();
       // }
+    //TODO clean this up this is ugly - Nathan
     double ty = LimelightDefault.getTY() + 30;
     if(ty > 50.8) {
       Robot.maxRPM = Robot.rpmLookup[0];
@@ -87,7 +91,7 @@ public class AutoAimCommand extends CommandBase {
     }
     steering_adjust = (steering_adjust > 0.10) ? 0.10 : steering_adjust;
     steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
-    Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+    inst.m_driveSubsystem.move(-steering_adjust, steering_adjust);
     SmartDashboard.putNumber("rightMotor", steering_adjust);
     SmartDashboard.putNumber("leftMotor", -steering_adjust);
     SmartDashboard.putNumber("tx", tx);
