@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Servo;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.IO;
 import frc.robot.Robot;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -26,10 +27,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   private DigitalInput bottomLimit;
   private DigitalInput upperLimit;
+
+  private IO io;
   /**
    * Creates a new ElevatorSubsystem.
    */
   public ElevatorSubsystem() {
+    io = IO.getInstance();
+
     elevator0 = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("elevator0")));
     elevator1 = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("elevator1")));
     // roller = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("roller")));
@@ -54,10 +59,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(Robot.m_io.xbox1_povN.get() || Robot.m_io.xbox1_povNE.get() || Robot.m_io.xbox1_povNW.get()) {
+    if(io.xbox1_povN.get() || io.xbox1_povNE.get() || io.xbox1_povNW.get()) {
       elevator0.set(ControlMode.PercentOutput, 0.66);
       elevator1.set(ControlMode.PercentOutput, 0.59);
-    } else if(Robot.m_io.xbox1_povS.get() || Robot.m_io.xbox1_povSE.get() || Robot.m_io.xbox1_povSW.get()) {
+    } else if(io.xbox1_povS.get() || io.xbox1_povSE.get() || io.xbox1_povSW.get()) {
       elevator0.set(ControlMode.PercentOutput, -0.66);
       elevator1.set(ControlMode.PercentOutput, -0.59);
     } else {

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.IO;
 import frc.robot.Robot;
 import frc.robot.commands.AutoAimCommand;
 import frc.robot.commands.RumbleCommand;
@@ -32,6 +33,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public CANSparkMax rightSlave;
   public CANSparkMax leftMaster;
   public CANSparkMax leftSlave;
+
+  private IO io;
 
   //Drive lookup table(might be automatically generated in the future).
   private double lookup[] = {0, 0, 0,  0.1, 0.10009, 0.10036, 0.10081, 
@@ -56,6 +59,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
 
   public DriveSubsystem() {
+    io = IO.getInstance();
+
     //Assigns the robot IDs from the robotMap.properties file
     rightMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightMaster")), MotorType.kBrushless);
     rightSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightSlave")), MotorType.kBrushless);
@@ -138,7 +143,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(Robot.m_io.xbox0_a.get()) {
+    if(io.xbox0_a.get()) {
       CommandScheduler.getInstance().schedule(new AutoAimCommand(System.currentTimeMillis()));
     }
 

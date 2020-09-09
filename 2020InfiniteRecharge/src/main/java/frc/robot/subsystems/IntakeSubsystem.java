@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.IO;
 import frc.robot.Robot;
 
 public class IntakeSubsystem extends SubsystemBase implements Subsystem {
@@ -27,8 +28,12 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
   double deadband = Double.parseDouble(Robot.m_values.getValue("deadband2"));
 
+  private IO io;
+
 
   public IntakeSubsystem() {
+    io = IO.getInstance();
+
     //initialize motor controller objects
     intake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
     outerIntake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("outerIntake")));
@@ -77,11 +82,11 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     if(Robot.beltsReversed) {
-      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.2);
-      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.2);
+      io.xbox1.setRumble(RumbleType.kRightRumble, 0.2);
+      io.xbox1.setRumble(RumbleType.kLeftRumble, 0.2);
     } else {
-      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
-      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
+      io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
+      io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
     }
     // This method will be called once per scheduler run
     // upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));
