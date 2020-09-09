@@ -18,7 +18,7 @@ public class AutoAimCommand extends CommandBase {
   private boolean finished;
   private double tx;
   private long startTime = 0;
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
   /**
    * Creates a new AutoAimCommand.
    */

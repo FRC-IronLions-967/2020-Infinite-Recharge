@@ -13,7 +13,7 @@ import frc.robot.subsystems.SubsystemsInstance;
 
 public class UpperBeltCommand extends CommandBase {
   private double power;
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
   /**
    * Creates a new UpperBeltCommand.
    */

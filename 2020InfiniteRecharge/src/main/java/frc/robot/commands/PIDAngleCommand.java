@@ -13,7 +13,7 @@ import frc.robot.subsystems.SubsystemsInstance;
 
 public class PIDAngleCommand extends CommandBase {
   private double angle;
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
   /**
    * Creates a new PIDAngleCommand.
    */

@@ -38,7 +38,6 @@ public class Robot extends TimedRobot {
   private static final String kTestAuto = "Test Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  public static IO m_io;
   public static Values m_values;
   public static Values m_robotMap;
   public static NetworkTable visionTable;
@@ -52,6 +51,7 @@ public class Robot extends TimedRobot {
   public static boolean elevatorJammed = false;
   public static Logger logger;
   SubsystemsInstance inst;
+  IO m_io;
 
   // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
   public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
@@ -63,6 +63,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     inst = SubsystemsInstance.getInstance();
+    m_io = IO.getInstance();
+
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("Test Auto", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -76,8 +78,7 @@ public class Robot extends TimedRobot {
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
-    
-    m_io = new IO();
+  
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     //for some reason, the getter will create the table if it already exists

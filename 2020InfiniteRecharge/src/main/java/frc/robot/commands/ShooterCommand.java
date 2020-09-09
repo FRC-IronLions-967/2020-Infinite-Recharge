@@ -12,13 +12,15 @@ import frc.robot.Robot;
 import frc.robot.subsystems.SubsystemsInstance;
 
 public class ShooterCommand extends CommandBase {
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
+  private IO io;
   /**
    * Creates a new ShooterCommand.
    */
   public ShooterCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     inst = SubsystemsInstance.getInstance();
+    io = IO.getInstance();
     addRequirements(inst.m_shooterSubsystem);
   }
 
@@ -67,7 +69,7 @@ public class ShooterCommand extends CommandBase {
     // } else {
     //   Robot.maxRPM = 5350;
     // }
-    inst.m_shooterSubsystem.shootRPM((Robot.m_io.xbox1.getRawAxis(3) > 0.3) ? 1.0 : 0.0);
+    inst.m_shooterSubsystem.shootRPM((io.xbox1.getRawAxis(3) > 0.3) ? 1.0 : 0.0);
     // Robot.m_shooterSubsystem.shoot((Robot.m_io.xbox1.getRawAxis(3) > 0.2) ? 0.8 : 0.0);
   }
 

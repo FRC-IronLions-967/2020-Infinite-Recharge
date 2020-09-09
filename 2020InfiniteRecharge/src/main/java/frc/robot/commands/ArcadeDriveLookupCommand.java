@@ -8,18 +8,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.IO;
 import frc.robot.Robot;
 import frc.robot.subsystems.SubsystemsInstance;
 import frc.robot.utils.Utils;
 
 public class ArcadeDriveLookupCommand extends CommandBase {
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
+  private IO io;
   /**
    * Creates a new ArcadeDriveLookupCommand.
    */
   public ArcadeDriveLookupCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     inst = SubsystemsInstance.getInstance();
+    io = IO.getInstance();
     addRequirements(inst.m_driveSubsystem);
   }
 
@@ -31,7 +34,7 @@ public class ArcadeDriveLookupCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    inst.m_driveSubsystem.arcadeDriveLookup(-Utils.deadband(Robot.m_io.xbox0.getRawAxis(1), 0.8 * Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(Robot.m_io.xbox0.getRawAxis(4), 0.7 * Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    inst.m_driveSubsystem.arcadeDriveLookup(-Utils.deadband(io.xbox0.getRawAxis(1), 0.8 * Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(io.xbox0.getRawAxis(4), 0.7 * Double.parseDouble(Robot.m_values.getValue("deadband"))));
   }
 
   // Called once the command ends or is interrupted.

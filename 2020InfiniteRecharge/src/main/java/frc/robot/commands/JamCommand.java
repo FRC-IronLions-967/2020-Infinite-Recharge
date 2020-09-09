@@ -17,7 +17,7 @@ public class JamCommand extends CommandBase {
    */
   private double pos;
   private boolean finished =  false;
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
 
   public JamCommand() {
     // Use addRequirements() here to declare subsystem dependencies.

@@ -8,12 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.IO;
 import frc.robot.Robot;
 import frc.robot.subsystems.SubsystemsInstance;
 
 public class AimRightCommand extends CommandBase {
   private double power;
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
+  private IO io;
   /**
    * Creates a new AimRightCommand.
    */
@@ -21,6 +23,7 @@ public class AimRightCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.power = power;
     inst = SubsystemsInstance.getInstance();
+    io = IO.getInstance();
     addRequirements(inst.m_driveSubsystem);
   }
 
@@ -43,7 +46,7 @@ public class AimRightCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(!Robot.m_io.xbox0_povE.get()) {
+    if(!io.xbox0_povE.get()) {
       return true;
     }
     return false;

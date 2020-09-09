@@ -13,13 +13,15 @@ import frc.robot.subsystems.SubsystemsInstance;
 import frc.robot.utils.Utils;
 
 public class ArcadeDriveCommand extends CommandBase {
-  SubsystemsInstance inst;
+  private SubsystemsInstance inst;
+  private IO io;
   /**
    * Creates a new ArcadeDriveCommand.
    */
   public ArcadeDriveCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     inst = SubsystemsInstance.getInstance();
+    io = IO.getInstance();
     addRequirements(inst.m_driveSubsystem);
   }
 
@@ -32,7 +34,7 @@ public class ArcadeDriveCommand extends CommandBase {
   @Override
   public void execute() {
     //run the arcade drive based off of the joystick inputs from the xbox driver controller
-    inst.m_driveSubsystem.arcadeDrive(-Utils.deadband(Robot.m_io.xbox0.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(Robot.m_io.xbox0.getRawAxis(4), Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    inst.m_driveSubsystem.arcadeDrive(-Utils.deadband(io.xbox0.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(io.xbox0.getRawAxis(4), Double.parseDouble(Robot.m_values.getValue("deadband"))));
   }
 
   // Called once the command ends or is interrupted.

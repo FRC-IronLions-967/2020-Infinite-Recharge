@@ -1,8 +1,21 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package frc.robot;
 
-public class IO {
-    private static IO instance;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
 
+/**
+ * Add your docs here.
+ */
+public class IO {
     public Joystick xbox0;
     public Joystick xbox1;
 
@@ -35,7 +48,7 @@ public class IO {
     JoystickButton xbox1_select;
     JoystickButton xbox1_start;
 
-    private IO() {
+    public IO() {
         //initialize both of the Xbox controllers here, 0 is the drive controller, 1 controls the manipulators
         xbox0 = new Joystick(0);
         xbox1 = new Joystick(1);
@@ -87,12 +100,6 @@ public class IO {
         // xbox1_y.whenPressed(new ToggleBeltsCommand());
         // xbox1_bump_l.whenPressed(new RPMDownCommand());
         // xbox1_bump_r.whenPressed(new RPMUpCommand());
-    }
-
-    public static IO getInstance() {
-        if(instance == null) instance = new IO();
-
-        return instance;
     }
 
     public void telopInit() {
