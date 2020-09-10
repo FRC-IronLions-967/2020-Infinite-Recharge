@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.*;
 import frc.robot.subsystems.SubsystemsInstance;
+import frc.robot.utils.controls.XBoxController;
 
 public class ShooterCommand extends CommandBase {
   private SubsystemsInstance inst;
@@ -69,7 +70,7 @@ public class ShooterCommand extends CommandBase {
     // } else {
     //   Robot.maxRPM = 5350;
     // }
-    inst.m_shooterSubsystem.shootRPM((io.xbox1.getRawAxis(3) > 0.3) ? 1.0 : 0.0);
+    inst.m_shooterSubsystem.shootRPM(io.getDriverController().isTriggerPressed(XBoxController.RIGHT_TRIGGER) ? 1.0 : 0.0);
     // Robot.m_shooterSubsystem.shoot((Robot.m_io.xbox1.getRawAxis(3) > 0.2) ? 0.8 : 0.0);
   }
 

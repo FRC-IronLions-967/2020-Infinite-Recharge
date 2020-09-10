@@ -25,19 +25,19 @@ public class RumbleCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    io.xbox0.setRumble(RumbleType.kLeftRumble, 0.5);
-    io.xbox0.setRumble(RumbleType.kRightRumble, 0.5);
-    io.xbox1.setRumble(RumbleType.kLeftRumble, 0.5);
-    io.xbox1.setRumble(RumbleType.kRightRumble, 0.5);
+    io.getDriverController().setRumble(RumbleType.kLeftRumble, 0.5);
+    io.getDriverController().setRumble(RumbleType.kRightRumble, 0.5);
+    io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.5);
+    io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.5);
     // try {
     //   Thread.sleep(500);
     // } catch (InterruptedException e) {
     //   e.printStackTrace();
     // }
-    io.xbox0.setRumble(RumbleType.kLeftRumble, 0.0);
-    io.xbox0.setRumble(RumbleType.kRightRumble, 0.0);
-    io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
-    io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
+    io.getDriverController().setRumble(RumbleType.kLeftRumble, 0.0);
+    io.getDriverController().setRumble(RumbleType.kRightRumble, 0.0);
+    io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.0);
+    io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

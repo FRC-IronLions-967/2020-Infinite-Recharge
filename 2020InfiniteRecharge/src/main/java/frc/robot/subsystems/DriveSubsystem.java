@@ -143,7 +143,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(io.xbox0_a.get()) {
+    if(io.getDriverController().isButtonPressed("A")) {
       CommandScheduler.getInstance().schedule(new AutoAimCommand(System.currentTimeMillis()));
     }
 
@@ -153,6 +153,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     }
   }
 
+  //I (Nathan) think this in miles/hr but I don't exactly remember
+  //remember to document your code, kids
   public double getRightSpeed() {
     return rightMaster.getEncoder().getVelocity() * 0.001255;
   }

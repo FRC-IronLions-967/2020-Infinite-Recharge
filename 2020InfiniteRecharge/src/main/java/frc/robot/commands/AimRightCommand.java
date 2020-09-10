@@ -46,9 +46,6 @@ public class AimRightCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(!io.xbox0_povE.get()) {
-      return true;
-    }
-    return false;
+    return (!io.getDriverController().isButtonPressed("E"));
   }
 }

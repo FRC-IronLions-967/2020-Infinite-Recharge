@@ -34,7 +34,7 @@ public class TankDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    inst.m_driveSubsystem.tankDriveLookup(Utils.deadband(io.xbox0.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(io.xbox0.getRawAxis(5), Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    inst.m_driveSubsystem.tankDriveLookup(Utils.deadband(io.getDriverController().getRightStickY(), Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(io.getDriverController().getLeftStickY(), Double.parseDouble(Robot.m_values.getValue("deadband"))));
   }
 
   // Called once the command ends or is interrupted.

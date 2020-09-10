@@ -82,11 +82,11 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     if(Robot.beltsReversed) {
-      io.xbox1.setRumble(RumbleType.kRightRumble, 0.2);
-      io.xbox1.setRumble(RumbleType.kLeftRumble, 0.2);
+      io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.2);
+      io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.2);
     } else {
-      io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
-      io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
+      io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.0);
+      io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.0);
     }
     // This method will be called once per scheduler run
     // upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));

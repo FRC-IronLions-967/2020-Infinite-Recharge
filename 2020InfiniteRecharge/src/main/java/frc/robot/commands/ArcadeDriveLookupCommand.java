@@ -34,7 +34,7 @@ public class ArcadeDriveLookupCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    inst.m_driveSubsystem.arcadeDriveLookup(-Utils.deadband(io.xbox0.getRawAxis(1), 0.8 * Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(io.xbox0.getRawAxis(4), 0.7 * Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    inst.m_driveSubsystem.arcadeDriveLookup(-Utils.deadband(io.getDriverController().getRightStickY(), 0.8 * Double.parseDouble(Robot.m_values.getValue("deadband"))), Utils.deadband(io.getDriverController().getLeftStickX(), 0.7 * Double.parseDouble(Robot.m_values.getValue("deadband"))));
   }
 
   // Called once the command ends or is interrupted.

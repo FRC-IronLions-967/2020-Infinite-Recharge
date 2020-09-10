@@ -59,10 +59,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(io.xbox1_povN.get() || io.xbox1_povNE.get() || io.xbox1_povNW.get()) {
+    if(io.getManipulatorController().isAngleMatched("N") || io.getManipulatorController().isAngleMatched("NE") || io.getManipulatorController().isAngleMatched("NW")) {
       elevator0.set(ControlMode.PercentOutput, 0.66);
       elevator1.set(ControlMode.PercentOutput, 0.59);
-    } else if(io.xbox1_povS.get() || io.xbox1_povSE.get() || io.xbox1_povSW.get()) {
+    } else if(io.getManipulatorController().isAngleMatched("S") || io.getManipulatorController().isAngleMatched("SE") || io.getManipulatorController().isAngleMatched("SW")) {
       elevator0.set(ControlMode.PercentOutput, -0.66);
       elevator1.set(ControlMode.PercentOutput, -0.59);
     } else {
