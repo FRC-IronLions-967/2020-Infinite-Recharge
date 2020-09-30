@@ -26,7 +26,7 @@ public class TestAuto implements Autonomous {
         // } catch (InterruptedException e) {
         //     e.printStackTrace();
         // }
-        Robot.maxRPM = 3900;
+        inst.m_shooterSubsystem.setMaxRPM(3900);
         // double ty = LimelightDefault.getTY() + 30;
         // if(ty > 50.8) {
         //     Robot.maxRPM = Robot.rpmLookup[0];

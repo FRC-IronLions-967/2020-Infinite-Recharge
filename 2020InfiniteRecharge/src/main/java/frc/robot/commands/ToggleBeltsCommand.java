@@ -9,14 +9,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.*;
 
 public class ToggleBeltsCommand extends CommandBase {
   private boolean finished =  false;
+  private SubsystemsInstance inst;
   /**
    * Creates a new ToggleBeltsCommand.
    */
   public ToggleBeltsCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +31,8 @@ public class ToggleBeltsCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.beltsReversed = (Robot.beltsReversed) ? false : true;
+    boolean beltsReversed = inst.m_intakeSubsystem.areBeltsReversed();
+    inst.m_intakeSubsystem.setBeltsReversed(!beltsReversed);
     finished = true;
   }
 

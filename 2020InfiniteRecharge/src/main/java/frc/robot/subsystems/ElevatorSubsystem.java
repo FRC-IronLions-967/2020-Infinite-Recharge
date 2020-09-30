@@ -29,6 +29,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   private DigitalInput upperLimit;
 
   private IO io;
+
+  private boolean elevatorJammed;
   /**
    * Creates a new ElevatorSubsystem.
    */
@@ -47,6 +49,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevator0.setInverted(false);
     elevator1.setInverted(false);
     // roller.setInverted(false);
+
+    elevatorJammed = false;
   }
 
   public void jam(double x){
@@ -54,6 +58,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     bottomLimit = new DigitalInput(0);
     upperLimit = new DigitalInput(1);
+  }
+
+  public boolean isElevatorJammed() {
+    return elevatorJammed;
+  }
+
+  public void setElevatorJammed(boolean elevatorJammed) {
+    this.elevatorJammed = elevatorJammed;
   }
 
   @Override

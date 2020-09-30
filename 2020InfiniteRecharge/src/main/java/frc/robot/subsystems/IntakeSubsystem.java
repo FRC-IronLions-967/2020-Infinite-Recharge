@@ -24,6 +24,9 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   private TalonSRX outerIntake;
   private TalonSRX lower;
   private TalonSRX upper;
+  
+  private boolean beltsReversed = false;
+  private boolean intakeOn = false;
 
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
   double deadband = Double.parseDouble(Robot.m_values.getValue("deadband2"));
@@ -53,7 +56,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
-    x = (Robot.beltsReversed) ? -x : x;
+    x = (beltsReversed) ? -x : x;
 
     intake.set(ControlMode.PercentOutput, x);
     outerIntake.set(ControlMode.PercentOutput, x);
@@ -64,7 +67,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
-    x = (Robot.beltsReversed) ? -x : x;
+    x = (beltsReversed) ? -x : x;
 
     lower.set(ControlMode.PercentOutput, x);
   }
@@ -74,14 +77,30 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
-    x = (Robot.beltsReversed) ? -x : x;
+    x = (beltsReversed) ? -x : x;
 
     upper.set(ControlMode.PercentOutput, x);
   }
 
+  public boolean isIntakeOn() {
+    return intakeOn;
+  }
+
+  public void setIntakeOn(boolean intakeOn) {
+    this.intakeOn = intakeOn;
+  }
+
+  public boolean areBeltsReversed() {
+    return beltsReversed;
+  }
+
+  public void setBeltsReversed(boolean beltsReversed) {
+    this.beltsReversed = beltsReversed;
+  }
+
   @Override
   public void periodic() {
-    if(Robot.beltsReversed) {
+    if(beltsReversed) {
       io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.2);
       io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.2);
     } else {

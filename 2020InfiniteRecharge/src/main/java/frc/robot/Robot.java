@@ -45,16 +45,16 @@ public class Robot extends TimedRobot {
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
   public static Autonomous selectedAuto;
-  public static int maxRPM = 3900;
-  public static boolean beltsReversed = false;
-  public static boolean intakeOn = false;
+  // public static int maxRPM = 3900;
+  // public static boolean beltsReversed = false;
+  // public static boolean intakeOn = false;
   public static boolean elevatorJammed = false;
   public static Logger logger;
   SubsystemsInstance inst;
   IO m_io;
 
   // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
-  public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
+  //public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
 
   /**
    * This function is run when the robot is first started up and should be
@@ -100,15 +100,15 @@ public class Robot extends TimedRobot {
     // CameraServer.getInstance().startAutomaticCapture();
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Shooter RPM", inst.m_shooterSubsystem.getRPM());
-    SmartDashboard.putNumber("Max RPM", maxRPM);
-    SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
-    SmartDashboard.putBoolean("Intake On", intakeOn);
-    SmartDashboard.putBoolean("Elevator Stopped", elevatorJammed);
+    SmartDashboard.putNumber("Max RPM", inst.m_shooterSubsystem.getMaxRPM());
+    SmartDashboard.putBoolean("Belts Reversed", inst.m_intakeSubsystem.areBeltsReversed());
+    SmartDashboard.putBoolean("Intake On", inst.m_intakeSubsystem.isIntakeOn());
+    SmartDashboard.putBoolean("Elevator Stopped", inst.m_elevatorSubsystem.isElevatorJammed());
     SmartDashboard.putNumber("Right Speed", inst.m_driveSubsystem.getRightSpeed());
     SmartDashboard.putNumber("Left Speed", inst.m_driveSubsystem.getLeftSpeed());
     try {
-      logger.log(new String[] {Double.toString(inst.m_shooterSubsystem.getRPM()), Double.toString(maxRPM),
-        Boolean.toString(beltsReversed), Boolean.toString(intakeOn), Boolean.toString(elevatorJammed),
+      logger.log(new String[] {Double.toString(inst.m_shooterSubsystem.getRPM()), Double.toString(inst.m_shooterSubsystem.getMaxRPM()),
+        Boolean.toString(inst.m_intakeSubsystem.areBeltsReversed()), Boolean.toString(inst.m_intakeSubsystem.isIntakeOn()), Boolean.toString(inst.m_elevatorSubsystem.isElevatorJammed()),
         Double.toString(inst.m_driveSubsystem.getRightSpeed()), Double.toString(inst.m_driveSubsystem.getLeftSpeed())});
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());

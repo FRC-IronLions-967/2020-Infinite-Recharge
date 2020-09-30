@@ -23,6 +23,9 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax flywheel1;
   private CANPIDController controller0;
   private CANPIDController controller1;
+  private int maxRPM = 3900;
+  private int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
+
   /**
    * Creates a new ReplaceMeSubsystem.
    */
@@ -65,7 +68,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shootRPM(double power) {
-    double setPoint = power * Robot.maxRPM;
+    double setPoint = power * maxRPM;
     SmartDashboard.putNumber("Setpoint", setPoint);
     if(setPoint != 0.0) {
       CANError err = controller0.setReference(setPoint, ControlType.kVelocity);
@@ -77,6 +80,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getRPM() {
     return flywheel0.getEncoder().getVelocity();
+  }
+
+  public int getMaxRPM() {
+    return maxRPM;
+  }
+
+  public void setMaxRPM(int rpm) {
+    this.maxRPM = rpm;
+  }
+
+  public int[] getRpmLookup() {
+    return rpmLookup;
   }
 
   @Override

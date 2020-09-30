@@ -46,6 +46,6 @@ public class AimRightCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (!io.getDriverController().isButtonPressed("E"));
+    return (!io.getDriverController().isAngleMatched("E"));
   }
 }

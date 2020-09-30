@@ -37,11 +37,15 @@ public class JamCommand extends CommandBase {
     //TODO move this boolean to the subsystem, makes more sense there
     //also I'm not sure what I was thinking when I wrote this, it needs to be altered or removed
     Robot.elevatorJammed = (Robot.elevatorJammed) ? false : true;
-    if(Robot.elevatorJammed == false){
-      inst.m_elevatorSubsystem.jam(pos);
-    } else if(Robot.elevatorJammed == true){
-      inst.m_elevatorSubsystem.jam(.5);
-    }
+    boolean elevatorJammed = !inst.m_elevatorSubsystem.isElevatorJammed();
+    inst.m_elevatorSubsystem.setElevatorJammed(elevatorJammed);
+    inst.m_elevatorSubsystem.jam((elevatorJammed) ? 0.5 : 0.0);
+    // if(Robot.elevatorJammed == false){
+    //   //used to be pos, idk
+    //   inst.m_elevatorSubsystem.jam(0.0);
+    // } else if(Robot.elevatorJammed == true){
+    //   inst.m_elevatorSubsystem.jam(0.5);
+    // }
     finished = true;
   }
 
