@@ -24,8 +24,6 @@ import frc.robot.autonomous.*;
 import java.io.File;
 import java.io.IOException;
 
-import com.revrobotics.CANPIDController;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -42,8 +40,6 @@ public class Robot extends TimedRobot {
   public static Values m_robotMap;
   public static NetworkTable visionTable;
   public static double tx;
-  public static CANPIDController controllerRight;
-  public static CANPIDController controllerLeft;
   public static Autonomous selectedAuto;
   public static boolean elevatorJammed = false;
   public static Logger logger;
@@ -122,30 +118,7 @@ public class Robot extends TimedRobot {
     //TODO set this to pull from the dashboard for the autonomous selection
     selectedAuto = new TestAuto();
 
-    double kP = 5e-6; 
-    double kI = 1e-6;
-    double kD = 0; 
-    double kIz = 0; 
-    double kFF = 0; 
-    double kMaxOutput = 1; 
-    double kMinOutput = -1;
-
-    controllerRight = inst.m_driveSubsystem.rightMaster.getPIDController();
-    controllerLeft = inst.m_driveSubsystem.leftMaster.getPIDController();
-
-    controllerRight.setP(kP);
-    controllerRight.setI(kI);
-    controllerRight.setD(kD);
-    controllerRight.setIZone(kIz);
-    controllerRight.setFF(kFF);
-    controllerRight.setOutputRange(kMinOutput, kMaxOutput);
-
-    controllerLeft.setP(kP);
-    controllerLeft.setI(kI);
-    controllerLeft.setD(kD);
-    controllerLeft.setIZone(kIz);
-    controllerLeft.setFF(kFF);
-    controllerLeft.setOutputRange(kMinOutput, kMaxOutput);
+    selectedAuto.initAuto();
 
     selectedAuto.runAuto();
   }
@@ -155,7 +128,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    // selectedAuto.runAuto();
   }
 
   /**
@@ -180,11 +152,4 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-  public double getTX() {
-    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
-  }
-
-  public double getTV() {
-    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0.0);
-  }
 }

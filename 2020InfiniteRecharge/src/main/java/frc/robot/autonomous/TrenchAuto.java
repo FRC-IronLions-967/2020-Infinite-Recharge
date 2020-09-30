@@ -1,16 +1,49 @@
 package frc.robot.autonomous;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Robot;
 import frc.robot.subsystems.*;
 
 public class TrenchAuto implements Autonomous {
     private double tx;
     private boolean moved = false;
-    SubsystemsInstance inst;
+    private CANPIDController controllerRight;
+    private CANPIDController controllerLeft;
+    private SubsystemsInstance inst;
+
+    @Override
+    public void initAuto() {
+        double kP = 5e-6; 
+        double kI = 1e-6;
+        double kD = 0; 
+        double kIz = 0; 
+        double kFF = 0; 
+        double kMaxOutput = 1; 
+        double kMinOutput = -1;
+
+        controllerRight = inst.m_driveSubsystem.rightMaster.getPIDController();
+        controllerLeft = inst.m_driveSubsystem.leftMaster.getPIDController();
+
+        controllerRight.setP(kP);
+        controllerRight.setI(kI);
+        controllerRight.setD(kD);
+        controllerRight.setIZone(kIz);
+        controllerRight.setFF(kFF);
+        controllerRight.setOutputRange(kMinOutput, kMaxOutput);
+
+        controllerLeft.setP(kP);
+        controllerLeft.setI(kI);
+        controllerLeft.setD(kD);
+        controllerLeft.setIZone(kIz);
+        controllerLeft.setFF(kFF);
+        controllerLeft.setOutputRange(kMinOutput, kMaxOutput);
+    }
+
     @Override
     public void runAuto() {
         inst = SubsystemsInstance.getInstance();

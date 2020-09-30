@@ -1,7 +1,10 @@
 package frc.robot.autonomous;
 
+import com.revrobotics.CANPIDController;
+
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Robot;
 import frc.robot.utils.vision.LimelightDefault;
 import frc.robot.subsystems.*;
@@ -11,11 +14,41 @@ public class OppFieldSideAuto implements Autonomous {
     private double rightEncoderPos = 0.0;
     private double leftEncoderPos = 0.0;
     private final double countsToDrive = 10.0;
-    SubsystemsInstance inst;
+    private CANPIDController controllerRight;
+    private CANPIDController controllerLeft;
+    private SubsystemsInstance inst;
 
     public OppFieldSideAuto() {
         inst.m_driveSubsystem.rightMaster.getEncoder().setPosition(0.0);
         inst.m_driveSubsystem.leftMaster.getEncoder().setPosition(0.0);
+    }
+
+    @Override
+    public void initAuto() {
+        double kP = 5e-6; 
+        double kI = 1e-6;
+        double kD = 0; 
+        double kIz = 0; 
+        double kFF = 0; 
+        double kMaxOutput = 1; 
+        double kMinOutput = -1;
+
+        controllerRight = inst.m_driveSubsystem.rightMaster.getPIDController();
+        controllerLeft = inst.m_driveSubsystem.leftMaster.getPIDController();
+
+        controllerRight.setP(kP);
+        controllerRight.setI(kI);
+        controllerRight.setD(kD);
+        controllerRight.setIZone(kIz);
+        controllerRight.setFF(kFF);
+        controllerRight.setOutputRange(kMinOutput, kMaxOutput);
+
+        controllerLeft.setP(kP);
+        controllerLeft.setI(kI);
+        controllerLeft.setD(kD);
+        controllerLeft.setIZone(kIz);
+        controllerLeft.setFF(kFF);
+        controllerLeft.setOutputRange(kMinOutput, kMaxOutput);
     }
 
     @Override
