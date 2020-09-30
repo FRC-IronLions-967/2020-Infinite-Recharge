@@ -81,5 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       elevator0.set(ControlMode.PercentOutput, 0.0);
       elevator1.set(ControlMode.PercentOutput, 0.0);
     }
+
+    SmartDashboard.putBoolean("Elevator Stopped", elevatorJammed);
   }
 }

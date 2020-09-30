@@ -45,16 +45,10 @@ public class Robot extends TimedRobot {
   public static CANPIDController controllerRight;
   public static CANPIDController controllerLeft;
   public static Autonomous selectedAuto;
-  // public static int maxRPM = 3900;
-  // public static boolean beltsReversed = false;
-  // public static boolean intakeOn = false;
   public static boolean elevatorJammed = false;
   public static Logger logger;
-  SubsystemsInstance inst;
-  IO m_io;
-
-  // public static int rpmLookup[] = {3250, 3300, 3350, 3525, 3575, 3650, 3700, 3750, 3825, 3950, 4125, 4300, 4400, 4575};
-  //public static int rpmLookup[] = {3900, 3900, 3900, 4100, 4200, 4400, 4450, 4600, 4800, 5000, 5200, 5400, 5600, 5700};
+  private SubsystemsInstance inst;
+  private IO m_io;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -69,8 +63,6 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("Test Auto", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    //initialize IO object and all used subsystems here to be created during the robot startup
-    // m_io = new IO();
     try {
       m_values = new Values(new File("/home/lvuser/deploy/values.properties"), new String[] {"deadband"});
       m_robotMap = new Values(new File("/home/lvuser/deploy/robotMap.properties"), new String[] {"rightMaster", "rightSlave", "leftMaster", "leftSlave"});
@@ -81,6 +73,7 @@ public class Robot extends TimedRobot {
   
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
     //for some reason, the getter will create the table if it already exists
     //i have no idea why it would be written this way, but it is so just go with it, this doesn't seem to be present in the documentation on the docs page
     // NetworkTable table = inst.getTable("test");
@@ -99,13 +92,6 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // CameraServer.getInstance().startAutomaticCapture();
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Shooter RPM", inst.m_shooterSubsystem.getRPM());
-    SmartDashboard.putNumber("Max RPM", inst.m_shooterSubsystem.getMaxRPM());
-    SmartDashboard.putBoolean("Belts Reversed", inst.m_intakeSubsystem.areBeltsReversed());
-    SmartDashboard.putBoolean("Intake On", inst.m_intakeSubsystem.isIntakeOn());
-    SmartDashboard.putBoolean("Elevator Stopped", inst.m_elevatorSubsystem.isElevatorJammed());
-    SmartDashboard.putNumber("Right Speed", inst.m_driveSubsystem.getRightSpeed());
-    SmartDashboard.putNumber("Left Speed", inst.m_driveSubsystem.getLeftSpeed());
     try {
       logger.log(new String[] {Double.toString(inst.m_shooterSubsystem.getRPM()), Double.toString(inst.m_shooterSubsystem.getMaxRPM()),
         Boolean.toString(inst.m_intakeSubsystem.areBeltsReversed()), Boolean.toString(inst.m_intakeSubsystem.isIntakeOn()), Boolean.toString(inst.m_elevatorSubsystem.isElevatorJammed()),

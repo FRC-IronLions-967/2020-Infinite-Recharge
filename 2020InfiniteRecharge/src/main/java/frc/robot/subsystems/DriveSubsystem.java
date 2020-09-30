@@ -151,6 +151,9 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
       new RumbleCommand().initialize();
       lastAimSuccessful = false;
     }
+
+    SmartDashboard.putNumber("Right Speed", this.getRightSpeed());
+    SmartDashboard.putNumber("Left Speed", this.getLeftSpeed());
   }
 
   //I (Nathan) think this in miles/hr but I don't exactly remember

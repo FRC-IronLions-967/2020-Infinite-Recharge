@@ -111,5 +111,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     // upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));
     // lower.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), deadband));
 
+    SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
+    SmartDashboard.putBoolean("Intake On", intakeOn);
   }
 }
