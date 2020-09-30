@@ -36,13 +36,16 @@ public class Robot extends TimedRobot {
   private static final String kTestAuto = "Test Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
   public static Values m_values;
   public static Values m_robotMap;
+
   public static NetworkTable visionTable;
-  public static double tx;
+
   public static Autonomous selectedAuto;
-  public static boolean elevatorJammed = false;
+
   public static Logger logger;
+  
   private SubsystemsInstance inst;
   private IO m_io;
 
@@ -90,8 +93,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     try {
       logger.log(new String[] {Double.toString(inst.m_shooterSubsystem.getRPM()), Double.toString(inst.m_shooterSubsystem.getMaxRPM()),
-        Boolean.toString(inst.m_intakeSubsystem.areBeltsReversed()), Boolean.toString(inst.m_intakeSubsystem.isIntakeOn()), Boolean.toString(inst.m_elevatorSubsystem.isElevatorJammed()),
-        Double.toString(inst.m_driveSubsystem.getRightSpeed()), Double.toString(inst.m_driveSubsystem.getLeftSpeed())});
+      Boolean.toString(inst.m_intakeSubsystem.areBeltsReversed()), Boolean.toString(inst.m_intakeSubsystem.isIntakeOn()), Boolean.toString(inst.m_elevatorSubsystem.isElevatorJammed()),
+      Double.toString(inst.m_driveSubsystem.getRightSpeed()), Double.toString(inst.m_driveSubsystem.getLeftSpeed())});
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
@@ -110,7 +113,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    tx = 0;
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);

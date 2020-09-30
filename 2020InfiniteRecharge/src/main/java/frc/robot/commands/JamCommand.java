@@ -15,7 +15,6 @@ public class JamCommand extends CommandBase {
   /**
    * Creates a new JamCommand.
    */
-  private double pos;
   private boolean finished =  false;
   private SubsystemsInstance inst;
 
@@ -23,7 +22,6 @@ public class JamCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     inst = SubsystemsInstance.getInstance();
     addRequirements(inst.m_elevatorSubsystem);
-    this.pos = pos;
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +34,6 @@ public class JamCommand extends CommandBase {
   public void execute() {
     //TODO move this boolean to the subsystem, makes more sense there
     //also I'm not sure what I was thinking when I wrote this, it needs to be altered or removed
-    Robot.elevatorJammed = (Robot.elevatorJammed) ? false : true;
     boolean elevatorJammed = !inst.m_elevatorSubsystem.isElevatorJammed();
     inst.m_elevatorSubsystem.setElevatorJammed(elevatorJammed);
     inst.m_elevatorSubsystem.jam((elevatorJammed) ? 0.5 : 0.0);

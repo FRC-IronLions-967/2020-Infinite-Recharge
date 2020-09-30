@@ -101,6 +101,8 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
 
   @Override
   public void periodic() {
+    // This method will be called once per scheduler run
+
     if(beltsReversed) {
       io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.2);
       io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.2);
@@ -108,9 +110,6 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
       io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.0);
       io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.0);
     }
-    // This method will be called once per scheduler run
-    // upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));
-    // lower.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), deadband));
 
     SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
     SmartDashboard.putBoolean("Intake On", intakeOn);

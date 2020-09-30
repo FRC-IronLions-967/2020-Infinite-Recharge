@@ -22,7 +22,7 @@ import frc.robot.Robot;
 public class ElevatorSubsystem extends SubsystemBase {
   private TalonSRX elevator0;
   private TalonSRX elevator1;
-  // private TalonSRX roller;
+
   private Servo jam0;
   private Servo jam1;
 
@@ -40,7 +40,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     elevator0 = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("elevator0")));
     elevator1 = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("elevator1")));
-    // roller = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("roller")));
+
     jam0 = new Servo(Integer.parseInt(Robot.m_robotMap.getValue("jam0")));
     jam1 = new Servo(Integer.parseInt(Robot.m_robotMap.getValue("jam1")));
 
@@ -49,7 +49,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     elevator0.setInverted(false);
     elevator1.setInverted(false);
-    // roller.setInverted(false);
 
     elevatorJammed = false;
   }

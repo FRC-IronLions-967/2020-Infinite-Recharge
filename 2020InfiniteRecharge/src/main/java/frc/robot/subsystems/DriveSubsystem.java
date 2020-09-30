@@ -55,7 +55,6 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     
   private TurningFunction turningFunction;
 
-  // private static final double TRIGGER_THRESHOLD = 0.2;
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
 
   public DriveSubsystem() {
@@ -118,8 +117,6 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     double r, l;
 
     //"I have no clue how this works ask Nathan" - Owen
-    // r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
-    // l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     r = ((x > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     l = ((x > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     SmartDashboard.putNumber("rightPower", r);
