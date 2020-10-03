@@ -55,9 +55,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    inst = SubsystemsInstance.getInstance();
-    m_io = IO.getInstance();
-
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("Test Auto", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -69,7 +66,9 @@ public class Robot extends TimedRobot {
     } catch (IOException e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
-  
+
+    inst = SubsystemsInstance.getInstance();
+    m_io = IO.getInstance();  
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
 

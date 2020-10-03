@@ -27,10 +27,10 @@ public class XBoxController extends Joystick {
         povMap = new HashMap<>();
 
         //initialize the buttons on the controller
-        buttonMap.put("X", new JoystickButton(this, 1));
-        buttonMap.put("Y", new JoystickButton(this, 2));
-        buttonMap.put("A", new JoystickButton(this, 3));
-        buttonMap.put("B", new JoystickButton(this, 4));
+        buttonMap.put("A", new JoystickButton(this, 1));
+        buttonMap.put("B", new JoystickButton(this, 2));
+        buttonMap.put("X", new JoystickButton(this, 3));
+        buttonMap.put("Y", new JoystickButton(this, 4));
         buttonMap.put("LBUMP", new JoystickButton(this, 5));
         buttonMap.put("RBUMP", new JoystickButton(this, 6));
         buttonMap.put("SELECT", new JoystickButton(this, 7));

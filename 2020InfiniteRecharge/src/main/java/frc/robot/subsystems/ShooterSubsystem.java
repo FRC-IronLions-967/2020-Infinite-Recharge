@@ -92,6 +92,18 @@ public class ShooterSubsystem extends SubsystemBase {
     this.maxRPM = rpm;
   }
 
+  public synchronized void incrementMaxRPM() {
+    if(maxRPM < 5600) {
+      maxRPM += 50;
+    }
+  }
+
+  public synchronized void decrementMaxRPM() {
+    if(maxRPM > 1500) {
+      maxRPM -= 50;
+    }
+  }
+
   public int[] getRpmLookup() {
     return rpmLookup;
   }
@@ -100,5 +112,6 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Motor Power", flywheel0.get());
+    SmartDashboard.putNumber("Max RPM", maxRPM);
   }
 }

@@ -32,9 +32,9 @@ public class IO {
         manipulatorController.whenButtonPressed("A", new IntakeCommand(0.8));
         manipulatorController.whenButtonReleased("A", new IntakeCommand(0.0));
         manipulatorController.whenButtonPressed("X", new LowerBeltCommand(0.7));
-        manipulatorController.whenButtonPressed("X", new LowerBeltCommand(0.0));
+        manipulatorController.whenButtonReleased("X", new LowerBeltCommand(0.0));
         manipulatorController.whenButtonPressed("B", new UpperBeltCommand(0.3));
-        manipulatorController.whenButtonPressed("B", new UpperBeltCommand(0.0));
+        manipulatorController.whenButtonReleased("B", new UpperBeltCommand(0.0));
         manipulatorController.whenButtonPressed("Y", new ToggleBeltsCommand());
         manipulatorController.whenButtonPressed("LBUMP", new RPMDownCommand());
         manipulatorController.whenButtonPressed("RBUMP", new RPMUpCommand());

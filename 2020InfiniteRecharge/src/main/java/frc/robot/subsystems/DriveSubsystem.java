@@ -55,7 +55,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     
   private TurningFunction turningFunction;
 
-  double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
+  double MAX;
 
   public DriveSubsystem() {
     io = IO.getInstance();
@@ -86,6 +86,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     leftSlave.setInverted(true);
 
     turningFunction = new TurningFunction(Double.parseDouble(Robot.m_values.getValue("deadband")), Double.parseDouble(Robot.m_values.getValue("minPower")), Double.parseDouble(Robot.m_values.getValue("aimPower")), Double.parseDouble(Robot.m_values.getValue("highCutoff")));
+    MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
   }
 
   //class convenience method to move the robot to save space in the different drive methods

@@ -31,10 +31,11 @@ public class RPMUpCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    int rpm = inst.m_shooterSubsystem.getMaxRPM();
-    if(rpm < 5600) {
-      inst.m_shooterSubsystem.setMaxRPM(rpm + 50);
-    }
+    // int rpm = inst.m_shooterSubsystem.getMaxRPM();
+    // if(rpm < 5600) {
+    //   inst.m_shooterSubsystem.setMaxRPM(rpm + 50);
+    // }
+    inst.m_shooterSubsystem.incrementMaxRPM();
     finished = true;
   }
 
