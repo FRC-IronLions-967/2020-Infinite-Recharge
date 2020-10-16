@@ -8,18 +8,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.IO;
 import frc.robot.Robot;
+import frc.robot.subsystems.*;
 
 public class IntakeCommand extends CommandBase {
   private double power;
   private boolean finished =  false;
+  private SubsystemsInstance inst;
 
   /**
    * Creates a new IntakeCommand.
    */
   public IntakeCommand(double power) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_intakeSubsystem);
+    inst = SubsystemsInstance.getInstance();
+    addRequirements(inst.m_intakeSubsystem);
     this.power = power;
   }
 
@@ -31,8 +35,8 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Robot.m_intakeSubsystem.intake(Utils.deadband(Robot.m_io.xbox1.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))));
-    Robot.m_intakeSubsystem.intake(power);
+    // Robot.m_intakeSubsystem.intake(Utils.deadband(io.xbox1.getRawAxis(1), Double.parseDouble(Robot.m_values.getValue("deadband"))));
+    inst.m_intakeSubsystem.intake(power);
     finished = true;
   }
 

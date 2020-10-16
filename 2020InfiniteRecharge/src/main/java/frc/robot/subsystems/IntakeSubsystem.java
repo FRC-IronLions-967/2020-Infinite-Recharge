@@ -13,6 +13,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.IO;
 import frc.robot.Robot;
 
 public class IntakeSubsystem extends SubsystemBase implements Subsystem {
@@ -23,12 +25,19 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
   private TalonSRX outerIntake;
   private TalonSRX lower;
   private TalonSRX upper;
+  
+  private boolean beltsReversed = false;
+  private boolean intakeOn = false;
 
   double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
   double deadband = Double.parseDouble(Robot.m_values.getValue("deadband2"));
 
+  private IO io;
+
 
   public IntakeSubsystem() {
+    io = IO.getInstance();
+
     //initialize motor controller objects
     intake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("intake")));
     outerIntake = new TalonSRX(Integer.parseInt(Robot.m_robotMap.getValue("outerIntake")));
@@ -48,7 +57,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
-    x = (Robot.beltsReversed) ? -x : x;
+    x = (beltsReversed) ? -x : x;
 
     intake.set(ControlMode.PercentOutput, x);
     outerIntake.set(ControlMode.PercentOutput, x);
@@ -59,7 +68,7 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
-    x = (Robot.beltsReversed) ? -x : x;
+    x = (beltsReversed) ? -x : x;
 
     lower.set(ControlMode.PercentOutput, x);
   }
@@ -69,23 +78,40 @@ public class IntakeSubsystem extends SubsystemBase implements Subsystem {
     x = (x > MAX) ? MAX : x;
     x = (x < -MAX) ? -MAX : x;
 
-    x = (Robot.beltsReversed) ? -x : x;
+    x = (beltsReversed) ? -x : x;
 
     upper.set(ControlMode.PercentOutput, x);
   }
 
+  public boolean isIntakeOn() {
+    return intakeOn;
+  }
+
+  public void setIntakeOn(boolean intakeOn) {
+    this.intakeOn = intakeOn;
+  }
+
+  public boolean areBeltsReversed() {
+    return beltsReversed;
+  }
+
+  public void setBeltsReversed(boolean beltsReversed) {
+    this.beltsReversed = beltsReversed;
+  }
+
   @Override
   public void periodic() {
-    if(Robot.beltsReversed) {
-      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.2);
-      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.2);
-    } else {
-      Robot.m_io.xbox1.setRumble(RumbleType.kRightRumble, 0.0);
-      Robot.m_io.xbox1.setRumble(RumbleType.kLeftRumble, 0.0);
-    }
     // This method will be called once per scheduler run
-    // upper.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(1), deadband));
-    // lower.set(ControlMode.PercentOutput, Utils.deadband(-Robot.m_io.xbox1.getRawAxis(5), deadband));
 
+    if(beltsReversed) {
+      io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.2);
+      io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.2);
+    } else {
+      io.getManipulatorController().setRumble(RumbleType.kRightRumble, 0.0);
+      io.getManipulatorController().setRumble(RumbleType.kLeftRumble, 0.0);
+    }
+
+    SmartDashboard.putBoolean("Belts Reversed", beltsReversed);
+    SmartDashboard.putBoolean("Intake On", intakeOn);
   }
 }

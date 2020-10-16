@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.IO;
 import frc.robot.Robot;
 import frc.robot.commands.AutoAimCommand;
 import frc.robot.commands.RumbleCommand;
@@ -33,6 +34,8 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   public CANSparkMax leftMaster;
   public CANSparkMax leftSlave;
 
+  private IO io;
+
   //Drive lookup table(might be automatically generated in the future).
   private double lookup[] = {0, 0, 0,  0.1, 0.10009, 0.10036, 0.10081, 
 		0.10144, 0.10225, 0.10324, 0.10441, 0.10576, 0.10729, 
@@ -52,10 +55,11 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     
   private TurningFunction turningFunction;
 
-  // private static final double TRIGGER_THRESHOLD = 0.2;
-  double MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
+  double MAX;
 
   public DriveSubsystem() {
+    io = IO.getInstance();
+
     //Assigns the robot IDs from the robotMap.properties file
     rightMaster = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightMaster")), MotorType.kBrushless);
     rightSlave = new CANSparkMax(Integer.parseInt(Robot.m_robotMap.getValue("rightSlave")), MotorType.kBrushless);
@@ -82,6 +86,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     leftSlave.setInverted(true);
 
     turningFunction = new TurningFunction(Double.parseDouble(Robot.m_values.getValue("deadband")), Double.parseDouble(Robot.m_values.getValue("minPower")), Double.parseDouble(Robot.m_values.getValue("aimPower")), Double.parseDouble(Robot.m_values.getValue("highCutoff")));
+    MAX = Double.parseDouble(Robot.m_values.getValue("MAX"));
   }
 
   //class convenience method to move the robot to save space in the different drive methods
@@ -113,8 +118,6 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
     double r, l;
 
     //"I have no clue how this works ask Nathan" - Owen
-    // r = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
-    // l = ((x > 0) ? lookup[(int) Math.floor(Math.abs(x) * 100)] : -lookup[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     r = ((x > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)]) - ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     l = ((x > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(x) * 100)]) + ((y > 0) ? turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)] : -turningFunction.getTable()[(int) Math.floor(Math.abs(y) * 100)]);
     SmartDashboard.putNumber("rightPower", r);
@@ -138,7 +141,7 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(Robot.m_io.xbox0_a.get()) {
+    if(io.getDriverController().isButtonPressed("A")) {
       CommandScheduler.getInstance().schedule(new AutoAimCommand(System.currentTimeMillis()));
     }
 
@@ -146,8 +149,13 @@ public class DriveSubsystem extends SubsystemBase implements Subsystem {
       new RumbleCommand().initialize();
       lastAimSuccessful = false;
     }
+
+    SmartDashboard.putNumber("Right Speed", this.getRightSpeed());
+    SmartDashboard.putNumber("Left Speed", this.getLeftSpeed());
   }
 
+  //I (Nathan) think this in miles/hr but I don't exactly remember
+  //remember to document your code, kids
   public double getRightSpeed() {
     return rightMaster.getEncoder().getVelocity() * 0.001255;
   }

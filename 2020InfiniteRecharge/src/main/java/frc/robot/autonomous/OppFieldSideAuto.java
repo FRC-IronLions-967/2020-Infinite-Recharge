@@ -1,30 +1,65 @@
 package frc.robot.autonomous;
 
+import com.revrobotics.CANPIDController;
+
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Robot;
 import frc.robot.utils.vision.LimelightDefault;
+import frc.robot.subsystems.*;
 
 public class OppFieldSideAuto implements Autonomous {
     private double tx;
     private double rightEncoderPos = 0.0;
     private double leftEncoderPos = 0.0;
     private final double countsToDrive = 10.0;
+    private CANPIDController controllerRight;
+    private CANPIDController controllerLeft;
+    private SubsystemsInstance inst;
 
     public OppFieldSideAuto() {
-        Robot.m_driveSubsystem.rightMaster.getEncoder().setPosition(0.0);
-        Robot.m_driveSubsystem.leftMaster.getEncoder().setPosition(0.0);
+        inst.m_driveSubsystem.rightMaster.getEncoder().setPosition(0.0);
+        inst.m_driveSubsystem.leftMaster.getEncoder().setPosition(0.0);
+    }
+
+    @Override
+    public void initAuto() {
+        double kP = 5e-6; 
+        double kI = 1e-6;
+        double kD = 0; 
+        double kIz = 0; 
+        double kFF = 0; 
+        double kMaxOutput = 1; 
+        double kMinOutput = -1;
+
+        controllerRight = inst.m_driveSubsystem.rightMaster.getPIDController();
+        controllerLeft = inst.m_driveSubsystem.leftMaster.getPIDController();
+
+        controllerRight.setP(kP);
+        controllerRight.setI(kI);
+        controllerRight.setD(kD);
+        controllerRight.setIZone(kIz);
+        controllerRight.setFF(kFF);
+        controllerRight.setOutputRange(kMinOutput, kMaxOutput);
+
+        controllerLeft.setP(kP);
+        controllerLeft.setI(kI);
+        controllerLeft.setD(kD);
+        controllerLeft.setIZone(kIz);
+        controllerLeft.setFF(kFF);
+        controllerLeft.setOutputRange(kMinOutput, kMaxOutput);
     }
 
     @Override
     public void runAuto() {
         if(rightEncoderPos < countsToDrive& leftEncoderPos < countsToDrive) {
-            Robot.m_driveSubsystem.move(0.1, 0.1);
+            inst.m_driveSubsystem.move(0.1, 0.1);
             SmartDashboard.putNumber("Right Encoder Pos", rightEncoderPos);
             SmartDashboard.putNumber("Left Encoder Pos", leftEncoderPos);
         } else {
-            Robot.m_driveSubsystem.rightMaster.getEncoder().setPosition(0.0);
-            Robot.m_driveSubsystem.leftMaster.getEncoder().setPosition(0.0);
+            inst.m_driveSubsystem.rightMaster.getEncoder().setPosition(0.0);
+            inst.m_driveSubsystem.leftMaster.getEncoder().setPosition(0.0);
         }
         double MOE = 1.5;
         // tx = (getTV() == 1) ? getTX() : 10.0f;
@@ -42,14 +77,14 @@ public class OppFieldSideAuto implements Autonomous {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Robot.m_shooterSubsystem.shoot(0.55); //.7826
+        inst.m_shooterSubsystem.shoot(0.55); //.7826
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Robot.m_intakeSubsystem.upper(0.4);
-        Robot.m_intakeSubsystem.lower(0.4);
+        inst.m_intakeSubsystem.upper(0.4);
+        inst.m_intakeSubsystem.lower(0.4);
             // Robot.m_intakeSubsystem.upper(0.7);
             // Robot.m_intakeSubsystem.lower(0.7);
         }
@@ -57,7 +92,7 @@ public class OppFieldSideAuto implements Autonomous {
         steering_adjust = (steering_adjust < -0.10) ? -0.10 : steering_adjust;
         // controllerLeft.setReference(steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
         // controllerRight.setReference(-steering_adjust * MAX_VELOCITY, ControlType.kVelocity);
-        Robot.m_driveSubsystem.move(-steering_adjust, steering_adjust);
+        inst.m_driveSubsystem.move(-steering_adjust, steering_adjust);
         // System.out.println("L: " + -steering_adjust + " R: " + steering_adjust);
         SmartDashboard.putNumber("rightMotor", steering_adjust);
         SmartDashboard.putNumber("leftMotor", -steering_adjust);

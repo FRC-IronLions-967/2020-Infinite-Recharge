@@ -10,14 +10,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.utils.vision.LimelightDefault;
+import frc.robot.subsystems.*;
 
 public class AutoRPMCommand extends CommandBase {
   private boolean finished = false;
+  private SubsystemsInstance inst;
+  private int[] rpmLookup;
   /**
    * Creates a new AutoRPMCommand.
    */
   public AutoRPMCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
+    inst = SubsystemsInstance.getInstance();
+    rpmLookup = inst.m_shooterSubsystem.getRpmLookup();
   }
 
   // Called when the command is initially scheduled.
@@ -30,35 +35,35 @@ public class AutoRPMCommand extends CommandBase {
   public void execute() {
     double ty = LimelightDefault.getTY() + 30;
     if(ty > 50.8) {
-      Robot.maxRPM = Robot.rpmLookup[0];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[0]);
     } else if(ty > 48.3) {
-      Robot.maxRPM = Robot.rpmLookup[1];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[1]);
     } else if(ty > 46.14) {
-      Robot.maxRPM = Robot.rpmLookup[2];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[2]);
     } else if(ty > 44.1) {
-      Robot.maxRPM = Robot.rpmLookup[3];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[3]);
     } else if(ty > 42.31) {
-      Robot.maxRPM = Robot.rpmLookup[4];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[4]);
     } else if(ty > 39.8) {
-      Robot.maxRPM = Robot.rpmLookup[5];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[5]);
     } else if(ty > 37.26) {
-      Robot.maxRPM = Robot.rpmLookup[6];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[6]);
     } else if(ty > 35.84) {
-      Robot.maxRPM = Robot.rpmLookup[7];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[7]);
     } else if(ty > 34.63) {
-      Robot.maxRPM = Robot.rpmLookup[8];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[8]);
     } else if(ty > 33.7) {
-      Robot.maxRPM = Robot.rpmLookup[9];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[9]);
     } else if(ty > 32.5) {
-      Robot.maxRPM = Robot.rpmLookup[10];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[10]);
     } else if(ty > 31.95) {
-      Robot.maxRPM = Robot.rpmLookup[11];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[11]);
     } else if(ty > 31.45) {
-      Robot.maxRPM = Robot.rpmLookup[12];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[12]);
     } else if(ty > 30.7) {
-      Robot.maxRPM = Robot.rpmLookup[13];
+      inst.m_shooterSubsystem.setMaxRPM(rpmLookup[13]);
     } else {
-      Robot.maxRPM = 5600;
+      inst.m_shooterSubsystem.setMaxRPM(5600);
     }
     finished = true;
   }

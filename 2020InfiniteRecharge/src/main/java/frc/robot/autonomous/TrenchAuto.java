@@ -1,16 +1,52 @@
 package frc.robot.autonomous;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Robot;
+import frc.robot.subsystems.*;
 
 public class TrenchAuto implements Autonomous {
     private double tx;
     private boolean moved = false;
+    private CANPIDController controllerRight;
+    private CANPIDController controllerLeft;
+    private SubsystemsInstance inst;
+
+    @Override
+    public void initAuto() {
+        double kP = 5e-6; 
+        double kI = 1e-6;
+        double kD = 0; 
+        double kIz = 0; 
+        double kFF = 0; 
+        double kMaxOutput = 1; 
+        double kMinOutput = -1;
+
+        controllerRight = inst.m_driveSubsystem.rightMaster.getPIDController();
+        controllerLeft = inst.m_driveSubsystem.leftMaster.getPIDController();
+
+        controllerRight.setP(kP);
+        controllerRight.setI(kI);
+        controllerRight.setD(kD);
+        controllerRight.setIZone(kIz);
+        controllerRight.setFF(kFF);
+        controllerRight.setOutputRange(kMinOutput, kMaxOutput);
+
+        controllerLeft.setP(kP);
+        controllerLeft.setI(kI);
+        controllerLeft.setD(kD);
+        controllerLeft.setIZone(kIz);
+        controllerLeft.setFF(kFF);
+        controllerLeft.setOutputRange(kMinOutput, kMaxOutput);
+    }
+
     @Override
     public void runAuto() {
+        inst = SubsystemsInstance.getInstance();
         // double MOE = 1.0;
         // // tx = (getTV() == 1) ? getTX() : 10.0f;
         // tx = LimelightDefault.getTX();
@@ -25,7 +61,7 @@ public class TrenchAuto implements Autonomous {
         // } catch (InterruptedException e) {
         //     e.printStackTrace();
         // }
-        Robot.maxRPM = 3900;
+        inst.m_shooterSubsystem.setMaxRPM(3900);
         // double ty = LimelightDefault.getTY() + 30;
         // if(ty > 50.8) {
         //     Robot.maxRPM = Robot.rpmLookup[0];
@@ -58,31 +94,31 @@ public class TrenchAuto implements Autonomous {
         //   } else {
         //     Robot.maxRPM = 5350;
         //   }
-        Robot.m_shooterSubsystem.shootRPM(1.0);
+        inst.m_shooterSubsystem.shootRPM(1.0);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Robot.m_intakeSubsystem.upper(0.2);
-        Robot.m_intakeSubsystem.lower(0.2);
+        inst.m_intakeSubsystem.upper(0.2);
+        inst.m_intakeSubsystem.lower(0.2);
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Robot.m_intakeSubsystem.upper(0.0);
-        Robot.m_intakeSubsystem.lower(0.0);
-        Robot.m_shooterSubsystem.shootRPM(0.0);
+        inst.m_intakeSubsystem.upper(0.0);
+        inst.m_intakeSubsystem.lower(0.0);
+        inst.m_shooterSubsystem.shootRPM(0.0);
 
         if(!moved) {
-          Robot.m_driveSubsystem.move(-0.3, -0.3);
-          CANEncoder rEncoder = Robot.m_driveSubsystem.rightMaster.getEncoder();
-          CANEncoder lEncoder = Robot.m_driveSubsystem.leftMaster.getEncoder();
+          inst.m_driveSubsystem.move(-0.3, -0.3);
+          CANEncoder rEncoder = inst.m_driveSubsystem.rightMaster.getEncoder();
+          CANEncoder lEncoder = inst.m_driveSubsystem.leftMaster.getEncoder();
           rEncoder.setPosition(0.0);
           lEncoder.setPosition(0.0);
           while(rEncoder.getPosition() < 20 && lEncoder.getPosition() < 20);
-          Robot.m_driveSubsystem.move(0.0, 0.0);
+          inst.m_driveSubsystem.move(0.0, 0.0);
         }
         SmartDashboard.putNumber("tx", tx);
     }
