@@ -9,7 +9,6 @@
 
 package frc.robot.utils.kalman;
 
-import frc.robot.utils.exceptions.*;
 import org.apache.commons.math3.linear.*;
 
 public class BasicPosKalman {
@@ -23,7 +22,7 @@ public class BasicPosKalman {
     private Array2DRowRealMatrix a;
 
     //coefficient matrix for the control matrix in the prediction equation - unused as I'm not using a control matrix
-    //private Array2DRowRealMatrix b;
+    // private Array2DRowRealMatrix b;
     //control matrix for prediction equation - unused
     // private Array2DRowRealMatrix u;
 
@@ -99,7 +98,7 @@ public class BasicPosKalman {
         return x;
     }
 
-    public void predict() throws DimensionMismatchException {
+    public void predict() {
         //there is a control matrix in a kalman filter, but because we are tracking the control variables i'm not using it
         //might change if this becomes an issue
         //xp = MatrixOperations.add(MatrixOperations.multiply(a, x), MatrixOperations.multiply(b, u));
@@ -117,7 +116,7 @@ public class BasicPosKalman {
     //m is a matrix created with all of the values from the sensors
     //r is a matrix that holds the covariances of all of the sensor data
     //calculates the measured position and the kalman gain
-    public void measure(Array2DRowRealMatrix xm, Array2DRowRealMatrix r) throws DimensionMismatchException {
+    public void measure(Array2DRowRealMatrix xm, Array2DRowRealMatrix r) {
         // y = MatrixOperations.multiply(c, xm);
         y = c.multiply(xm);
 
@@ -137,7 +136,7 @@ public class BasicPosKalman {
 
     }
 
-    public void update() throws DimensionMismatchException {
+    public void update() {
         // x = MatrixOperations.add(xp, MatrixOperations.multiply(k, MatrixOperations.subtract(y, MatrixOperations.multiply(h, x))));
         x = h.multiply(x);
         x = y.subtract(x);
